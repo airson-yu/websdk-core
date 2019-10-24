@@ -1,0 +1,9 @@
+html, body {
+    #background-color: #111;
+    #text-align: center;
+}
+
+canvas.video-box {
+    width: 640px;
+    height: 480px;
+}

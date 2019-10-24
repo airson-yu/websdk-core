@@ -1,0 +1,1 @@
+copy /y  %~dp0..\dist\websdk.core.bundle.js .

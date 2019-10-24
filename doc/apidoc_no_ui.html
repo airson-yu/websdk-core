@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>调度台WEB接口说明文档</title>
+</head>
+<link rel="stylesheet" href="./iview.min.css">
+<style>
+    .api {
+        width: 800px;
+        border: solid 1px #e4e1e1;
+        margin-bottom: 20px;
+    }
+
+    .grid_item_div {
+        border-top: 1px solid #dcdee2;
+        /*padding: 2px 5px;*/
+    }
+
+    .grid_item {
+        width: 48%;
+        display: inline-block;
+        vertical-align: top;
+        margin: 10px 1% 15px 5px;
+    }
+
+    .top {
+        position: fixed;
+        right: 20px;
+        bottom: 30px;
+        font-size: larger;
+        z-index: 1;
+    }
+</style>
+<body>
+
+<div>
+    <div class="top"><a href="#api_div">返回API</a></div>
+</div>
+
+
+<div id="doc" style="font-size: 1.2rem;">
+    <div style="text-align:center;"><a href="../demo/demo.html" target="_blank">点击查看DEMO</a></div>
+    <h2>调度台WEB接口说明文档</h2>
+    <h3>一.文件结构</h3>
+    <div>
+        <p>调度台WEB接口包含的文件：</p>
+        <!--<p>1.ITC.Console.Service.zip：调度台服务安装文件压缩包。</p>-->
+        <p>1.dist目录：websdk资源目录。</p>
+        <p>1-1.dist/websdk.bundle.js：包含了所有的接口功能。</p>
+        <p>1-2.dist/assets目录：存放图片、字体、音频等资源文件。</p>
+        <p>2.doc目录：API文档。</p>
+        <p>3.demo目录：演示案例。</p>
+    </div>
+    <h3>二.集成方式</h3>
+    <div>
+        <p>安装调度台软件：</p>
+        <!--<p>1.下载并安装调度台软件（若已经安装请忽略）：（链接：https://pan.baidu.com/s/1lIMWeTWScwbmmC_HQDc8uw 提取码：x5jg）
+            <a href="https://pan.baidu.com/s/1lIMWeTWScwbmmC_HQDc8uw" target="_blank">点击下载</a>
+        </p>-->
+        <!--<p>2.下载调度台service压缩包：https://39.105.135.70/manager/app/ConsoleWinService.zip
+            <a href="https://39.105.135.70/manager/app/ConsoleWinService.zip" target="_blank">点击下载</a>
+        </p>-->
+        <!--<p>2.将ITC.Console.Service.zip文件解压到D:\console\ConsoleService根目录(根据实际情况修改目录),使用admin权限打开CMD窗口，并切换到此目录</p>-->
+        <!--<p>2.使用admin权限执行此命令卸载之前安装的service(若为全新安装则可忽略此步骤)：sc delete IConService</p>-->
+        <!--<p>2.卸载之前安装的service(若为全新安装则可忽略此步骤)：C:\Windows\Microsoft.NET\Framework\v4.0.30319\installutil.exe /u ITC.Console.Service.exe (确保此目录为已经安装的服务的路径)</p>-->
+        <p>1.下载并安装调度台服务软件：（链接：https://pan.baidu.com/s/1kgs1QnDT9j_I61WEGm1rbA 提取码：szc7）
+            <a href="https://pan.baidu.com/s/1kgs1QnDT9j_I61WEGm1rbA" target="_blank">点击下载</a>
+        </p>
+        <!-- <p>4.安装调用台服务：C:\Windows\Microsoft.NET\Framework\v4.0.30319\installutil.exe ITC.Console.Service.exe (此目录为新安装的服务的路径)</p>
+         <p>5.使用admin权限执行此命令启动调度台服务：net start IConService</p>-->
+        <!--<p>4.打开C:\ProgramData\ITC\Config\service\Configuration.json文件，修改三个配置项：ServerIp(服务器IP)，ServerPort(服务器端口)，OrgId(企业ID号)</p>-->
+        <p>前端集成：</p>
+        <p>1.将websdk.bundle.js，assets复制到首页的同级目录,assets须与首页保持同一目录，websdk.bundle.js非必须。</p>
+        <p>2.在首页中引入websdk.bundle.js</p>
+        <p>3.在JS中调用对应的API,具体查看demo.html,demo.js</p>
+        <p>注意事项：</p>
+        <p style="color:orange;">1.若在调用登陆接口时，返回的cmd_status为5，则使用admin权限执行这两个命令：1.net stop "ITC Console Service" 2.net start "ITC Console Service"</p>
+        <p style="color:orange;">2.改了配置文件，需要手动重启服务，服务名为：集群调度服务</p>
+        <p style="color:orange;">3.logon接口新增了三个参数：ipaddr, port, orgid</p>
+        <p style="color:orange;">4.视频相关的请求和监听函数移除了camera参数</p>
+
+    </div>
+    <h3 id="api_div">三.API整体结构</h3>
+    <div>
+        <pre>
+    websdk:
+        request:
+            authRequest:
+                <a href="#authRequest_logon">logon:登陆</a>
+                <a href="#authRequest_logout">logout:退出登陆</a>
+                <a href="#authRequest_changePasswd">changePasswd:修改密码</a>
+            userRequest:
+                <a href="#userRequest_getUserInfo">getUserInfo:获取用户信息</a>
+                <a href="#userRequest_getConsoleInfo">getConsoleInfo:获取调度台信息</a>
+                <a href="#userRequest_setUserParams">setUserParams:设置用户参数</a>
+                <a href="#userRequest_noticeUserState">noticeUserState:触发用户状态通知</a>
+            groupRequest:
+                <a href="#groupRequest_getGroupInfo">getGroupInfo:获取群组信息</a>
+                <a href="#groupRequest_enterGroup">enterGroup:加入群组</a>
+                <a href="#groupRequest_leaveGroup">leaveGroup:退出群组</a>
+                <a href="#groupRequest_forceEnterGroup">forceEnterGroup:群组强拉（强行要求组的成员进入该组）</a>
+                <a href="#groupRequest_forceLeaveGroup">forceLeaveGroup:群组强拆（强行解散该组，要求当前正在该组的成员立即回到被强拖时所在的组）</a>
+                <a href="#groupRequest_addGroupMember">addGroupMember:增加组成员</a>
+                <a href="#groupRequest_removeGroupMember">removeGroupMember:移除组成员</a>
+                <a href="#groupRequest_createGroup">createGroup:创建临时组</a>
+                <a href="#groupRequest_deleteGroup">deleteGroup:删除临时组</a>
+            voiceRequest:
+                <a href="#voiceRequest_call">call:请求语音通话</a>
+                <a href="#voiceRequest_pttOn">pttOn:开始PTT</a>
+                <a href="#voiceRequest_pttOff">pttOff:结束PTT</a>
+        listeners:
+            <a href="#logoutNotice">logoutNotice:退出登录通知</a>
+            <a href="#userProfileNotice">userProfileNotice:用户信息通知</a>
+            <a href="#userParamsNotice">userParamsNotice:用户配置参数通知</a>
+            <a href="#userStateNotice">userStateNotice:用户状态通知</a>
+            <a href="#callStatusNotice">callStatusNotice:语音通话状态状态通知</a>
+            <a href="#pttStatusNotice">pttStatusNotice:PTT状态通知</a>
+            <a href="#enterGroupNotice">enterGroupNotice:加入群组通知</a>
+            <a href="#leaveGroupNotice">leaveGroupNotice:离开群组通知</a>
+            <a href="#addGroupMemberNotice">addGroupMemberNotice:增加组成员通知</a>
+            <a href="#removeGroupMemberNotice">removeGroupMemberNotice:移除组成员通知</a>
+            <a href="#groupMemStatusNotice">groupMemStatusNotice:组成员状态通知</a>
+        </pre>
+    </div>
+    <h3>四.API文档</h3>
+
+    <div id="app">
+        <div id="authRequest_logon" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.authRequest.logon 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.authRequest_logon.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.authRequest.logon 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.authRequest_logon.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="authRequest_logout" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.authRequest.logout 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.authRequest_logout.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.authRequest.logout 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.authRequest_logout.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="authRequest_changePasswd" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.authRequest.changePasswd 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.authRequest_changePasswd.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.authRequest.changePasswd 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.authRequest_changePasswd.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="userRequest_getUserInfo" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.userRequest.getUserInfo 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.userRequest_getUserInfo.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.userRequest.getUserInfo 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.userRequest_getUserInfo.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="userRequest_getConsoleInfo" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.userRequest.getConsoleInfo 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.userRequest_getConsoleInfo.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.userRequest.getConsoleInfo 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.userRequest_getConsoleInfo.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="userRequest_setUserParams" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.userRequest.setUserParams 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.userRequest_setUserParams.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.userRequest.setUserParams 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.userRequest_setUserParams.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="userRequest_noticeUserState" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.userRequest.noticeUserState(异步) 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.userRequest_noticeUserState.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.userRequest.noticeUserState 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.userRequest_noticeUserState.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="groupRequest_getGroupInfo" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.groupRequest.getGroupInfo 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.groupRequest_getGroupInfo.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.groupRequest.getGroupInfo 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.groupRequest_getGroupInfo.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="groupRequest_enterGroup" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.groupRequest.enterGroup(异步) 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.groupRequest_enterGroup.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.groupRequest.enterGroup 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.groupRequest_enterGroup.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="groupRequest_leaveGroup" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.groupRequest.leaveGroup(异步) 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.groupRequest_leaveGroup.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.groupRequest.leaveGroup 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.groupRequest_leaveGroup.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="groupRequest_forceEnterGroup" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.groupRequest.forceEnterGroup(异步) 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.groupRequest_forceEnterGroup.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.groupRequest.forceEnterGroup 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.groupRequest_forceEnterGroup.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="groupRequest_forceLeaveGroup" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.groupRequest.forceLeaveGroup(异步) 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.groupRequest_forceLeaveGroup.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.groupRequest.forceLeaveGroup 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.groupRequest_forceLeaveGroup.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="groupRequest_addGroupMember" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.groupRequest.addGroupMember(异步) 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.groupRequest_addGroupMember.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.groupRequest.addGroupMember 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.groupRequest_addGroupMember.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="groupRequest_removeGroupMember" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.groupRequest.removeGroupMember(异步) 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.groupRequest_removeGroupMember.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.groupRequest.removeGroupMember 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.groupRequest_removeGroupMember.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="groupRequest_createGroup" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.groupRequest.groupRequest_createGroup 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.groupRequest_createGroup.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.groupRequest.groupRequest_createGroup 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.groupRequest_createGroup.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="groupRequest_deleteGroup" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.groupRequest.groupRequest_deleteGroup 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.groupRequest_deleteGroup.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.groupRequest.groupRequest_deleteGroup 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.groupRequest_deleteGroup.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="voiceRequest_call" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.voiceRequest.call(异步) 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.voiceRequest_call.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.voiceRequest.call 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.voiceRequest_call.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="voiceRequest_pttOn" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.voiceRequest.pttOn(异步) 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.voiceRequest_pttOn.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.voiceRequest.pttOn 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.voiceRequest_pttOn.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="voiceRequest_pttOff" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.voiceRequest.pttOff(异步) 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.voiceRequest_pttOff.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.voiceRequest.pttOff 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.voiceRequest_pttOff.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="logoutNotice" class="grid_item_div">
+            <div class="grid_item">
+                <h2>logoutNotice 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.logoutNotice.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="userProfileNotice" class="grid_item_div">
+            <div class="grid_item">
+                <h2>userProfileNotice 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.userProfileNotice.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="userParamsNotice" class="grid_item_div">
+            <div class="grid_item">
+                <h2>userParamsNotice 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.userParamsNotice.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="userStateNotice" class="grid_item_div">
+            <div class="grid_item">
+                <h2>userStateNotice 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.userStateNotice.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="callStatusNotice" class="grid_item_div">
+            <div class="grid_item">
+                <h2>callStatusNotice 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.callStatusNotice.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="pttStatusNotice" class="grid_item_div">
+            <div class="grid_item">
+                <h2>pttStatusNotice 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.pttStatusNotice.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="enterGroupNotice" class="grid_item_div">
+            <div class="grid_item">
+                <h2>enterGroupNotice 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.enterGroupNotice.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="leaveGroupNotice" class="grid_item_div">
+            <div class="grid_item">
+                <h2>leaveGroupNotice 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.leaveGroupNotice.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="addGroupMemberNotice" class="grid_item_div">
+            <div class="grid_item">
+                <h2>addGroupMemberNotice 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.addGroupMemberNotice.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="removeGroupMemberNotice" class="grid_item_div">
+            <div class="grid_item">
+                <h2>removeGroupMemberNotice 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.removeGroupMemberNotice.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="groupMemStatusNotice" class="grid_item_div">
+            <div class="grid_item">
+                <h2>groupMemStatusNotice 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.groupMemStatusNotice.rsp"></i-table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div style="height: 300px;"></div>
+
+<script src="./vue.min.js"></script>
+<script src="./iview.min.js"></script>
+<script src="./data_no_ui.js"></script>
+<script src="./apidoc_no_ui.js"></script>
+</body>
+</html>
