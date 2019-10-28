@@ -14,7 +14,7 @@ class websdk {
             login_uid: null,
             login_user: {},
         };
-        logger.debug('websdk_core_version: 2019.10.22.01');
+        logger.debug('websdk_core_version: 2019.10.28.01');
     }
 
     /** @deprecated */
@@ -31,7 +31,7 @@ class websdk {
     /** @deprecated */
     init = (callback) => {
         if (window.websdk.view) { //兼容老版本的API：window.websdk.init();
-            return window.websdk.view.init();
+            return window.websdk.view.init(callback);
         } else {
             callback(this.core.processor.build_rsp_succ(Result.succ));
             return this;
