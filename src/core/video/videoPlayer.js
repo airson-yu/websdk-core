@@ -109,8 +109,8 @@ class VideoPlayer {
     /* Player controls Start Here */
 
     fullscreen() {
-        let node = document.getElementById('vidPlayerComp');
-        let canvas = document.getElementById('canvas');
+        let node = document.getElementById('sdk_vidPlayerComp');
+        let canvas = document.getElementById('sdk_canvas');
         let childrens = node.children;
         let fullScreen;
 

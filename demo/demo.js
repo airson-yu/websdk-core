@@ -33,7 +33,7 @@ if (RHTX) {
     global_data.con_id = 68508;
     global_data.con_other_id = 68509;
 } else {
-    document.getElementById('server_tip').style.display = 'block';
+    document.getElementById('sdk_server_tip').style.display = 'block';
 }
 
 var api_demo = {
@@ -70,9 +70,9 @@ var api_demo = {
         websdk.request.authRequest.logon(global_data.ipaddr, global_data.port, global_data.orgid, global_data.logonName, global_data.password, null, function (rsp) {
             console.log('demo_req_logon result:', rsp);
             if (rsp.cmd_status === 0) {
-                document.getElementById('tip').innerText = '登录成功';
+                document.getElementById('sdk_tip').innerText = '登录成功';
             } else {
-                document.getElementById('tip').innerText = '登录失败';
+                document.getElementById('sdk_tip').innerText = '登录失败';
             }
         }, 'demo_req_logon');
     },

@@ -148,7 +148,7 @@ let logger = {
     },
 
     output: function (level_num, level_name, msg) {
-        let node = document.getElementById('output');
+        let node = document.getElementById('sdk_output');
         if (!node) {
             return false;
         }

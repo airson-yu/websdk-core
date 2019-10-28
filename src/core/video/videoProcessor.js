@@ -48,7 +48,7 @@ class VideoProcessor {
     fresh_canvas_toggle_fullscreen(fullscreen) {
         this.fullscreen = fullscreen;
         if (fullscreen) {
-            let collection = document.getElementsByClassName('fullscreen_toggle_modal');
+            let collection = document.getElementsByClassName('sdk-fullscreen-toggle-modal');
             let modal = collection.item(0);
             this.fullscreen_w = modal.clientWidth - 6;
             this.fullscreen_h = modal.clientHeight - 99;

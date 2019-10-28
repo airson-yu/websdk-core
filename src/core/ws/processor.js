@@ -130,6 +130,9 @@ class Processor {
                     window.websdk.private_cache.upload_url_gfile =
                         'http://' + data.ipaddr + ':' + data.port + '/rtv/api/v1/file/chunk_upload?' +
                         'type=gfile&token=' + data.token + '&uid=' + data.uid;
+                    if (!data.ipaddr) {
+                        logger.warn('rsp_logon ipaddr empty');
+                    }
 
                 }, 'req_user_profile_processor_logon');//
             }

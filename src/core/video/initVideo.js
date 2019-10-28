@@ -14,7 +14,7 @@ class InitVideo {
         var lockReconnect = false;  //����ws�ظ�����
 
         function init_all() {
-            init_socket('video-canvas1', 1);
+            init_socket('sdk_video_canvas1', 1);
         }
 
         window.onload = function () {
