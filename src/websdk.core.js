@@ -30,8 +30,8 @@ class websdk {
 
     /** @deprecated */
     init = (callback) => {
-        if (window.websdk.view) { //兼容老版本的API：window.websdk.init();
-            return window.websdk.view.init(callback);
+        if (window.websdk.websdkui) { //兼容老版本的API：window.websdk.init();
+            return window.websdk.websdkui.init(callback);
         } else {
             callback(this.core.processor.build_rsp_succ(Result.succ));
             return this;
