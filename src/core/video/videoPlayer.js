@@ -20,8 +20,10 @@ class VideoPlayer {
 
     setupCanvas(canvas, options) {
         let gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-        if (!gl)
+        if (!gl) {
+            logger.warn('webgl init fail');
             return gl;
+        }
 
         let program = gl.createProgram();
         let vertexShaderSource = [
@@ -88,6 +90,8 @@ class VideoPlayer {
         gl.y.bind(0, program, "YTexture");
         gl.u.bind(1, program, "UTexture");
         gl.v.bind(2, program, "VTexture");
+
+        logger.debug('webgl init done');
 
         return gl;
     }
