@@ -130,6 +130,7 @@
             <a href="#view_showCreateGroupModal">showCreateGroupModal:显示创建临时组窗口</a>
 
         listeners:
+            <a href="#logonNotice">logonNotice:登录状态变更通知</a>
             <a href="#logoutNotice">logoutNotice:退出登录通知</a>
             <a href="#emergencyAlarmNotice">emergencyAlarmNotice:告警通知</a>
             <a href="#emergencyHandledNotice">emergencyHandledNotice:告警已处理通知</a>
@@ -531,6 +532,13 @@
             <div class="grid_item">
                 <h2>view.showCreateGroupModal 回调参数</h2>
                 <i-table border size="small" :columns="grid.col" :data="grid.showCreateGroupModal.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="logonNotice" class="grid_item_div">
+            <div class="grid_item">
+                <h2>logonNotice 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.logonNotice.rsp"></i-table>
             </div>
         </div>
 

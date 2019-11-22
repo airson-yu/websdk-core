@@ -110,6 +110,7 @@
                 <a href="#voiceRequest_pttOn">pttOn:开始PTT</a>
                 <a href="#voiceRequest_pttOff">pttOff:结束PTT</a>
         listeners:
+            <a href="#logonNotice">logonNotice:登录状态变更通知</a>
             <a href="#logoutNotice">logoutNotice:退出登录通知</a>
             <a href="#userProfileNotice">userProfileNotice:用户信息通知</a>
             <a href="#userParamsNotice">userParamsNotice:用户配置参数通知</a>
@@ -332,6 +333,13 @@
             <div class="grid_item">
                 <h2>request.voiceRequest.pttOff 回调参数</h2>
                 <i-table border size="small" :columns="grid.col" :data="grid.voiceRequest_pttOff.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="logonNotice" class="grid_item_div">
+            <div class="grid_item">
+                <h2>logonNotice 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.logonNotice.rsp"></i-table>
             </div>
         </div>
 

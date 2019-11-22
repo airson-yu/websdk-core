@@ -5,6 +5,7 @@ class Listeners {
         this.core = core;
         this.monitors = this.core.processor.monitors;
         this.types = {
+            'notice_logon': 'notice_logon',
             'notice_logout': 'notice_logout',
             'notice_emergency': 'notice_emergency',
             'notice_emergency_handled': 'notice_emergency_handled',
@@ -54,6 +55,11 @@ class Listeners {
             return false;
         }
         this.monitors.removeMonitor(type, '_all');
+    }
+
+    logonNotice = (callback, key) => {
+        //logger.debug('listener logonNotice');
+        this.monitors.addMonitor(this.types.notice_logon, callback, key);
     }
 
     logoutNotice = (callback, key) => {

@@ -751,6 +751,21 @@ grid.voiceRequest_pttOff = {
     ]
 }
 
+grid.logonNotice = {
+    rsp: [
+        common.build_msg_code('notice_logon'),
+        common.cmd_type_2,
+        common.session,
+        common.cbid,
+        {
+            k1: 'cmd_status',
+            k2: 'int',
+            k3: 'yes',
+            k4: '0已登录，1未登录，2当前账号已在其他设备登录'
+        },
+    ]
+}
+
 grid.logoutNotice = {
     rsp: [
         common.build_msg_code('notice_logout'),

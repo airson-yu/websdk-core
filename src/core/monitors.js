@@ -46,6 +46,13 @@ class Monitors {
         }
     }
 
+    notice_logon = (data) => {
+        //logger.debug('monitor notice_logon');
+        if (this.functions.notice_logon) {
+            this.executeMonitor(this.functions.notice_logon, data);
+        }
+    }
+
     notice_logout = (data) => {
         //logger.debug('monitor notice_logout1');
         if (this.functions.notice_logout) {
