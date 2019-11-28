@@ -68,7 +68,9 @@ class Processor {
         /*logger.debug('receive:{}', msg);
         this.output('<label style="color:orange;">receive:</label>' + msg);*/
 
-        let data = this.decode(msg);
+        let that = this;
+
+        let data = that.decode(msg);
 
         if (data.msg_code === 'heartbeat') {
             logger.debug('pong');
@@ -93,19 +95,26 @@ class Processor {
             data.cbid = 'test_req_logout';
         }*/
 
-        if (data.msg_code === 'rsp_logout') {
+        if (data.msg_code === 'rsp_logout') { //req_logout 已经调用 resetStateWhenLogout
             data.msg_code = 'notice_logout';
             data.cmd_type = 2;
             if (null !== window.websdk || undefined !== window.websdk) {
                 window.websdk.private_cache.login_uid = 0;
                 window.websdk.private_cache.login_user = {};
+                window.websdk.login_ing = false;
             }
+            that.ws.socket && that.ws.destroy();
 
-        } else if (data.msg_code === 'notice_logout') {
+        } else if (data.msg_code === 'notice_logout' || (data.msg_code === 'notice_logon' && data.cmd_status == 2)) {// 已在其他设备登录
             logger.debug('monitor notice_logout');
-            websdk.view.resetStateWhenLogout(function (result) {
+            let resetView = websdk.view && websdk.view.resetStateWhenLogout;
+            resetView && websdk.view.resetStateWhenLogout(function (result) {
                 logger.debug('notice_logout websdk.view.resetState');
             });
+            window.websdk.private_cache.login_uid = 0;
+            window.websdk.private_cache.login_user = {};
+            window.websdk.login_ing = false;
+            that.ws.socket && that.ws.destroy();
 
         } else if (data.msg_code === 'rsp_send_im') {
             data.msg_code = 'notice_im';
@@ -113,8 +122,11 @@ class Processor {
             data.sending = true;
 
         } else if (data.msg_code === 'rsp_logon') {
-            //XXX FIXME TEST
-            if (data.uid && (null !== window.websdk || undefined !== window.websdk)) {
+            window.websdk.login_ing = false;
+            if (data.cmd_status !== 0) {
+                logger.warn('rsp_logon fail');
+
+            } else if (data.uid && (null !== window.websdk || undefined !== window.websdk)) {
                 window.websdk.login_ing = true;
                 websdk.request.userRequest.getUserInfo([data.uid], null, function (rsp) {
                     window.websdk.login_ing = false;
@@ -231,7 +243,7 @@ class Processor {
         logger.warn('{success: false, code: 10104, desc: "尚未登录"}');
         return false;*/
 
-        if (!window.websdk.private_cache.login_uid && data.msg_code !== 'req_logon' && !window.websdk.login_ing) {
+        if (!window.websdk.private_cache.login_uid && data.msg_code !== 'req_logon' && data.msg_code !== 'req_logout' && !window.websdk.login_ing) {
             logger.warn('{success: false, code: 10104, desc: "尚未登录"}');
             callback && callback(this.build_rsp_fail(Result.no_login));
             return false;
@@ -285,12 +297,14 @@ class Processor {
                 callback && callback(this.build_rsp_fail(Result.already_login));
                 return false;
             }
+            that.ws.socket && that.ws.destroy(); // 先注销ws，再创建新的
             that.init_login(function (ws_result) {
                 that.send(that.build_request(msg_code, param), callback, cbid, async);
             });
         } else if (msg_code == 'req_logout') {
             logger.debug('req_logout destroy ui');
-            websdk.view.resetStateWhenLogout(function (result) {
+            let resetView = websdk.view && websdk.view.resetStateWhenLogout;
+            resetView && websdk.view.resetStateWhenLogout(function (result) {
                 logger.debug('req_logout websdk.view.resetState');
             });
             return this.send(this.build_request(msg_code, param), callback, cbid, async);
