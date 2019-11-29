@@ -72,6 +72,10 @@ var api_demo = {
             console.log('demo_req_logon result:', rsp);
             if (rsp.cmd_status === 0) {
                 document.getElementById('sdk_tip').innerText = '登录成功';
+
+                // XXX 设置当前调度台账号的ID，其他接口会使用此ID
+                global_data.con_id = rsp.uid;
+
             } else {
                 document.getElementById('sdk_tip').innerText = '登录失败';
             }
