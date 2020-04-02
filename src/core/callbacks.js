@@ -189,6 +189,20 @@ class Callbacks {
         }
     }
 
+    rsp_get_video_list = (data, callback) => {
+        //logger.debug('rsp_get_video_list:{}', data);
+        if (callback) {
+            callback(this.processor.build_response(data));
+        }
+    }
+
+    rsp_transform_video = (data, callback) => {
+        //logger.debug('rsp_transform_video:{}', data);
+        if (callback) {
+            callback(this.processor.build_response(data));
+        }
+    }
+
 }
 
 export default Callbacks;

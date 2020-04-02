@@ -239,6 +239,20 @@ var api_demo = {
         }, 'demo_req_stop_video');//
     },
 
+    req_get_video_list: function () {
+        websdk.request.videoRequest.getVideoList(0, 10, '2020-04-01 11:11:11', '2022-04-01 11:11:11', null, function (rsp) {
+            console.log('demo_req_get_video_list result:{}', rsp);
+        }, 'demo_req_get_video_list');//
+    },
+
+    req_transform_video: function () {
+        var videoid = 1;
+        var videourl = '';
+        websdk.request.videoRequest.transformVideo(videoid, videourl, function (rsp) {
+            console.log('demo_req_transform_video result:{}', rsp);
+        }, 'demo_req_transform_video');//
+    },
+
     // XXX listeners
     logonNotice: function () {
         websdk.listeners.logonNotice(function (rsp) {

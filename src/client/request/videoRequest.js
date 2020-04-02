@@ -1,4 +1,5 @@
 import BaseRequest from './baseRequest';
+//import axios from 'axios';
 import logger from "../../core/logger";
 
 class VideoRequest extends BaseRequest {
@@ -117,6 +118,147 @@ class VideoRequest extends BaseRequest {
         this.core.invokes.req_stop_share_video_in_video_conf(param, callback, cbid);
     }
 
+    getVideoList = (start, count, starttime, endtime, name, callback, cbid) => {
+        logger.debug('getVideoList,start:{},count:{}', start, count);
+        //startDate endDate userCamNameLike start length
+        start = start >= 0 ? start : 0;
+        count = count > 0 ? count : 100;
+        //let consoleId = window.websdk.private_cache.login_uid;
+        let param = {
+            'starttime': starttime,
+            'endtime': endtime,
+            'usercamnamelike': name,
+            'start': start,
+            'length': count,
+            //'consoleId': consoleId,
+        }
+        this.core.invokes.req_get_video_list(param, callback, cbid);
+    }
+
+    transformVideo = (videoid, videourl, callback, cbid) => {
+        let result = {
+            msg_code: 'transformVideo',
+            cbid: cbid,
+            cmd_type: 1
+        }
+        if (!videoid) {
+            result.cmd_status = 2;
+            result.error_reason = 'videoId empty';
+            callback(result);
+            return;
+        }
+        if (!videourl) {
+            result.cmd_status = 3;
+            result.error_reason = 'videoUrl empty';
+            callback(result);
+            return;
+        }
+        let param = {
+            'videoid': videoid,
+            'videourl': videourl
+        }
+        this.core.invokes.req_transform_video(param, callback, cbid);
+    }
+
+    /*getRemoteVideoList = (start, count, startDate, endDate, name, callback, cbid) => {
+        logger.debug('getRemoteVideoList,start:{},count:{}', start, count);
+        //startDate endDate userCamNameLike start length
+        start = start >= 0 ? start : 0;
+        count = count > 0 ? count : 50;
+        let param = {
+            'startDate': startDate,
+            'endDate': endDate,
+            'userCamNameLike': name,
+            'start': start,
+            'length': count,
+            'consoleId': vsid,
+        };
+
+        let url = window.websdk.private_cache.get_remote_video_url;
+        let result = {
+            msg_code: 'getRemoteVideoList',
+            cbid: cbid,
+            cmd_type: 1
+        }
+        if (!url) {
+            result.cmd_status = 1;
+            result.error_reason = 'cache url empty';
+            callback(result);
+            return;
+        }
+
+        axios.post(url, param).then(function (response) {
+            console.log(response);
+            if (response.success) {
+                response.cmd_status = 0;
+                let data = Object.assign({}, response, result);
+                callback(data);
+            } else {
+                result.cmd_status = 20;
+                result.error_reason = 'http response error';
+                callback(result);
+            }
+
+        }).catch(function (error) {
+            console.log(error);
+            result.cmd_status = 10;
+            result.error_reason = 'http error:' + error;
+            callback(result);
+        });
+
+    }
+
+    transformVideo = (videoId, videoUrl, callback, cbid) => {
+
+        let url = window.websdk.private_cache.transform_video_url;
+        let result = {
+            msg_code: 'transformVideo',
+            cbid: cbid,
+            cmd_type: 1
+        }
+        if (!url) {
+            result.cmd_status = 1;
+            result.error_reason = 'cache url empty';
+            callback(result);
+            return;
+        }
+        if (!videoId) {
+            result.cmd_status = 2;
+            result.error_reason = 'videoId empty';
+            callback(result);
+            return;
+        }
+        if (!videoUrl) {
+            result.cmd_status = 3;
+            result.error_reason = 'videoUrl empty';
+            callback(result);
+            return;
+        }
+
+        let param = {
+            'videoId': videoId,
+            'videoUrl': videoUrl
+        };
+
+        axios.post(url, param).then(function (response) {
+            console.log(response);
+            if (response.success) {
+                response.cmd_status = 0;
+                let data = Object.assign({}, response, result);
+                callback(data);
+            } else {
+                result.cmd_status = 20;
+                result.error_reason = 'http response error';
+                callback(result);
+            }
+
+        }).catch(function (error) {
+            console.log(error);
+            result.cmd_status = 10;
+            result.error_reason = 'http error:' + error;
+            callback(result);
+        });
+    }*/
 
     initVideoDom = (cavans) => {
 

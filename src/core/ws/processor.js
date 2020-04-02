@@ -139,9 +139,15 @@ class Processor {
                     window.websdk.private_cache.ipaddr = data.ipaddr;
                     window.websdk.private_cache.port = data.port;
                     window.websdk.private_cache.token = data.token;
+                    let url_host = 'http://' + data.ipaddr + ':' + data.port;
                     window.websdk.private_cache.upload_url_gfile =
-                        'http://' + data.ipaddr + ':' + data.port + '/rtv/api/v1/file/chunk_upload?' +
-                        'type=gfile&token=' + data.token + '&uid=' + data.uid;
+                        url_host + '/rtv/api/v1/file/chunk_upload?type=gfile&token=' + data.token + '&uid=' + data.uid;
+                    /*window.websdk.private_cache.upload_url_gfile =
+                        url_host + '/rtv/api/v1/gps/get_gps_trace?token=' + data.token + '&uid=' + data.uid;
+                    window.websdk.private_cache.get_remote_video_url =
+                        url_host + '/data/api/video/list?token=' + data.token + '&consoleId=' + data.uid;
+                    window.websdk.private_cache.transform_video_url =
+                        url_host + '/data/api/transformVideo?token=' + data.token + '&consoleId=' + data.uid;*/
                     if (!data.ipaddr) {
                         logger.warn('rsp_logon ipaddr empty');
                     }

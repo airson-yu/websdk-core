@@ -116,6 +116,8 @@
                 <a href="#videoRequest_stopVideo">stopVideo:停止视频<span style="color:green;"> (视频必需的接口)</span></a>
                 <a href="#videoRequest_switchCamera">switchCamera:切换摄像头</a>
                 <a href="#videoRequest_updateVideoSet">updateVideoSet:更改分辨率或视频质量</a>
+                <a href="#videoRequest_getVideoList">getVideoList:获取视频列表</a>
+                <a href="#videoRequest_transformVideo">transformVideo:转换视频格式（mp4转m3u8）</a>
             <!--<a href="#startVideoConf">startVideoConf:发起视频会商</a>
             <a href="#stopVideoConf">stopVideoConf:结束视频会商</a>
             <a href="#shareVideoInVideoConf">shareVideoInVideoConf:发起视频会商分享视频</a>
@@ -422,6 +424,28 @@
             <div class="grid_item">
                 <h2>request.videoRequest.updateVideoSet 回调参数</h2>
                 <i-table border size="small" :columns="grid.col" :data="grid.videoRequest_updateVideoSet.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="videoRequest_getVideoList" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.videoRequest.getVideoList 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.videoRequest_getVideoList.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.videoRequest.getVideoList 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.videoRequest_getVideoList.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="videoRequest_transformVideo" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.videoRequest.transformVideo 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.videoRequest_transformVideo.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.videoRequest.transformVideo 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.videoRequest_transformVideo.rsp"></i-table>
             </div>
         </div>
 

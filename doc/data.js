@@ -1049,6 +1049,98 @@ grid.videoRequest_updateVideoSet = {
     ]
 }
 
+grid.videoRequest_getVideoList = {
+    req: [
+        {
+            k1: 'start',
+            k2: 'int',
+            k3: 'no',
+            k4: '数据分页起始值'
+        },
+        {
+            k1: 'count',
+            k2: 'int',
+            k3: 'no',
+            k4: '数据分页条数'
+        },
+        {
+            k1: 'starttime',
+            k2: 'string',
+            k3: 'no',
+            k4: '开始时间，采用"2008-10-13 16:00:00"格式'
+        },
+        {
+            k1: 'endtime',
+            k2: 'string',
+            k3: 'no',
+            k4: '结束时间，格式同上'
+        },
+        {
+            k1: 'name',
+            k2: 'string',
+            k3: 'no',
+            k4: '用户名称'
+        },
+        common.callback,
+        common.cbid,
+        common.empty,
+    ],
+    rsp: [
+        common.build_msg_code('req_get_video_list'),
+        common.cmd_type_1,
+        common.cmd_status,
+        common.error_reason,
+        common.cbid,
+        {
+            k1: 'rows',
+            k2: 'json array',
+            k3: 'no',
+            k4: '视频数据列表，格式参考：{duration: "00:00:02", id: 791, m3u8: null, name: "视频文件791", rate: "1001.610", size: "0.29M",time: "2020-03-31 16:56:14",url: null,user: "zone1 1",videoUrl: "/home/itrunk/video/record/2020-03-31/01590849_00082006_2020-03-31_16:56:14_0.mp4"}'
+        },
+        {
+            k1: 'total',
+            k2: 'int',
+            k3: 'no',
+            k4: '视频数据总条数'
+        },
+    ]
+}
+
+grid.videoRequest_transformVideo = {
+    req: [
+        {
+            k1: 'videoid',
+            k2: 'string',
+            k3: 'no',
+            k4: '视频ID'
+        },
+        {
+            k1: 'videourl',
+            k2: 'string',
+            k3: 'no',
+            k4: '视频URL'
+        },
+        common.callback,
+        common.cbid,
+        common.empty,
+        common.empty,
+    ],
+    rsp: [
+        common.build_msg_code('req_transform_video'),
+        common.cmd_type_1,
+        common.cmd_status,
+        common.error_reason,
+        common.cbid,
+        {
+            k1: 'url',
+            k2: 'int',
+            k3: 'no',
+            k4: '视频URL'
+        },
+
+    ]
+}
+
 grid.voiceRequest_call = {
     req: [
         {
