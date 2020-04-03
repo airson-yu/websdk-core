@@ -223,6 +223,18 @@ var api_demo = {
             console.log('demo_req_ptt_off result:{}', rsp);
         }, 'demo_req_ptt_off');//
     },
+    voice_pstn_call: function () {
+        var telno = '123123';
+        websdk.request.voiceRequest.call(global_data.con_id, global_data.param_uid1, null, null, 0, 15, 0, 0, telno, function (rsp) {
+            console.log('demo_voice_pstn_call result:{}', rsp);
+        }, 'demo_voice_pstn_call');//
+    },
+    voice_pstn_call_stop: function () {
+        var telno = '123123';
+        websdk.request.voiceRequest.call(global_data.con_id, global_data.param_uid1, null, null, 0, 15, 0, 0, telno, function (rsp) {
+            console.log('demo_voice_pstn_call_stop result:{}', rsp);
+        }, 'demo_voice_pstn_call_stop');//
+    },
 
     // XXX videoRequest
     req_play_video: function () {
