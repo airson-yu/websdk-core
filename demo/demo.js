@@ -204,12 +204,12 @@ var api_demo = {
 
     // XXX voiceRequest
     voice_call: function () {
-        websdk.request.voiceRequest.call(global_data.con_id, global_data.param_uid1, null, null, 0, 15, 0, 1, function (rsp) {
+        websdk.request.voiceRequest.call(global_data.con_id, global_data.param_uid1, null, null, 0, 15, 0, 1, null, function (rsp) {
             console.log('demo_voice_call result:{}', rsp);
         }, 'demo_voice_call');//
     },
     voice_call_stop: function () {
-        websdk.request.voiceRequest.call(global_data.con_id, global_data.param_uid1, null, null, 0, 15, 0, 0, function (rsp) {
+        websdk.request.voiceRequest.call(global_data.con_id, global_data.param_uid1, null, null, 0, 15, 0, 0, null, function (rsp) {
             console.log('demo_voice_call_stop result:{}', rsp);
         }, 'demo_voice_call_stop');//
     },

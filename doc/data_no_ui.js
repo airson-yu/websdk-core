@@ -709,6 +709,12 @@ grid.voiceRequest_call = {
             k3: 'yes',
             k4: '0: stop call, 1: start call'
         },
+        {
+            k1: 'telno',
+            k2: 'string',
+            k3: 'no',
+            k4: 'PSTN单呼的电话号码，当call_type为32时有效'
+        },
     ],
     rsp: [
         common.async_result,
@@ -882,7 +888,8 @@ grid.callStatusNotice = {
                 '15：全双工语音\n' +
                 '16：全双工RTT（BMS->Console only）\n' +
                 '17：全双工语音强拉（用于console处理BMS发起的Emergency，在该请求类型下，BMS不振铃，直接进入组中进行双工通话）\n' +
-                '20：终端到调度台：半双工RTT。其他情况：半双工PTT\n'
+                '20：终端到调度台：半双工RTT。其他情况：半双工PTT\n' +
+                '32：PSTN单呼'
         },
         {
             k1: 'status',
@@ -897,6 +904,12 @@ grid.callStatusNotice = {
                 '70 – 目标无应答\n' +
                 '71 – 由于网络不好，系统自动结束通话\n' +
                 '250- 对方结束通话'
+        },
+        {
+            k1: 'telno',
+            k2: 'string',
+            k3: 'no',
+            k4: 'PSTN单呼的电话号码，当call_type为32时有效'
         },
     ]
 }

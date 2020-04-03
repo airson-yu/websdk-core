@@ -1,5 +1,6 @@
 import BaseRequest from './baseRequest';
-import logger from "../../core/logger";
+
+//import logger from "../../core/logger";
 
 class VoiceRequest extends BaseRequest {
     constructor(core) {
@@ -7,7 +8,7 @@ class VoiceRequest extends BaseRequest {
         this.core = core;
     }
 
-    call = (demander, target, extdemander, exttarget, channel, call_type, priority, start, callback, cbid) => {
+    call = (demander, target, extdemander, exttarget, channel, call_type, priority, start, telno, callback, cbid) => {
         //logger.debug('requestCall:{}', target);
         let param = {
             /*'demander': demander,
@@ -17,7 +18,8 @@ class VoiceRequest extends BaseRequest {
             'channel': channel,
             'call_type': call_type,
             'priority': priority,
-            'start': start
+            'start': start,
+            'telno': telno
         };
         if (demander) {
             param.demander = demander;
