@@ -22,15 +22,15 @@ var global_data = {
     con_id: 66249,
     con_other_id: 66254,
 }
-RHTX = false;
+RHTX = true;
 if (RHTX) {
     global_data.ipaddr = '39.105.135.70';
-    global_data.orgid = 10;
+    global_data.orgid = 1;
     global_data.param_uid1 = 68505;
     global_data.param_uid2 = 68506;
     global_data.param_tgid1 = 74752;
     global_data.param_tgid2 = 74753;
-    global_data.con_id = 68508;
+    global_data.con_id = 65576;
     global_data.con_other_id = 68509;
 } else {
     document.getElementById('sdk_server_tip').style.display = 'block';
@@ -258,8 +258,8 @@ var api_demo = {
     },
 
     req_transform_video: function () {
-        var videoid = 1;
-        var videourl = '';
+        var videoid = 93;
+        var videourl = '/home/itrunk/video/record/2020-04-08/01665363_00065777_2020-04-08_14:16:34_0.mp4';
         websdk.request.videoRequest.transformVideo(videoid, videourl, function (rsp) {
             console.log('demo_req_transform_video result:{}', rsp);
         }, 'demo_req_transform_video');//
