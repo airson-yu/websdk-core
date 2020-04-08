@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 let logger = {
     //this.processor = processor;
     //this.config = processor.config;
@@ -22,7 +24,9 @@ let logger = {
 
         if (logger.level <= level_num) { // 符合输出级别
 
-            let date = new Date().toLocaleString('zh-CN', {timeZone: 'Asia/Shanghai', hour12: false});
+            // ie11 不支持 toLocaleString 'zh-CN
+            //let date = new Date().toLocaleString('zh-CN', {timeZone: 'Asia/Shanghai', hour12: false});
+            let date = moment().format('YYYY-MM-DD HH:mm:ss');
             //date = date.substring(0, date.length - 5);
             let pre_msg = date + ' ' + level_name + ':';
             let args_for_console = []; // 用于浏览器console打印的参数，主要是为了打印对象（console打印对象更直观）
