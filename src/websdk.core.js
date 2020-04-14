@@ -14,7 +14,7 @@ class websdk {
             login_uid: null,
             login_user: {},
         };
-        logger.debug('websdk_core_version: 2020.04.08.01');
+        logger.debug('websdk_core_version: 2020.04.14.01');
     }
 
     /** @deprecated */

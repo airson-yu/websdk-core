@@ -126,6 +126,7 @@
                 <a href="#voiceRequest_call">call:请求语音通话</a>
                 <a href="#voiceRequest_pttOn">pttOn:开始PTT</a>
                 <a href="#voiceRequest_pttOff">pttOff:结束PTT</a>
+                <a href="#voiceRequest_dtmf">dtmf:PSTN单呼的分机号</a>
         view:
             <a href="#view_showUserModal">showUserModal:显示用户窗口</a>
             <a href="#view_showGroupModal">showGroupModal:显示群组窗口</a>
@@ -523,6 +524,17 @@
             <div class="grid_item">
                 <h2>request.voiceRequest.pttOff 回调参数</h2>
                 <i-table border size="small" :columns="grid.col" :data="grid.voiceRequest_pttOff.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="voiceRequest_dtmf" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.voiceRequest.dtmf(异步) 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.voiceRequest_dtmf.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.voiceRequest.dtmf 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.voiceRequest_dtmf.rsp"></i-table>
             </div>
         </div>
 

@@ -68,6 +68,12 @@ class VoiceRequest extends BaseRequest {
         this.core.invokes.req_ptt_replay(param, callback, cbid);
     }
 
+    dtmf = (telno, subno, callback, cbid) => {
+        //logger.debug('dtmf:{}-{}', telno, subno);
+        let param = {'telno': telno, 'value': subno};
+        this.core.invokes.req_dtmf(param, callback, cbid);
+    }
+
 }
 
 export default VoiceRequest;

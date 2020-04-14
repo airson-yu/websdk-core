@@ -1230,7 +1230,6 @@ grid.voiceRequest_pttOn = {
     ]
 }
 
-
 grid.voiceRequest_pttOff = {
     req: [
         {
@@ -1242,6 +1241,27 @@ grid.voiceRequest_pttOff = {
     ],
     rsp: [
         common.async_result,
+    ]
+}
+
+grid.voiceRequest_dtmf = {
+    req: [
+        {
+            k1: 'telno',
+            k2: 'string',
+            k3: 'yes',
+            k4: 'PSTN单呼的电话号码'
+        },
+        {
+            k1: 'subno',
+            k2: 'string',
+            k3: 'yes',
+            k4: 'PSTN单呼的分机号'
+        },
+    ],
+    rsp: [
+        common.async_result,
+        common.empty,
     ]
 }
 

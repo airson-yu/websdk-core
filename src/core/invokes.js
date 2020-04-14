@@ -229,6 +229,12 @@ class Invokes {
         //callback && callback(true);
     }
 
+    req_dtmf = (param, callback, cbid) => {
+        //logger.debug('req_dtmf:{}', param.demander);
+        this.processor.build_req_send('req_dtmf', param, callback, null, true);
+        //callback && callback(true);
+    }
+
     req_play_video = (param, callback, cbid) => {
         //logger.debug('req_play_video:{}', param.demander);
         this.processor.build_req_send('req_play_video', param, callback, null, true);

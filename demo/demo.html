@@ -87,7 +87,12 @@
         <button onclick="api_demo.voice_call_stop();">结束语音通话</button>
         <button onclick="api_demo.req_ptt_on();">开始PTT(先进入群组)</button>
         <button onclick="api_demo.req_ptt_off();">结束PTT</button>
+        <div></div>
+        <span>voiceRequest:</span>
+        <span style="width: 55px;">主号码:</span><input name="pstn_telno" id="pstn_telno">
+        <span style="width: 55px;">分机号:</span><input name="pstn_subno" id="pstn_subno">
         <button onclick="api_demo.voice_pstn_call();">请求PSTN单呼</button>
+        <button onclick="api_demo.voice_pstn_dtmf_call();">PSTN呼叫分机</button>
         <button onclick="api_demo.voice_pstn_call_stop();">结束PSTN单呼</button>
         <!--<span>listeners:</span>-->
         <!--<div></div>

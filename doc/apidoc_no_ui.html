@@ -109,6 +109,7 @@
                 <a href="#voiceRequest_call">call:请求语音通话</a>
                 <a href="#voiceRequest_pttOn">pttOn:开始PTT</a>
                 <a href="#voiceRequest_pttOff">pttOff:结束PTT</a>
+                <a href="#voiceRequest_dtmf">dtmf:PSTN单呼的分机号</a>
         listeners:
             <a href="#logonNotice">logonNotice:登录状态变更通知</a>
             <a href="#logoutNotice">logoutNotice:退出登录通知</a>
@@ -335,6 +336,8 @@
                 <i-table border size="small" :columns="grid.col" :data="grid.voiceRequest_pttOff.rsp"></i-table>
             </div>
         </div>
+
+
 
 
         <div id="logonNotice" class="grid_item_div">

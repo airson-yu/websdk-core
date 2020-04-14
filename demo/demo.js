@@ -32,6 +32,9 @@ if (RHTX) {
     global_data.param_tgid2 = 74753;
     global_data.con_id = 65576;
     global_data.con_other_id = 68509;
+
+    global_data.ipaddr = '39.106.17.196';
+    global_data.con_id = 66198;
 } else {
     document.getElementById('sdk_server_tip').style.display = 'block';
 }
@@ -224,14 +227,37 @@ var api_demo = {
         }, 'demo_req_ptt_off');//
     },
     voice_pstn_call: function () {
-        var telno = '123123';
-        websdk.request.voiceRequest.call(global_data.con_id, global_data.param_uid1, null, null, 0, 15, 0, 0, telno, function (rsp) {
+        var telno = document.getElementById('pstn_telno').value;
+        if (!telno) {
+            alert('请输入需要拨打的号码');
+            return;
+        }
+        websdk.request.voiceRequest.call(global_data.con_id, null, null, null, 0, 32, 0, 1, telno, function (rsp) {
             console.log('demo_voice_pstn_call result:{}', rsp);
         }, 'demo_voice_pstn_call');//
     },
+    voice_pstn_dtmf_call: function () {
+        var telno = document.getElementById('pstn_telno').value;
+        if (!telno) {
+            alert('请输入需要拨打的号码');
+            return;
+        }
+        var subno = document.getElementById('pstn_subno').value;
+        if (!subno) {
+            alert('请输入需要拨打的分机号码');
+            return;
+        }
+        websdk.request.voiceRequest.dtmf(telno, subno, function (rsp) {
+            console.log('demo_voice_pstn_dtmf_call result:{}', rsp);
+        }, 'demo_voice_pstn_dtmf_call');//
+    },
     voice_pstn_call_stop: function () {
-        var telno = '123123';
-        websdk.request.voiceRequest.call(global_data.con_id, global_data.param_uid1, null, null, 0, 15, 0, 0, telno, function (rsp) {
+        var telno = document.getElementById('pstn_telno').value;
+        if (!telno) {
+            alert('请输入需要结束拨打的号码');
+            return;
+        }
+        websdk.request.voiceRequest.call(global_data.con_id, null, null, null, 0, 32, 0, 0, telno, function (rsp) {
             console.log('demo_voice_pstn_call_stop result:{}', rsp);
         }, 'demo_voice_pstn_call_stop');//
     },
