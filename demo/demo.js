@@ -34,7 +34,9 @@ if (RHTX) {
     global_data.con_other_id = 68509;
 
     global_data.ipaddr = '39.106.17.196';
-    global_data.con_id = 66198;
+    //global_data.con_id = 66198;
+    global_data.logonName = 'pstn';
+    global_data.con_id = 66266;
 } else {
     document.getElementById('sdk_server_tip').style.display = 'block';
 }

@@ -30,7 +30,7 @@ class VoiceRequest extends BaseRequest {
         this.core.invokes.req_call(param, callback, cbid);
     }
 
-    callStatus = (demander, target, extdemander, exttarget, channel, call_type, status, callback, cbid) => {
+    callStatus = (demander, target, extdemander, exttarget, channel, call_type, status, telno, callback, cbid) => {
         //logger.debug('callStatus:{}', target);
         let param = {
             /*'demander': demander,
@@ -39,7 +39,8 @@ class VoiceRequest extends BaseRequest {
             'exttarget': exttarget,
             'channel': channel,
             'call_type': call_type,
-            'status': status
+            'status': status,
+            'telno': telno
         };
         if (demander) {
             param.demander = demander;
