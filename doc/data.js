@@ -81,7 +81,7 @@ var common = {
         k2: 'boolean',
         k3: 'yes',
         k4: 'true:成功，false:失败'
-    },
+    }
 }
 
 grid.authRequest_logon = {
@@ -125,7 +125,7 @@ grid.authRequest_logon = {
         common.callback,
         common.cbid,
         common.empty,
-        common.empty,
+        common.empty
     ],
     rsp: [
         common.build_msg_code('rsp_logon'),
@@ -142,7 +142,7 @@ grid.authRequest_logon = {
         },
         common.empty,
         common.empty,
-        common.empty,
+        common.empty
     ]
 }
 
@@ -153,7 +153,7 @@ grid.authRequest_logout = {
         common.empty,
         common.empty,
         common.empty,
-        common.empty,
+        common.empty
     ],
     rsp: [
         common.build_msg_code('rsp_logout'),
@@ -161,7 +161,7 @@ grid.authRequest_logout = {
         common.cmd_type_1,
         common.cmd_status,
         common.error_reason,
-        common.cbid,
+        common.cbid
     ]
 }
 
@@ -198,7 +198,7 @@ grid.authRequest_emergencyHandled = {
             k4: '0：告警已处理完毕'
         },
         common.callback,
-        common.cbid,
+        common.cbid
     ],
     rsp: [
         common.build_msg_code('rsp_emergencyHandled'),
@@ -207,7 +207,7 @@ grid.authRequest_emergencyHandled = {
         common.cmd_status,
         common.error_reason,
         common.cbid,
-        common.empty,
+        common.empty
     ]
 }
 
@@ -233,7 +233,7 @@ grid.authRequest_changePasswd = {
         },
         common.callback,
         common.cbid,
-        common.empty,
+        common.empty
     ],
     rsp: [
         common.build_msg_code('rsp_change_passwd'),
@@ -241,8 +241,7 @@ grid.authRequest_changePasswd = {
         common.cmd_type_1,
         common.cmd_status,
         common.error_reason,
-        common.cbid,
-
+        common.cbid
     ]
 }
 
@@ -264,7 +263,7 @@ grid.userRequest_getUserInfo = {
         common.cbid,
         common.empty,
         common.empty,
-        common.empty,
+        common.empty
     ],
     rsp: [
         common.build_msg_code('rsp_user_profile'),
@@ -278,7 +277,7 @@ grid.userRequest_getUserInfo = {
             k2: 'object array',
             k3: 'yes',
             k4: '用户信息'
-        },
+        }
     ]
 }
 
@@ -295,7 +294,7 @@ grid.userRequest_getConsoleInfo = {
         common.empty,
         common.empty,
         common.empty,
-        common.empty,
+        common.empty
     ],
     rsp: [
         common.build_msg_code('rsp_user_profile'),
@@ -309,7 +308,7 @@ grid.userRequest_getConsoleInfo = {
             k2: 'object array',
             k3: 'yes',
             k4: '调度台信息'
-        },
+        }
     ]
 }
 
@@ -334,14 +333,14 @@ grid.userRequest_setUserParams = {
             k4: '参数JSON对象，如：{\'gps_report\': 0}, 参数项：gps_report:是否上报GPS; gps_interval:GPS上报周期(秒); gps_query:是否允许GPS查询; '
         },
         common.callback,
-        common.cbid,
+        common.cbid
     ],
     rsp: [
         common.async_result,
         common.empty,
         common.empty,
         common.empty,
-        common.empty,
+        common.empty
     ]
 }
 
@@ -360,13 +359,13 @@ grid.userRequest_noticeUserState = {
             k4: '第三方用户ID数组'
         },
         common.callback,
-        common.cbid,
+        common.cbid
     ],
     rsp: [
         common.async_result,
         common.empty,
         common.empty,
-        common.empty,
+        common.empty
     ]
 }
 
@@ -385,13 +384,13 @@ grid.gpsRequest_queryGPS = {
             k4: '被请求者的第三方ID'
         },
         common.callback,
-        common.cbid,
+        common.cbid
     ],
     rsp: [
         common.async_result,
         common.empty,
         common.empty,
-        common.empty,
+        common.empty
     ]
 }
 
@@ -428,7 +427,7 @@ grid.gpsRequest_queryHistoryGPS = {
         common.empty,
         common.empty,
         common.empty,
-        common.empty,
+        common.empty
     ],
     rsp: [
         common.build_msg_code('rsp_query_history_gps'),
@@ -472,7 +471,7 @@ grid.gpsRequest_queryHistoryGPS = {
             k2: 'int',
             k3: 'yes',
             k4: '点位总数'
-        },
+        }
     ]
 }
 
@@ -489,7 +488,7 @@ grid.groupRequest_getGroupInfo = {
         common.empty,
         common.empty,
         common.empty,
-        common.empty,
+        common.empty
     ],
     rsp: [
         common.build_msg_code('rsp_grp_profile'),
@@ -503,7 +502,7 @@ grid.groupRequest_getGroupInfo = {
             k2: 'object array',
             k3: 'yes',
             k4: '群组信息'
-        },
+        }
     ]
 }
 
@@ -532,13 +531,13 @@ grid.groupRequest_enterGroup = {
             k2: 'int',
             k3: 'no',
             k4: '如果为0或空，表明放声音，1则为静音'
-        },
+        }
     ],
     rsp: [
         common.async_result,
         common.empty,
         common.empty,
-        common.empty,
+        common.empty
     ]
 }
 
@@ -561,12 +560,12 @@ grid.groupRequest_leaveGroup = {
             k2: 'int',
             k3: 'yes',
             k4: '群组ID'
-        },
+        }
     ],
     rsp: [
         common.async_result,
         common.empty,
-        common.empty,
+        common.empty
     ]
 }
 
@@ -577,10 +576,10 @@ grid.groupRequest_forceEnterGroup = {
             k2: 'int',
             k3: 'yes',
             k4: '群组ID'
-        },
+        }
     ],
     rsp: [
-        common.async_result,
+        common.async_result
     ]
 }
 
@@ -594,7 +593,7 @@ grid.groupRequest_forceLeaveGroup = {
         },
     ],
     rsp: [
-        common.async_result,
+        common.async_result
     ]
 }
 
@@ -617,12 +616,12 @@ grid.groupRequest_addGroupMember = {
             k2: 'string array',
             k3: 'no',
             k4: '第三方用户ID数组'
-        },
+        }
     ],
     rsp: [
         common.async_result,
         common.empty,
-        common.empty,
+        common.empty
     ]
 }
 
@@ -645,12 +644,12 @@ grid.groupRequest_removeGroupMember = {
             k2: 'string array',
             k3: 'no',
             k4: '第三方用户ID数组'
-        },
+        }
     ],
     rsp: [
         common.async_result,
         common.empty,
-        common.empty,
+        common.empty
     ]
 }
 
@@ -680,7 +679,7 @@ grid.groupRequest_createGroup = {
         common.empty,
         common.empty,
         common.empty,
-        common.empty,
+        common.empty
     ],
     rsp: [
         common.build_msg_code('rsp_create_grp'),
@@ -712,7 +711,7 @@ grid.groupRequest_createGroup = {
             k2: 'string array',
             k3: 'no',
             k4: '第三方组成员用户ID数组'
-        },
+        }
     ]
 }
 
@@ -729,7 +728,7 @@ grid.groupRequest_deleteGroup = {
         common.empty,
         common.empty,
         common.empty,
-        common.empty,
+        common.empty
     ],
     rsp: [
         common.build_msg_code('rsp_delete_grp'),
@@ -743,7 +742,7 @@ grid.groupRequest_deleteGroup = {
             k2: 'int',
             k3: 'yes',
             k4: '群组ID'
-        },
+        }
     ]
 }
 
@@ -778,7 +777,7 @@ grid.imRequest_sendIM = {
             k2: 'long',
             k3: 'yes',
             k4: '消息发送时间，long型毫秒数'
-        },
+        }
         //target, exttarget, im_type, content, time, callback, cbid
     ],
     rsp: [
@@ -786,7 +785,7 @@ grid.imRequest_sendIM = {
         common.empty,
         common.empty,
         common.empty,
-        common.empty,
+        common.empty
     ]
 }
 
@@ -845,7 +844,7 @@ grid.videoRequest_playVideo = {
             k2: 'long',
             k3: 'no',
             k4: '仅仅notice_play_video 中有效'
-        },
+        }
         //target, exttarget, im_type, content, time, callback, cbid
     ],
     rsp: [
@@ -856,7 +855,7 @@ grid.videoRequest_playVideo = {
         common.empty,
         common.empty,
         common.empty,
-        common.empty,
+        common.empty
     ]
 }
 
@@ -897,7 +896,7 @@ grid.videoRequest_stopVideo = {
             k2: 'long',
             k3: 'no',
             k4: '客户端随机ID,用它来支持异步。如果为0，系统会产生一个随机数'
-        },
+        }
         /*{
             k1: 'camera',
             k2: 'int',
@@ -911,7 +910,7 @@ grid.videoRequest_stopVideo = {
         common.empty,
         common.empty,
         common.empty,
-        common.empty,
+        common.empty
     ]
 }
 
@@ -947,7 +946,7 @@ grid.videoRequest_switchCamera = {
             k2: 'int',
             k3: 'no',
             k4: '切换类型：0 – 切换前后摄像头；1 – 按配置切换。目前只支持type为0'
-        },
+        }
         /*{
             k1: 'camera',
             k2: 'int',
@@ -975,7 +974,7 @@ grid.videoRequest_switchCamera = {
             k2: 'int',
             k3: 'no',
             k4: '摄像头通道号。对于终端自身的摄像头，该值为0'
-        },
+        }
     ]
 }
 
@@ -1016,7 +1015,7 @@ grid.videoRequest_updateVideoSet = {
             k2: 'int',
             k3: 'no',
             k4: '画面质量， 0，使用默认值， 1-流畅（码率较低），2-清晰（高码率）'
-        },
+        }
         /*{
             k1: 'camera',
             k2: 'int',
@@ -1045,7 +1044,7 @@ grid.videoRequest_updateVideoSet = {
             k3: 'no',
             k4: '摄像头通道号。对于终端自身的摄像头，该值为0'
         },
-        common.empty,
+        common.empty
     ]
 }
 
@@ -1083,7 +1082,7 @@ grid.videoRequest_getVideoList = {
         },
         common.callback,
         common.cbid,
-        common.empty,
+        common.empty
     ],
     rsp: [
         common.build_msg_code('req_get_video_list'),
@@ -1102,7 +1101,7 @@ grid.videoRequest_getVideoList = {
             k2: 'int',
             k3: 'no',
             k4: '视频数据总条数'
-        },
+        }
     ]
 }
 
@@ -1123,7 +1122,7 @@ grid.videoRequest_transformVideo = {
         common.callback,
         common.cbid,
         common.empty,
-        common.empty,
+        common.empty
     ],
     rsp: [
         common.build_msg_code('req_transform_video'),
@@ -1136,8 +1135,7 @@ grid.videoRequest_transformVideo = {
             k2: 'int',
             k3: 'no',
             k4: '视频URL'
-        },
-
+        }
     ]
 }
 
@@ -1216,6 +1214,77 @@ grid.voiceRequest_call = {
     ]
 }
 
+grid.voiceRequest_callStatus = {
+    req: [
+        {
+            k1: 'demander',
+            k2: 'int',
+            k3: 'no',
+            k4: '命令的发起者的ID'
+        },
+        {
+            k1: 'target',
+            k2: 'int',
+            k3: 'no',
+            k4: '被请求者的ID'
+        },
+        {
+            k1: 'extdemander',
+            k2: 'string',
+            k3: 'no',
+            k4: '命令的发起者的第三方ID'
+        },
+        {
+            k1: 'exttarget',
+            k2: 'string',
+            k3: 'no',
+            k4: '被请求者的第三方ID'
+        },
+        {
+            k1: 'channel',
+            k2: 'int',
+            k3: 'no',
+            k4: '仅仅当call_type ==1 时有效'
+        },
+        {
+            k1: 'call_type',
+            k2: 'int',
+            k3: 'yes',
+            k4: '1：音视频call  \n' +
+                '15：全双工语音\n' +
+                '16：全双工RTT（BMS->Console only）\n' +
+                '17：全双工语音强拉（用于console处理BMS发起的Emergency，在该请求类型下，BMS不振铃，直接进入组中进行双工通话）\n' +
+                '20：终端到调度台：半双工RTT。其他情况：半双工PTT\n' +
+                '32：PSTN单呼'
+        },
+        {
+            k1: 'status',
+            k2: 'int',
+            k3: 'yes',
+            k4:
+                '67 – 接受\n' +
+                '69 – 拒绝（对方提示目标忙）\n'
+        },
+        {
+            k1: 'telno',
+            k2: 'string',
+            k3: 'no',
+            k4: 'PSTN单呼的电话号码，当call_type为32时有效'
+        }
+    ],
+    rsp: [
+        common.async_result,
+        common.empty,
+        common.empty,
+        common.empty,
+        common.empty,
+        common.empty,
+        common.empty,
+        common.empty,
+        common.empty
+    ]
+}
+
 grid.voiceRequest_pttOn = {
     req: [
         {
@@ -1223,10 +1292,10 @@ grid.voiceRequest_pttOn = {
             k2: 'int',
             k3: 'yes',
             k4: '群组ID'
-        },
+        }
     ],
     rsp: [
-        common.async_result,
+        common.async_result
     ]
 }
 
@@ -1237,10 +1306,10 @@ grid.voiceRequest_pttOff = {
             k2: 'int',
             k3: 'yes',
             k4: '群组ID'
-        },
+        }
     ],
     rsp: [
-        common.async_result,
+        common.async_result
     ]
 }
 
@@ -1257,11 +1326,11 @@ grid.voiceRequest_dtmf = {
             k2: 'string',
             k3: 'yes',
             k4: 'PSTN单呼的分机号'
-        },
+        }
     ],
     rsp: [
         common.async_result,
-        common.empty,
+        common.empty
     ]
 }
 
@@ -1284,12 +1353,12 @@ grid.view_showUserModal = {
             k2: 'function',
             k3: 'no',
             k4: '回调函数'
-        },
+        }
     ],
     rsp: [
         common.result,
         common.empty,
-        common.empty,
+        common.empty
     ]
 }
 
@@ -1306,11 +1375,11 @@ grid.view_showGroupModal = {
             k2: 'function',
             k3: 'no',
             k4: '回调函数'
-        },
+        }
     ],
     rsp: [
         common.result,
-        common.empty,
+        common.empty
     ]
 }
 
@@ -1321,10 +1390,10 @@ grid.showCreateGroupModal = {
             k2: 'function',
             k3: 'no',
             k4: '回调函数'
-        },
+        }
     ],
     rsp: [
-        common.result,
+        common.result
     ]
 }
 
@@ -1339,7 +1408,7 @@ grid.logonNotice = {
             k2: 'int',
             k3: 'yes',
             k4: '0已登录，1未登录，2当前账号已在其他设备登录'
-        },
+        }
     ]
 }
 
@@ -1354,7 +1423,7 @@ grid.logoutNotice = {
             k2: 'string',
             k3: 'no',
             k4: '强制退出登录的原因'
-        },
+        }
     ]
 }
 
@@ -1393,7 +1462,7 @@ grid.emergencyAlarmNotice = {
             k2: 'string',
             k3: 'no',
             k4: '告警留言'
-        },
+        }
     ]
 }
 
@@ -1432,7 +1501,7 @@ grid.emergencyHandledNotice = {
             k2: 'int',
             k3: 'yes',
             k4: '0：告警已处理完毕'
-        },
+        }
     ]
 }
 
@@ -1447,7 +1516,7 @@ grid.userProfileNotice = {
             k2: 'object array',
             k3: 'yes',
             k4: '用户信息'
-        },
+        }
     ]
 }
 
@@ -1474,7 +1543,7 @@ grid.userParamsNotice = {
             k2: 'object',
             k3: 'yes',
             k4: '设置的参数详情'
-        },
+        }
     ]
 }
 
@@ -1495,7 +1564,7 @@ grid.userStateNotice = {
             k2: 'object array',
             k3: 'no',
             k4: '终端状态信息'
-        },
+        }
     ]
 }
 
@@ -1534,7 +1603,7 @@ grid.userGPSNotice = {
             k2: 'object array',
             k3: 'no',
             k4: 'GPS点位信息(point内部结构参考底部图片：gps_point内部结构)'
-        },
+        }
     ]
 }
 
@@ -1598,7 +1667,7 @@ grid.callStatusNotice = {
             k2: 'string',
             k3: 'no',
             k4: 'PSTN单呼的电话号码，当call_type为32时有效'
-        },
+        }
     ]
 }
 
@@ -1657,7 +1726,7 @@ grid.pttStatusNotice = {
             k2: 'string',
             k3: 'yes',
             k4: 'Unix时间戳'
-        },
+        }
     ]
 }
 
@@ -1684,7 +1753,7 @@ grid.enterGroupNotice = {
             k2: 'int',
             k3: 'yes',
             k4: '群组ID'
-        },
+        }
     ]
 }
 
@@ -1711,7 +1780,7 @@ grid.leaveGroupNotice = {
             k2: 'int',
             k3: 'yes',
             k4: '群组ID'
-        },
+        }
     ]
 }
 
@@ -1738,7 +1807,7 @@ grid.addGroupMemberNotice = {
             k2: 'string array',
             k3: 'no',
             k4: '第三方用户ID数组'
-        },
+        }
     ]
 }
 
@@ -1765,7 +1834,7 @@ grid.removeGroupMemberNotice = {
             k2: 'string array',
             k3: 'no',
             k4: '第三方用户ID数组'
-        },
+        }
     ]
 }
 
@@ -1792,7 +1861,7 @@ grid.groupMemStatusNotice = {
             k2: 'int',
             k3: 'yes',
             k4: '0:不能PPT，1可以PTT'
-        },
+        }
     ]
 }
 
@@ -1840,7 +1909,7 @@ grid.imNotice = {
             k2: 'string',
             k3: 'yes',
             k4: '消息内容'
-        },
+        }
     ]
 }
 
@@ -1902,7 +1971,7 @@ grid.openVideoNotice = {
             k2: 'long',
             k3: 'no',
             k4: '仅仅notice_play_video 中有效'
-        },
+        }
     ]
 }
 
@@ -1946,7 +2015,7 @@ grid.stopVideoNotice = {
             k2: 'long',
             k3: 'no',
             k4: '客户端随机ID,用它来支持异步。如果为0，系统会产生一个随机数'
-        },
+        }
         /*{
             k1: 'camera',
             k2: 'int',
@@ -2016,7 +2085,7 @@ grid.openVideoRspNotice = {
             k2: 'long',
             k3: 'no',
             k4: '仅仅notice_play_video 中有效'
-        },
+        }
     ]
 }
 
@@ -2051,7 +2120,7 @@ grid.stopVideoRspNotice = {
             k2: 'long',
             k3: 'no',
             k4: '客户端随机ID,用它来支持异步。如果为0，系统会产生一个随机数'
-        },
+        }
     ]
 }
 
@@ -2089,7 +2158,7 @@ grid.startVideoConfNotice = {
             k2: 'long',
             k3: 'no',
             k4: '客户端随机ID,用它来支持异步。如果为0，系统会产生一个随机数'
-        },
+        }
     ]
 }
 
@@ -2121,7 +2190,7 @@ grid.stopVideoConfNotice = {
             k2: 'long',
             k3: 'no',
             k4: '客户端随机ID,用它来支持异步。如果为0，系统会产生一个随机数'
-        },
+        }
     ]
 }
 
@@ -2153,7 +2222,7 @@ grid.stopVideoConfNotice = {
             k2: 'long',
             k3: 'no',
             k4: '客户端随机ID,用它来支持异步。如果为0，系统会产生一个随机数'
-        },
+        }
     ]
 }
 
@@ -2185,7 +2254,7 @@ grid.shareVideoInVideoConfNotice = {
             k2: 'long',
             k3: 'no',
             k4: '客户端随机ID,用它来支持异步。如果为0，系统会产生一个随机数'
-        },
+        }
     ]
 }
 

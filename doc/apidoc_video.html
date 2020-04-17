@@ -124,6 +124,7 @@
             <a href="#stopShareVideoInVideoConf">stopShareVideoInVideoConf:停止视频会商分享视频</a>-->
             voiceRequest:
                 <a href="#voiceRequest_call">call:请求语音通话</a>
+                <a href="#voiceRequest_callStatus">callStatus:响应语音通话</a>
                 <a href="#voiceRequest_pttOn">pttOn:开始PTT</a>
                 <a href="#voiceRequest_pttOff">pttOff:结束PTT</a>
                 <a href="#voiceRequest_dtmf">dtmf:PSTN呼叫分机号（暂不支持）</a>
@@ -502,6 +503,17 @@
             <div class="grid_item">
                 <h2>request.voiceRequest.call 回调参数</h2>
                 <i-table border size="small" :columns="grid.col" :data="grid.voiceRequest_call.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="voiceRequest_callStatus" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.voiceRequest.callStatus(异步) 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.voiceRequest_callStatus.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.voiceRequest.callStatus 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.voiceRequest_callStatus.rsp"></i-table>
             </div>
         </div>
 

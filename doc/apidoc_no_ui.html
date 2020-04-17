@@ -107,6 +107,7 @@
                 <a href="#groupRequest_deleteGroup">deleteGroup:删除临时组</a>
             voiceRequest:
                 <a href="#voiceRequest_call">call:请求语音通话</a>
+                <a href="#voiceRequest_callStatus">callStatus:响应语音通话</a>
                 <a href="#voiceRequest_pttOn">pttOn:开始PTT</a>
                 <a href="#voiceRequest_pttOff">pttOff:结束PTT</a>
                 <a href="#voiceRequest_dtmf">dtmf:PSTN呼叫分机号（暂不支持）</a>
@@ -315,6 +316,17 @@
             </div>
         </div>
 
+        <div id="voiceRequest_callStatus" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.voiceRequest.callStatus(异步) 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.voiceRequest_callStatus.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.voiceRequest.callStatus 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.voiceRequest_callStatus.rsp"></i-table>
+            </div>
+        </div>
+
         <div id="voiceRequest_pttOn" class="grid_item_div">
             <div class="grid_item">
                 <h2>request.voiceRequest.pttOn(异步) 请求参数</h2>
@@ -336,8 +348,6 @@
                 <i-table border size="small" :columns="grid.col" :data="grid.voiceRequest_pttOff.rsp"></i-table>
             </div>
         </div>
-
-
 
 
         <div id="logonNotice" class="grid_item_div">
