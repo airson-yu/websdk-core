@@ -1,3 +1,4 @@
+window.ws_url = 'ws://192.168.0.106:port/console';
 var global_data = {
     //ipaddr: '39.105.135.70',
     ipaddr: '39.106.213.127',

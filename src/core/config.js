@@ -4,7 +4,8 @@ class Config {
 
     constructor() {
         //this.callbackArraySize = 1000;
-        this.ws_url = 'ws://localhost:port/console';
+        //this.ws_url = 'ws://localhost:port/console';
+        this.ws_url = window.ws_url || 'ws://localhost:port/console';
         //this.ws_url = 'ws://127.0.0.1:port/console';
         //this.ws_url = 'ws://192.168.1.119:port/console';
         this.portArray = [9080, 3001, 3002, 3003, 3004, 3005];
