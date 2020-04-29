@@ -10,8 +10,9 @@ class VideoWebsocket {
             connect: [],
             data: []
         }
-        this.reconnectInterval = options.reconnectInterval !== undefined ? options.reconnectInterval : 5;
+        this.reconnectInterval = options.reconnectInterval !== undefined ? options.reconnectInterval : 3;
         this.shouldAttemptReconnect = !!this.reconnectInterval;
+        this.reconnectTimes = 0;
         this.completed = false;
         this.established = false;
         this.progress = 0;
@@ -71,6 +72,7 @@ class VideoWebsocket {
         logger.info('video ws onOpen');
         this.progress = 1;
         this.established = true;
+        this.reconnectTimes = 0;
 
         //this.config.init_callback(this.processor.build_rsp_succ(Result.succ));
     }
@@ -79,6 +81,11 @@ class VideoWebsocket {
         logger.info('video ws onClose');
         if (this.shouldAttemptReconnect) {
             clearTimeout(this.reconnectTimeoutId);
+            if (this.reconnectTimes > 3) {
+                logger.info('video ws reconnectTimes>3,give up');
+                this.shouldAttemptReconnect = false;
+            }
+            this.reconnectTimes++;
             this.reconnectTimeoutId = setTimeout(function () {
                 this.start()
             }.bind(this), this.reconnectInterval * 1e3)
