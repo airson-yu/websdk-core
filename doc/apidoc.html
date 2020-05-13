@@ -150,10 +150,10 @@
             <a href="#removeGroupMemberNotice">removeGroupMemberNotice:移除组成员通知</a>
             <a href="#groupMemStatusNotice">groupMemStatusNotice:组成员状态通知</a>
             <a href="#imNotice">imNotice:IM消息通知</a>
-            <a href="#openVideoNotice">openVideoNotice:打开视频通知</a>
-            <a href="#stopVideoNotice">stopVideoNotice:关闭视频通知</a>
-            <a href="#openVideoRspNotice">openVideoRspNotice:打开视频的结果通知</a>
-            <a href="#stopVideoRspNotice">stopVideoRspNotice:关闭视频的结果通知</a>
+            <a href="#playVideoNotice">playVideoNotice:打开视频通知</a>
+            <a href="#stopPlayVideoNotice">stopPlayVideoNotice:关闭视频通知</a>
+            <a href="#playVideoRspNotice">playVideoRspNotice:打开视频的结果通知</a>
+            <a href="#stopPlayVideoRspNotice">stopPlayVideoRspNotice:关闭视频的结果通知</a>
             <a href="#webUserLocationNotice">webUserLocationNotice:点击定位通知</a>
             <!--<a href="#startVideoConfNotice">startVideoConfNotice:发起视频会商通知</a>-->
             <!--<a href="#startVideoConfStatusNotice">startVideoConfStatusNotice:发起视频会商通知</a>-->
@@ -699,30 +699,30 @@
             </div>
         </div>
 
-        <div id="openVideoNotice" class="grid_item_div">
+        <div id="playVideoNotice" class="grid_item_div">
             <div class="grid_item">
-                <h2>openVideoNotice 回调参数</h2>
+                <h2>playVideoNotice 回调参数</h2>
                 <i-table border size="small" :columns="grid.col" :data="grid.openVideoNotice.rsp"></i-table>
             </div>
         </div>
 
-        <div id="stopVideoNotice" class="grid_item_div">
+        <div id="stopPlayVideoNotice" class="grid_item_div">
             <div class="grid_item">
-                <h2>stopVideoNotice 回调参数</h2>
+                <h2>stopPlayVideoNotice 回调参数</h2>
                 <i-table border size="small" :columns="grid.col" :data="grid.stopVideoNotice.rsp"></i-table>
             </div>
         </div>
 
-        <div id="openVideoRspNotice" class="grid_item_div">
+        <div id="playVideoRspNotice" class="grid_item_div">
             <div class="grid_item">
-                <h2>openVideoRspNotice 回调参数</h2>
+                <h2>playVideoRspNotice 回调参数</h2>
                 <i-table border size="small" :columns="grid.col" :data="grid.openVideoRspNotice.rsp"></i-table>
             </div>
         </div>
 
-        <div id="stopVideoRspNotice" class="grid_item_div">
+        <div id="stopPlayVideoRspNotice" class="grid_item_div">
             <div class="grid_item">
-                <h2>stopVideoRspNotice 回调参数</h2>
+                <h2>stopPlayVideoRspNotice 回调参数</h2>
                 <i-table border size="small" :columns="grid.col" :data="grid.stopVideoRspNotice.rsp"></i-table>
             </div>
         </div>
