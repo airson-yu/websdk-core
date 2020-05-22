@@ -1094,7 +1094,11 @@ grid.videoRequest_getVideoList = {
             k1: 'rows',
             k2: 'json array',
             k3: 'no',
-            k4: '视频数据列表，格式参考：{duration: "00:00:02", id: 791, m3u8: null, name: "视频文件791", rate: "1001.610", size: "0.29M",time: "2020-03-31 16:56:14",url: null,user: "zone1 1",videoUrl: "/home/itrunk/video/record/2020-03-31/01590849_00082006_2020-03-31_16:56:14_0.mp4"}'
+            k4: '视频数据列表，格式参考：{duration: "00:00:02", id: 791, m3u8: null, name: "视频文件791", rate: "1001.610", ' +
+                'size: "0.29M",time: "2020-03-31 16:56:14",url: null,user: "zone1 1",' +
+                'videoUrl: "/home/itrunk/video/record/2020-03-31/01590849_00082006_2020-03-31_16:56:14_0.mp4",' +
+                'originUrl: "http://39.105.135.70:80/rtv/video_record/2020-03-31/01590849_00082006_2020-03-31_16_56_14_0.mp4"},' +
+                'url为m3u8格式,此格式需要使用transformVideo接口转换，originUrl为mp4格式'
         },
         {
             k1: 'total',
@@ -1390,6 +1394,20 @@ grid.showCreateGroupModal = {
             k2: 'function',
             k3: 'no',
             k4: '回调函数'
+        }
+    ],
+    rsp: [
+        common.result
+    ]
+}
+
+grid.set_video_close_action = {
+    req: [
+        {
+            k1: 'action',
+            k2: 'integer',
+            k3: 'yes',
+            k4: '操作类型取值：1:弹框询问(默认), 2:只关闭视频窗口, 3:关闭视频窗口并关闭终端视频'
         }
     ],
     rsp: [

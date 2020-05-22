@@ -133,6 +133,9 @@
             <a href="#view_showGroupModal">showGroupModal:显示群组窗口</a>
             <a href="#view_showCreateGroupModal">showCreateGroupModal:显示创建临时组窗口</a>
 
+        config:
+            <a href="#config_set_video_close_action">set_video_close_action:设置关闭视频时的操作</a>
+
         listeners:
             <a href="#logonNotice">logonNotice:登录状态变更通知</a>
             <a href="#logoutNotice">logoutNotice:退出登录通知</a>
@@ -580,6 +583,17 @@
             <div class="grid_item">
                 <h2>view.showCreateGroupModal 回调参数</h2>
                 <i-table border size="small" :columns="grid.col" :data="grid.showCreateGroupModal.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="config_set_video_close_action" class="grid_item_div">
+            <div class="grid_item">
+                <h2>websdkui.configApi.set_video_close_action 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.set_video_close_action.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>websdkui.configApi.set_video_close_action 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.set_video_close_action.rsp"></i-table>
             </div>
         </div>
 
