@@ -20,6 +20,12 @@ class Processor {
         this.empty_cbid_code = '_empty_';
     }
 
+    replace_local_ip_for_ie = () => {
+        let ip = window.ie_object_ip.GetLocalIpAddr();
+        this.config.ws_url = this.config.ws_url.replace('localhost', ip);
+        logger.debug('replace_local_ip_for_ie:{}', ip);
+    }
+
     init = (vm, callback) => {
         this.vm = vm;
         if (!vm) {

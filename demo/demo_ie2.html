@@ -1,0 +1,33 @@
+<HTML>
+
+<HEAD>
+    <TITLE>WMI Scripting HTML</TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=gb2312">
+</HEAD>
+
+<BODY>
+<OBJECT id="foo" classid="CLSID:E5677E67-EE60-49F1-B5E9-54CBF1C3178E"></OBJECT>
+<!--<OBJECT id=foo classid="CLSID:09AC4354-0AA3-4A9F-B951-00CC09EB375D" WIDTH="800" HEIGHT="400"></OBJECT>-->
+<!--<OBJECT id=foo classid="CLSID:231CA54F-36FD-40CF-BDC0-665C74687503" WIDTH="800" HEIGHT="400"></OBJECT>-->
+<SCRIPT language=JScript>
+
+	setTimeout(function(){
+		//var obj = document.getElementById("foo");
+		var ip = foo.GetLocalIpAddr();
+		//var about = foo.AboutBox();
+		document.forms[0].txtIPAddr.value = ip;
+alert(ip);
+	}, 0);
+	
+	
+</SCRIPT>
+<SCRIPT type="text/javascript" FOR="foo" EVENT="OnPhoneRegistrationOk(varMsg)">
+    showInfo_evt(varMsg);
+</SCRIPT>
+<FORM id="formfoo" name="formbar" action="index.do" method="post">
+    <INPUT value="00-11-11-B4-52-EF" name="txtMACAddr">
+    <INPUT value="210.42.38.50" name="txtIPAddr">
+    <INPUT value="zhupan" name="txtDNSName">
+</FORM>
+</BODY>
+</HTML>
