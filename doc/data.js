@@ -896,7 +896,13 @@ grid.videoRequest_stopVideo = {
             k2: 'long',
             k3: 'no',
             k4: '客户端随机ID,用它来支持异步。如果为0，系统会产生一个随机数'
-        }
+        },
+        {
+            k1: 'stop_type',
+            k2: 'int',
+            k3: 'no',
+            k4: '0:停止视频播放和推流，1:仅停止视频播放，不停止推流'
+        },
         /*{
             k1: 'camera',
             k2: 'int',
@@ -906,6 +912,7 @@ grid.videoRequest_stopVideo = {
     ],
     rsp: [
         common.async_result,
+        common.empty,
         common.empty,
         common.empty,
         common.empty,

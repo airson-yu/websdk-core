@@ -24,7 +24,7 @@ class VideoRequest extends BaseRequest {
         //this.initVideoDom(param.cavans);
     }
 
-    stopPlayVideo = (demander, target, extdemander, exttarget, session, channel, callback, cbid) => {
+    stopPlayVideo = (demander, target, extdemander, exttarget, session, channel, stop_type, callback, cbid) => {
         //logger.debug('stopPlayVideo:{}', target);
         let param = {
             'demander': demander,
@@ -33,6 +33,7 @@ class VideoRequest extends BaseRequest {
             'exttarget': exttarget,
             'session': session,
             'channel': channel,
+            'stop_type': stop_type,//0停止视频播放和推流，1仅停止视频播放，不停止推流
             //'camera': camera
         };
         this.core.invokes.req_stop_play_video(param, callback, cbid);

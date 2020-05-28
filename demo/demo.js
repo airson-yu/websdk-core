@@ -275,7 +275,7 @@ var api_demo = {
     },
     req_stop_video: function () {
         //stopPlayVideo = (demander, target, extdemander, exttarget, session, channel, callback, cbid) => {
-        websdk.request.videoRequest.stopPlayVideo(global_data.con_id, global_data.param_uid1, null, null, 0, 0, function (rsp) {
+        websdk.request.videoRequest.stopPlayVideo(global_data.con_id, global_data.param_uid1, null, null, 0, 0, 0, function (rsp) {
             console.log('demo_req_stop_video result:{}', rsp);
         }, 'demo_req_stop_video');//
     },
