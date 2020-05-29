@@ -74,7 +74,7 @@ var api_demo = {
 
     // XXX authRequest
     req_login: function () {
-        websdk.request.authRequest.logon(global_data.ipaddr, global_data.port, global_data.orgid, global_data.logonName, global_data.password, null, function (rsp) {
+        websdk.request.authRequest.logon(global_data.ipaddr, global_data.port, global_data.orgid, global_data.logonName, global_data.password, global_data.consoleName, function (rsp) {
             console.log('demo_req_logon result:', rsp);
             if (rsp.cmd_status === 0) {
                 document.getElementById('sdk_tip').innerText = '登录成功';
@@ -437,7 +437,7 @@ websdk.init(function (result) {
     api_demo.req_login();
 
     //设置关闭视频时的操作: 1:询问, 2:只关闭视频窗口, 3:关闭视频窗口并结束推流
-    websdk.websdkui.configApi.set_video_close_action(1);
+    websdk.websdkui && websdk.websdkui.configApi.set_video_close_action(1);
 
 });
 
