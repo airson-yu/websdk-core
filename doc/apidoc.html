@@ -79,10 +79,10 @@
         <p style="color:orange;">2.改了配置文件，需要手动重启服务，服务名为：集群调度服务</p>
         <p style="color:orange;">3.logon接口新增了三个参数：ipaddr, port, orgid</p>
         <p style="color:orange;">4.视频相关的请求和监听函数移除了camera参数</p>
-		<p style="color:orange;">5.在IE浏览器中禁止提出提示框（已限制此网页运行脚本或ActiveX控件），只需要在网页的html标签与head标签之间加上如下内容：
-		</p>
-		<p style="color:orange;">&lt;!-- saved from url=(0016)http://localhost --&gt;</p>
-		
+        <p style="color:orange;">5.在IE浏览器中禁止提出提示框（已限制此网页运行脚本或ActiveX控件），只需要在网页的html标签与head标签之间加上如下内容：
+        </p>
+        <p style="color:orange;">&lt;!-- saved from url=(0016)http://localhost --&gt;</p>
+
 
     </div>
     <h3 id="api_div">三.API整体结构</h3>
@@ -162,6 +162,17 @@
             <a href="#playVideoRspNotice">playVideoRspNotice:打开视频的结果通知</a>
             <a href="#stopPlayVideoRspNotice">stopPlayVideoRspNotice:关闭视频的结果通知</a>
             <a href="#webUserLocationNotice">webUserLocationNotice:点击定位通知</a>
+
+        view listeners:
+             注册方法：websdk.listeners.dynamicNotice(msg_code, callback, key);
+             <a href="#notice_im_modal_open">notice_im_modal_open:IM窗口打开通知</a>
+             <a href="#notice_im_modal_close">notice_im_modal_close:IM窗口关闭通知</a>
+             <a href="#notice_video_modal_open">notice_video_modal_open:视频窗口打开通知</a>
+             <a href="#notice_video_modal_close">notice_video_modal_close:视频窗口打开通知</a>
+             <a href="#notice_video_call_modal_open">notice_video_call_modal_open:视频通话窗口打开通知</a>
+             <a href="#notice_video_call_modal_close">notice_video_call_modal_close:视频通话窗口打开通知</a>
+             <a href="#notice_voice_call_modal_open">notice_voice_call_modal_open:语音通话窗口打开通知</a>
+             <a href="#notice_voice_call_modal_close">notice_voice_call_modal_close:语音通话窗口打开通知</a>
             <!--<a href="#startVideoConfNotice">startVideoConfNotice:发起视频会商通知</a>-->
             <!--<a href="#startVideoConfStatusNotice">startVideoConfStatusNotice:发起视频会商通知</a>-->
             <!--<a href="#stopVideoConfNotice">stopVideoConfNotice:结束视频会商通知</a>
@@ -787,6 +798,61 @@
             </div>
         </div>
 
+        <div id="notice_im_modal_open" class="grid_item_div">
+            <div class="grid_item">
+                <h2>notice_im_modal_open 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.notice_im_modal_open.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="notice_im_modal_close" class="grid_item_div">
+            <div class="grid_item">
+                <h2>notice_im_modal_close 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.notice_im_modal_close.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="notice_video_modal_open" class="grid_item_div">
+            <div class="grid_item">
+                <h2>notice_video_modal_open 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.notice_video_modal_open.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="notice_video_modal_close" class="grid_item_div">
+            <div class="grid_item">
+                <h2>notice_video_modal_close 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.notice_video_modal_close.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="notice_video_call_modal_open" class="grid_item_div">
+            <div class="grid_item">
+                <h2>notice_video_call_modal_open 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.notice_video_call_modal_open.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="notice_video_call_modal_close" class="grid_item_div">
+            <div class="grid_item">
+                <h2>notice_video_call_modal_close 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.notice_video_call_modal_close.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="notice_voice_call_modal_open" class="grid_item_div">
+            <div class="grid_item">
+                <h2>notice_voice_call_modal_open 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.notice_voice_call_modal_open.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="notice_voice_call_modal_close" class="grid_item_div">
+            <div class="grid_item">
+                <h2>notice_voice_call_modal_close 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.notice_voice_call_modal_close.rsp"></i-table>
+            </div>
+        </div>
 
         <div id="img_container">
             <div id="img_gps_point" class="grid_item_div">

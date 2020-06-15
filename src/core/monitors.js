@@ -341,6 +341,15 @@ class Monitors {
         }
     }
 
+    notice_dynamic = (data) => {
+        //logger.debug('monitor notice_dynamic');
+        let notice_type = data.notice_type;
+        if (this.functions[notice_type]) {
+            logger.debug("notice_dynamic:{}", data);
+            this.executeMonitor(this.functions[notice_type], data);
+        }
+    }
+
 }
 
 export default Monitors;

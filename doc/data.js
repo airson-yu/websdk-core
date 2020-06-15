@@ -2293,3 +2293,120 @@ grid.webUserLocationNotice = {
         }
     ]
 }
+
+grid.notice_im_modal_open = {
+    rsp: [
+        common.build_msg_code('notice_im_modal_open'),
+        common.cmd_type_2,
+        {
+            k1: 'target',
+            k2: 'int',
+            k3: 'yes',
+            k4: '对方的ID，有可能为uid或tgid，根据im_target_type字段判断类型'
+        },
+        {
+            k1: 'im_target_type',
+            k2: 'int',
+            k3: 'yes',
+            k4: '类型：1用户窗口，2群组窗口'
+        }
+    ]
+}
+
+grid.notice_im_modal_close = {
+    rsp: [
+        common.build_msg_code('notice_im_modal_open'),
+        common.cmd_type_2,
+        {
+            k1: 'target',
+            k2: 'int',
+            k3: 'yes',
+            k4: '对方的ID，有可能为uid或tgid，根据im_target_type字段判断类型'
+        },
+        {
+            k1: 'im_target_type',
+            k2: 'int',
+            k3: 'yes',
+            k4: '类型：1用户窗口，2群组窗口'
+        }
+    ]
+}
+
+grid.notice_video_modal_open = {
+    rsp: [
+        common.build_msg_code('notice_video_modal_open'),
+        common.cmd_type_2,
+        {
+            k1: 'target',
+            k2: 'int',
+            k3: 'yes',
+            k4: '对方的UID'
+        },
+    ]
+}
+
+grid.notice_video_modal_close = {
+    rsp: [
+        common.build_msg_code('notice_video_modal_close'),
+        common.cmd_type_2,
+        {
+            k1: 'target',
+            k2: 'int',
+            k3: 'yes',
+            k4: '对方的UID'
+        },
+    ]
+}
+
+grid.notice_video_call_modal_open = {
+    rsp: [
+        common.build_msg_code('notice_video_call_modal_open'),
+        common.cmd_type_2,
+        {
+            k1: 'target',
+            k2: 'int',
+            k3: 'yes',
+            k4: '对方的UID'
+        },
+    ]
+}
+
+grid.notice_video_call_modal_close = {
+    rsp: [
+        common.build_msg_code('notice_video_call_modal_close'),
+        common.cmd_type_2,
+        {
+            k1: 'target',
+            k2: 'int',
+            k3: 'yes',
+            k4: '对方的UID'
+        },
+    ]
+}
+
+
+grid.notice_voice_call_modal_open = {
+    rsp: [
+        common.build_msg_code('notice_voice_call_modal_open'),
+        common.cmd_type_2,
+        {
+            k1: 'target',
+            k2: 'int',
+            k3: 'yes',
+            k4: '对方的UID'
+        },
+    ]
+}
+
+grid.notice_voice_call_modal_close = {
+    rsp: [
+        common.build_msg_code('notice_voice_call_modal_close'),
+        common.cmd_type_2,
+        {
+            k1: 'target',
+            k2: 'int',
+            k3: 'yes',
+            k4: '对方的UID'
+        },
+    ]
+}

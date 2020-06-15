@@ -216,6 +216,15 @@ class Listeners {
         this.monitors.addMonitor(this.types.ErrMsg, callback, key);
     }
 
+    dynamicNotice = (notice_type, callback, key) => {
+        //logger.debug('monitor dynamicNotice');
+        if (!notice_type) {
+            logger.warn("notice_type can't be empty,dynamicNotice failed");
+            return;
+        }
+        this.monitors.addMonitor(notice_type, callback, key);
+    }
+
 }
 
 export default Listeners;
