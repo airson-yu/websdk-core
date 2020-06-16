@@ -343,10 +343,10 @@ class Monitors {
 
     notice_dynamic = (data) => {
         //logger.debug('monitor notice_dynamic');
-        let notice_type = data.notice_type;
-        if (this.functions[notice_type]) {
+        let msg_code = data.msg_code;
+        if (this.functions[msg_code]) {
             logger.debug("notice_dynamic:{}", data);
-            this.executeMonitor(this.functions[notice_type], data);
+            this.executeMonitor(this.functions[msg_code], data);
         }
     }
 
