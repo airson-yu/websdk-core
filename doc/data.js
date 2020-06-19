@@ -1150,6 +1150,28 @@ grid.videoRequest_transformVideo = {
     ]
 }
 
+grid.videoRequest_getPushVideoUsers = {
+    req: [
+        common.callback,
+        common.cbid,
+        common.empty,
+        common.empty
+    ],
+    rsp: [
+        common.build_msg_code('req_get_push_video_users'),
+        common.cmd_type_1,
+        common.cmd_status,
+        common.error_reason,
+        common.cbid,
+        {
+            k1: 'videos',
+            k2: 'json array',
+            k3: 'yes',
+            k4: '每个object包含的字段：uid,extuid,display_name,session,channel,resolution,quality'
+        }
+    ]
+}
+
 grid.voiceRequest_call = {
     req: [
         {
@@ -1405,6 +1427,27 @@ grid.showCreateGroupModal = {
     ],
     rsp: [
         common.result
+    ]
+}
+
+grid.getPlayVideoUids = {
+    req: [
+        {
+            k1: 'callback',
+            k2: 'function',
+            k3: 'no',
+            k4: '回调函数'
+        },
+        common.empty
+    ],
+    rsp: [
+        common.result,
+        {
+            k1: 'data',
+            k2: 'int array',
+            k3: 'yes',
+            k4: '用户ID数组'
+        }
     ]
 }
 

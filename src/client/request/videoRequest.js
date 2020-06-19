@@ -161,6 +161,12 @@ class VideoRequest extends BaseRequest {
         this.core.invokes.req_transform_video(param, callback, cbid);
     }
 
+    getPushVideoUsers = (callback, cbid) => {
+        //logger.debug('getPushVideoUsers');
+        let param = {};
+        this.core.invokes.req_get_push_video_users(param, callback, cbid);
+    }
+
     /*getRemoteVideoList = (start, count, startDate, endDate, name, callback, cbid) => {
         logger.debug('getRemoteVideoList,start:{},count:{}', start, count);
         //startDate endDate userCamNameLike start length

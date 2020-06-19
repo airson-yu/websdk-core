@@ -122,6 +122,7 @@
                 <a href="#videoRequest_updateVideoSet">updateVideoSet:更改分辨率或视频质量</a>
                 <a href="#videoRequest_getVideoList">getVideoList:获取视频列表</a>
                 <a href="#videoRequest_transformVideo">transformVideo:转换视频格式（mp4转m3u8）</a>
+                <a href="#videoRequest_getPushVideoUsers">getPushVideoUsers:获取正在视频推流的用户列表</a>
             <!--<a href="#startVideoConf">startVideoConf:发起视频会商</a>
             <a href="#stopVideoConf">stopVideoConf:结束视频会商</a>
             <a href="#shareVideoInVideoConf">shareVideoInVideoConf:发起视频会商分享视频</a>
@@ -136,6 +137,7 @@
             <a href="#view_showUserModal">showUserModal:显示用户窗口</a>
             <a href="#view_showGroupModal">showGroupModal:显示群组窗口</a>
             <a href="#view_showCreateGroupModal">showCreateGroupModal:显示创建临时组窗口</a>
+            <a href="#view_getPlayVideoUids">getPlayVideoUids:获取正在视频推流并播放的用户ID列表</a>
 
         config:
             <a href="#config_set_video_close_action">set_video_close_action:设置关闭视频时的操作</a>
@@ -469,6 +471,17 @@
             </div>
         </div>
 
+        <div id="videoRequest_getPushVideoUsers" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.videoRequest.getPushVideoUsers 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.videoRequest_getPushVideoUsers.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.videoRequest.getPushVideoUsers 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.videoRequest_getPushVideoUsers.rsp"></i-table>
+            </div>
+        </div>
+
         <!--<div id="videoRequest_startVideoConf" class="grid_item_div">
             <div class="grid_item">
                 <h2>request.videoRequest.startVideoConf 请求参数</h2>
@@ -598,6 +611,17 @@
             <div class="grid_item">
                 <h2>view.showCreateGroupModal 回调参数</h2>
                 <i-table border size="small" :columns="grid.col" :data="grid.showCreateGroupModal.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="view_getPlayVideoUids" class="grid_item_div">
+            <div class="grid_item">
+                <h2>view.getPlayVideoUids 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.getPlayVideoUids.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>view.getPlayVideoUids 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.getPlayVideoUids.rsp"></i-table>
             </div>
         </div>
 

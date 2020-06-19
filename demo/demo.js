@@ -294,6 +294,12 @@ var api_demo = {
         }, 'demo_req_transform_video');//
     },
 
+    req_get_push_video_users: function () {
+        websdk.request.videoRequest.getPushVideoUsers(function (rsp) {
+            console.log('demo_req_get_push_video_users result:{}', rsp);
+        }, 'demo_req_get_push_video_users');//
+    },
+
     // XXX listeners
     logonNotice: function () {
         websdk.listeners.logonNotice(function (rsp) {

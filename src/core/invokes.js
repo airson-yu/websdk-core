@@ -117,6 +117,12 @@ class Invokes {
         //callback && callback(true);
     }
 
+    req_get_push_video_users = (param, callback, cbid) => {
+        //logger.debug('req_get_push_video_users:{}', param.demander);
+        this.processor.build_req_send('req_get_push_video_users', param, callback, cbid);
+        //callback && callback(true);
+    }
+
     /** --------------async requests-------------- */
 
     /*req_logout = (param, callback, cbid) => {
