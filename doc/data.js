@@ -1155,6 +1155,8 @@ grid.videoRequest_getPushVideoUsers = {
         common.callback,
         common.cbid,
         common.empty,
+        common.empty,
+        common.empty,
         common.empty
     ],
     rsp: [
