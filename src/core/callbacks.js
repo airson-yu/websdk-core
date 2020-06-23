@@ -203,6 +203,13 @@ class Callbacks {
         }
     }
 
+    rsp_get_push_video_users = (data, callback) => {
+        //logger.debug('rsp_get_push_video_users:{}', data);
+        if (callback) {
+            callback(this.processor.build_response(data));
+        }
+    }
+
 }
 
 export default Callbacks;
