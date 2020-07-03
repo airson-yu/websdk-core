@@ -1,6 +1,5 @@
 import VideoWebsocket from './videoWebsocket';
 import VideoPlayer from "./videoPlayer";
-import logger from "../logger";
 
 class VideoProcessor {
     constructor(url, dom_id) {

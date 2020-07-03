@@ -202,7 +202,7 @@ class Listeners {
         this.monitors.addMonitor(this.types.notice_stop_share_video_in_video_conf, callback, key);
     }
 
-    webUserLocationNotice = (callback, key) => {
+    webUserLocationNotice = (callback) => {
         //logger.debug('listener webUserLocationNotice');
         this.web_notices.webUserLocationNotice = callback;
     }

@@ -1,7 +1,5 @@
 import BaseRequest from './baseRequest';
 
-//import logger from "../../core/logger";
-
 class VoiceRequest extends BaseRequest {
     constructor(core) {
         super(core);

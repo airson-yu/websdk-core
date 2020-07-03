@@ -1,5 +1,4 @@
 import BaseRequest from './baseRequest';
-import logger from "../../core/logger";
 
 class GroupRequest extends BaseRequest {
     constructor(core) {

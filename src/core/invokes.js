@@ -1,5 +1,4 @@
-import logger from "../core/logger";
-
+/* eslint-disable no-unused-vars */
 class Invokes {
     constructor(processor) {
         this.processor = processor;

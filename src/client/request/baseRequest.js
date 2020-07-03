@@ -1,5 +1,3 @@
-import logger from "../../core/logger";
-
 class BaseRequest {
     constructor(core) {
         this.core = core;

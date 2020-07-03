@@ -113,8 +113,9 @@ class Processor {
 
         } else if (data.msg_code === 'notice_logout' || (data.msg_code === 'notice_logon' && data.cmd_status == 2)) {// 已在其他设备登录
             logger.debug('monitor notice_logout');
-            let resetView = websdk.view && websdk.view.resetStateWhenLogout;
-            resetView && websdk.view.resetStateWhenLogout(function (result) {
+            let resetView = window.websdk.view && window.websdk.view.resetStateWhenLogout;
+            // eslint-disable-next-line no-unused-vars
+            resetView && window.websdk.view.resetStateWhenLogout(function (result) {
                 logger.debug('notice_logout websdk.view.resetState');
             });
             window.websdk.private_cache.login_uid = 0;
@@ -134,7 +135,7 @@ class Processor {
 
             } else if (data.uid && (null !== window.websdk || undefined !== window.websdk)) {
                 window.websdk.login_ing = true;
-                websdk.request.userRequest.getUserInfo([data.uid], null, function (rsp) {
+                window.websdk.request.userRequest.getUserInfo([data.uid], null, function (rsp) {
                     window.websdk.login_ing = false;
                     if (!rsp.user_info) {
                         return;
@@ -310,13 +311,15 @@ class Processor {
                 return false;
             }
             that.ws.socket && that.ws.destroy(); // 先注销ws，再创建新的
+            // eslint-disable-next-line no-unused-vars
             that.init_login(function (ws_result) {
                 that.send(that.build_request(msg_code, param), callback, cbid, async);
             });
         } else if (msg_code == 'req_logout') {
             logger.debug('req_logout destroy ui');
-            let resetView = websdk.view && websdk.view.resetStateWhenLogout;
-            resetView && websdk.view.resetStateWhenLogout(function (result) {
+            let resetView = window.websdk.view && window.websdk.view.resetStateWhenLogout;
+            // eslint-disable-next-line no-unused-vars
+            resetView && window.websdk.view.resetStateWhenLogout(function (result) {
                 logger.debug('req_logout websdk.view.resetState');
             });
             return this.send(this.build_request(msg_code, param), callback, cbid, async);

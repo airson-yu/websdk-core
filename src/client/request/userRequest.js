@@ -1,5 +1,4 @@
 import BaseRequest from './baseRequest';
-import logger from "../../core/logger";
 
 class UserRequest extends BaseRequest {
     constructor(core) {

@@ -114,7 +114,7 @@ let logger = {
                 //logger.dom_id && (this.log_dom(msg, level_name));
             } else if (level_num <= this.level_list.notice) {
                 this.dev_mode && console.info.apply(console, args_for_console);
-                ui.alert(msg);
+                window.ui.alert(msg);
             }
 
             this.output(level_num, level_name, msg);

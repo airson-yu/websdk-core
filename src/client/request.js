@@ -5,7 +5,6 @@ import UserRequest from "./request/userRequest";
 import GroupRequest from "./request/groupRequest";
 import VoiceRequest from "./request/voiceRequest";
 import IMRequest from "./request/imRequest";
-import logger from "../core/logger";
 
 class Request {
     constructor(core) {

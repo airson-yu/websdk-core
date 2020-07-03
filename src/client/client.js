@@ -14,7 +14,7 @@ class Client {
 
     demo() {
         this.request.video.openVideo('param', function (message) {
-            //logger.debug('openVideo result: {}', message);
+            logger.debug('openVideo result: {}', message);
         });
     }
 

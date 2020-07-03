@@ -1,5 +1,4 @@
 import BaseRequest from './baseRequest';
-import logger from "../../core/logger";
 
 class IMRequest extends BaseRequest {
     constructor(core) {

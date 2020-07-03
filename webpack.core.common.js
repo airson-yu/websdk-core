@@ -61,7 +61,9 @@ module.exports = {
                     }, {
                         loader: 'less-loader', // compiles Less to CSS
                         options: {
-                            javascriptEnabled: true
+                            lessOptions: { // https://juejin.im/post/5ec040b4e51d454da515dee9
+                                javascriptEnabled: true
+                            }
                         }
                     }
                 ]

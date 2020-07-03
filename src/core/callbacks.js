@@ -1,5 +1,3 @@
-import logger from "./logger";
-
 class Callbacks {
     constructor(processor) {
         this.processor = processor;

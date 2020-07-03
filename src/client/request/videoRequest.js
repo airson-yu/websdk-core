@@ -267,9 +267,9 @@ class VideoRequest extends BaseRequest {
         });
     }*/
 
-    initVideoDom = (cavans) => {
+    /*initVideoDom = (cavans) => {
 
-    }
+    }*/
 
 }
 
