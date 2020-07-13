@@ -444,6 +444,7 @@ websdk.init(function (result) {
 
     //设置关闭视频时的操作: 1:询问, 2:只关闭视频窗口, 3:关闭视频窗口并结束推流
     websdk.websdkui && websdk.websdkui.configApi.set_video_close_action(1);
+    websdk.websdkui && websdk.websdkui.configApi.set_video_push_close_action(2);
 
 });
 

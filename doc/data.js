@@ -1459,7 +1459,35 @@ grid.set_video_close_action = {
             k1: 'action',
             k2: 'integer',
             k3: 'yes',
-            k4: '操作类型取值：1:弹框询问(默认), 2:只关闭视频窗口, 3:关闭视频窗口并关闭终端视频'
+            k4: '操作类型取值：1:弹框询问(默认), 2:只关闭视频窗口, 3:关闭视频窗口并关闭终端视频。（包括终端主动推送和调度台拉取）'
+        }
+    ],
+    rsp: [
+        common.result
+    ]
+}
+
+grid.set_video_pull_close_action = {
+    req: [
+        {
+            k1: 'action',
+            k2: 'integer',
+            k3: 'yes',
+            k4: '只针对调度台拉取视频的操作类型取值：0:同video_close_action(默认), 1:弹框询问, 2:只关闭视频窗口, 3:关闭视频窗口并关闭终端视频。（优先级高于video_close_action）'
+        }
+    ],
+    rsp: [
+        common.result
+    ]
+}
+
+grid.set_video_push_close_action = {
+    req: [
+        {
+            k1: 'action',
+            k2: 'integer',
+            k3: 'yes',
+            k4: '只针对终端主动推视频的操作类型取值：0:同video_close_action(默认), 1:弹框询问, 2:只关闭视频窗口, 3:关闭视频窗口并关闭终端视频。（优先级高于video_close_action）'
         }
     ],
     rsp: [
