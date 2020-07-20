@@ -2428,6 +2428,12 @@ grid.notice_video_modal_close = {
             k3: 'yes',
             k4: '对方的UID'
         },
+        {
+            k1: 'manually',
+            k2: 'boolean',
+            k3: 'yes',
+            k4: '是否为调度台手动关闭（主动操作UI触发关闭）'
+        }
     ]
 }
 

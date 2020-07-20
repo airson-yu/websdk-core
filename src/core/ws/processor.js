@@ -27,31 +27,33 @@ class Processor {
     }
 
     init = (vm, callback) => {
-        this.vm = vm;
+        let that = this;
+        that.vm = vm;
         if (!vm) {
-            callback && callback(this.build_rsp_fail(Result.view_init_error));
+            callback && callback(that.build_rsp_fail(Result.view_init_error));
             return;
         }
         if (callback) {
-            this.config.init_callback = callback;
+            that.config.init_callback = callback;
         } else {
-            this.config.init_callback = null;
+            that.config.init_callback = null;
         }
 
-        this.config.init_callback && this.config.init_callback(this.build_rsp_succ(Result.succ));
-        this.config.init_callback = null;
+        that.config.init_callback && that.config.init_callback(that.build_rsp_succ(Result.succ));
+        that.config.init_callback = null;
 
         //this.ws.init().start();
     }
 
     init_login = (callback) => {
-        this.ws = new WS(this.config, {'processor': this});
+        let that = this;
+        that.ws = new WS(that.config, {'processor': that});
         if (callback) {
-            this.config.logon_callback = callback;
+            that.config.logon_callback = callback;
         } else {
-            this.config.logon_callback = null;
+            that.config.logon_callback = null;
         }
-        this.ws.init().start();
+        that.ws.init().start();
     }
 
     // --- xxx codec start ---
@@ -68,6 +70,78 @@ class Processor {
 
     // --- xxx codec end ---
     // --- xxx receiver start ---
+
+    clear_cache = (that, reset_ui, close_ws) => {
+        if (reset_ui) {
+            let resetView = window.websdk.view && window.websdk.view.resetStateWhenLogout;
+            // eslint-disable-next-line no-unused-vars
+            resetView && window.websdk.view.resetStateWhenLogout(function (result) {
+                logger.debug('logout websdk.view.resetState');
+            });
+        }
+        if (null !== window.websdk || undefined !== window.websdk) {
+            window.websdk.private_cache.login_uid = 0;
+            window.websdk.private_cache.login_user = {};
+            window.websdk.login_ing = false;
+            window.localStorage && window.localStorage.removeItem("websdk_private_cache");
+        }
+        if (close_ws) {
+            that.ws.socket && that.ws.destroy();
+        }
+    }
+
+    handle_receive_logout = (that, data) => {
+        if (data.msg_code === 'rsp_logout') { //req_logout 已经调用 resetStateWhenLogout
+            data.msg_code = 'notice_logout';
+            data.cmd_type = 2;
+            that.clear_cache(that, false, true);
+
+        } else if (data.msg_code === 'notice_logout' || (data.msg_code === 'notice_logon' && data.cmd_status == 2)) {// 已在其他设备登录
+            logger.debug('monitor notice_logout');
+            that.clear_cache(that, true, true);
+        }
+    }
+
+    handle_receive_logon = (data) => {
+        window.websdk.login_ing = false;
+        if (data.cmd_status !== 0) {
+            logger.warn('rsp_logon fail');
+
+        } else if (data.uid && (null !== window.websdk || undefined !== window.websdk)) {
+            window.websdk.login_ing = true;
+            window.websdk.request.userRequest.getUserInfo([data.uid], null, function (rsp) {
+                window.websdk.login_ing = false;
+                if (!rsp.user_info) {
+                    return;
+                }
+                let target = rsp.user_info[0];
+                window.websdk.private_cache.login_uid = data.uid;
+                window.websdk.private_cache.login_user = target;
+                window.websdk.private_cache.ipaddr = data.ipaddr;
+                window.websdk.private_cache.port = data.port;
+                window.websdk.private_cache.token = data.token;
+                let url_host = 'http://' + data.ipaddr + ':' + data.port;
+                window.websdk.private_cache.upload_url_gfile =
+                    url_host + '/rtv/api/v1/file/chunk_upload?type=gfile&token=' + data.token + '&uid=' + data.uid;
+                /*window.websdk.private_cache.upload_url_gfile =
+                    url_host + '/rtv/api/v1/gps/get_gps_trace?token=' + data.token + '&uid=' + data.uid;
+                window.websdk.private_cache.get_remote_video_url =
+                    url_host + '/data/api/video/list?token=' + data.token + '&consoleId=' + data.uid;
+                window.websdk.private_cache.transform_video_url =
+                    url_host + '/data/api/transformVideo?token=' + data.token + '&consoleId=' + data.uid;*/
+                if (!data.ipaddr) {
+                    logger.warn('rsp_logon ipaddr empty');
+                }
+
+                // cache to localStorage
+                if (window.localStorage) {
+                    logger.debug('save websdk_private_cache to localStorage');
+                    window.localStorage.setItem("websdk_private_cache", JSON.stringify(window.websdk.private_cache));
+                }
+
+            }, 'req_user_profile_processor_logon');//
+        }
+    }
 
     receive = (msg) => {
         //logger.info('receive:{}', msg);
@@ -102,65 +176,18 @@ class Processor {
         }*/
 
         if (data.msg_code === 'rsp_logout') { //req_logout 已经调用 resetStateWhenLogout
-            data.msg_code = 'notice_logout';
-            data.cmd_type = 2;
-            if (null !== window.websdk || undefined !== window.websdk) {
-                window.websdk.private_cache.login_uid = 0;
-                window.websdk.private_cache.login_user = {};
-                window.websdk.login_ing = false;
-            }
-            that.ws.socket && that.ws.destroy();
+            that.handle_receive_logout(that, data);
 
         } else if (data.msg_code === 'notice_logout' || (data.msg_code === 'notice_logon' && data.cmd_status == 2)) {// 已在其他设备登录
-            logger.debug('monitor notice_logout');
-            let resetView = window.websdk.view && window.websdk.view.resetStateWhenLogout;
-            // eslint-disable-next-line no-unused-vars
-            resetView && window.websdk.view.resetStateWhenLogout(function (result) {
-                logger.debug('notice_logout websdk.view.resetState');
-            });
-            window.websdk.private_cache.login_uid = 0;
-            window.websdk.private_cache.login_user = {};
-            window.websdk.login_ing = false;
-            that.ws.socket && that.ws.destroy();
+            that.handle_receive_logout(that, data);
+
+        } else if (data.msg_code === 'rsp_logon') {
+            that.handle_receive_logon(data);
 
         } else if (data.msg_code === 'rsp_send_im') {
             data.msg_code = 'notice_im';
             data.cmd_type = 2;
             data.sending = true;
-
-        } else if (data.msg_code === 'rsp_logon') {
-            window.websdk.login_ing = false;
-            if (data.cmd_status !== 0) {
-                logger.warn('rsp_logon fail');
-
-            } else if (data.uid && (null !== window.websdk || undefined !== window.websdk)) {
-                window.websdk.login_ing = true;
-                window.websdk.request.userRequest.getUserInfo([data.uid], null, function (rsp) {
-                    window.websdk.login_ing = false;
-                    if (!rsp.user_info) {
-                        return;
-                    }
-                    let target = rsp.user_info[0];
-                    window.websdk.private_cache.login_uid = data.uid;
-                    window.websdk.private_cache.login_user = target;
-                    window.websdk.private_cache.ipaddr = data.ipaddr;
-                    window.websdk.private_cache.port = data.port;
-                    window.websdk.private_cache.token = data.token;
-                    let url_host = 'http://' + data.ipaddr + ':' + data.port;
-                    window.websdk.private_cache.upload_url_gfile =
-                        url_host + '/rtv/api/v1/file/chunk_upload?type=gfile&token=' + data.token + '&uid=' + data.uid;
-                    /*window.websdk.private_cache.upload_url_gfile =
-                        url_host + '/rtv/api/v1/gps/get_gps_trace?token=' + data.token + '&uid=' + data.uid;
-                    window.websdk.private_cache.get_remote_video_url =
-                        url_host + '/data/api/video/list?token=' + data.token + '&consoleId=' + data.uid;
-                    window.websdk.private_cache.transform_video_url =
-                        url_host + '/data/api/transformVideo?token=' + data.token + '&consoleId=' + data.uid;*/
-                    if (!data.ipaddr) {
-                        logger.warn('rsp_logon ipaddr empty');
-                    }
-
-                }, 'req_user_profile_processor_logon');//
-            }
 
         } else if (data.msg_code === 'rsp_query_gps') {
             data.msg_code = 'notice_gps';
@@ -257,9 +284,21 @@ class Processor {
         return false;*/
 
         if (!window.websdk.private_cache.login_uid && data.msg_code !== 'req_logon' && data.msg_code !== 'req_logout' && !window.websdk.login_ing) {
-            logger.warn('{success: false, code: 10104, desc: "尚未登录"}');
-            callback && callback(this.build_rsp_fail(Result.no_login));
-            return false;
+            // 缓存中没有登录信息，再检查localStorage中是否有登录信息
+            let cache_exist = false;
+            if (window.localStorage) {
+                let login_cache_str = window.localStorage.getItem("websdk_private_cache");
+                if (login_cache_str) {
+                    window.websdk.private_cache = JSON.parse(login_cache_str);
+                    cache_exist = true;
+                    logger.debug('get websdk_private_cache from localStorage');
+                }
+            }
+            if (!cache_exist) {
+                logger.warn('{success: false, code: 10104, desc: "尚未登录"}');
+                callback && callback(this.build_rsp_fail(Result.no_login));
+                return false;
+            }
         }
 
         if (cbid === this.empty_cbid_code) {
@@ -303,28 +342,31 @@ class Processor {
     /**
      */
     build_req_send = (msg_code, param, callback, cbid, async) => {
+        let that = this;
         if (msg_code == 'req_logon') {
-            let that = this;
             if (window.websdk.private_cache.login_uid) {
                 logger.warn('{success: false, code: 10105, desc: "已经登录"}');
                 callback && callback(this.build_rsp_fail(Result.already_login));
                 return false;
             }
-            that.ws.socket && that.ws.destroy(); // 先注销ws，再创建新的
+            that.clear_cache(that, false, true); // 先注销ws，再创建新的
             // eslint-disable-next-line no-unused-vars
-            that.init_login(function (ws_result) {
+            that.init_login(ws_result => {
                 that.send(that.build_request(msg_code, param), callback, cbid, async);
             });
         } else if (msg_code == 'req_logout') {
             logger.debug('req_logout destroy ui');
-            let resetView = window.websdk.view && window.websdk.view.resetStateWhenLogout;
-            // eslint-disable-next-line no-unused-vars
-            resetView && window.websdk.view.resetStateWhenLogout(function (result) {
-                logger.debug('req_logout websdk.view.resetState');
-            });
+            that.clear_cache(that, true, false);
             return this.send(this.build_request(msg_code, param), callback, cbid, async);
         } else {
-            return this.send(this.build_request(msg_code, param), callback, cbid, async);
+            if (that.ws.established) {
+                return this.send(this.build_request(msg_code, param), callback, cbid, async);
+            } else {
+                logger.debug('start ws first, then send request');
+                that.init_login(() => {
+                    that.send(that.build_request(msg_code, param), callback, cbid, async);
+                });
+            }
         }
         return true;
     }
