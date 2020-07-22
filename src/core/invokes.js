@@ -122,6 +122,12 @@ class Invokes {
         //callback && callback(true);
     }
 
+    req_add_admin_users = (param, callback, cbid) => {
+        //logger.debug('req_add_admin_users:{}', param.demander);
+        this.processor.build_req_send('req_add_admin_users', param, callback, cbid);
+        //callback && callback(true);
+    }
+
     /** --------------async requests-------------- */
 
     /*req_logout = (param, callback, cbid) => {

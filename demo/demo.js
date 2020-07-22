@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 window.ws_url = 'ws://192.168.0.106:port/console';
 var global_data = {
     //ipaddr: '39.105.135.70',
@@ -126,9 +127,16 @@ var api_demo = {
         }, 'demo_req_params_set');//
     },
     req_user_state: function () {
-        websdk.request.userRequest.noticeUserState([global_data.param_uid1], null, function (rsp) {
+        //websdk.request.userRequest.noticeUserState([global_data.param_uid1], null, function (rsp) {
+        websdk.request.userRequest.getUserStateAsync([global_data.param_uid1], null, function (rsp) {
             console.log('demo_req_user_state result:', rsp);
         }, 'demo_req_user_state');//
+    },
+
+    req_add_admin_users: function () {
+        websdk.request.userRequest.addAdminUsers([global_data.param_uid1], null, function (rsp) {
+            console.log('demo_req_add_admin_users result:{}', rsp);
+        }, 'demo_req_add_admin_users');//
     },
 
     // XXX gpsRequest
@@ -267,7 +275,7 @@ var api_demo = {
 
     // XXX videoRequest
     req_play_video: function () {
-        var that = this;
+        //var that = this;
         //playVideo = (demander, target, extdemander, exttarget, session, channel, resolution, callback, cbid) => {
         websdk.request.videoRequest.playVideo(global_data.con_id, global_data.param_uid1, null, null, 0, 0, 0, function (rsp) {
             console.log('demo_req_play_video result:{}', rsp);
@@ -444,7 +452,10 @@ websdk.init(function (result) {
 
     //设置关闭视频时的操作: 1:询问, 2:只关闭视频窗口, 3:关闭视频窗口并结束推流
     websdk.websdkui && websdk.websdkui.configApi.set_video_close_action(1);
-    websdk.websdkui && websdk.websdkui.configApi.set_video_push_close_action(2);
+    //只针对终端主动推的视频 0：与set_video_close_action一致，1:询问, 2:只关闭视频窗口, 3:关闭视频窗口并结束推流
+    websdk.websdkui && websdk.websdkui.configApi.set_video_push_close_action(3);
+    //只针对调度台拉取的视频 0：与set_video_close_action一致，1:询问, 2:只关闭视频窗口, 3:关闭视频窗口并结束推流
+    websdk.websdkui && websdk.websdkui.configApi.set_video_pull_close_action(3);
 
 });
 

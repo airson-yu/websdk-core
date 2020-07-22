@@ -24,10 +24,24 @@ class UserRequest extends BaseRequest {
         this.core.invokes.req_params_set(param, callback, cbid);
     }
 
+    // 等同 getUserStateAsync
     noticeUserState = (uids, extuids, callback, cbid) => {
         //logger.debug('getUserState:{}', uids);
         let param = {'uids': uids, 'extuids': extuids};
         this.core.invokes.req_user_state(param, callback, cbid);
+    }
+
+    // 等同 noticeUserState
+    getUserStateAsync = (uids, extuids, callback, cbid) => {
+        //logger.debug('getUserState:{}', uids);
+        let param = {'uids': uids, 'extuids': extuids};
+        this.core.invokes.req_user_state(param, callback, cbid);
+    }
+
+    addAdminUsers = (uids, extuids, callback, cbid) => {
+        //logger.debug('addAdminUsers:{}', uids);
+        let param = {'uids': uids, 'extuids': extuids};
+        this.core.invokes.req_add_admin_users(param, callback, cbid);
     }
 
 }

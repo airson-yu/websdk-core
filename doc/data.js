@@ -2068,7 +2068,7 @@ grid.openVideoNotice = {
             k1: 'playid',
             k2: 'long',
             k3: 'no',
-            k4: '仅仅notice_play_video 中有效'
+            k4: '仅仅notice_play_video 中有效，如果为0则表示终端在推流，但是调度台不主动播放的场景（根据调度台本地配置：AutoDisplayVideo）'
         }
     ]
 }
