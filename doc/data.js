@@ -344,7 +344,7 @@ grid.userRequest_setUserParams = {
     ]
 }
 
-grid.userRequest_noticeUserState = {
+grid.userRequest_getUserStateAsync = {
     req: [
         {
             k1: 'uids',
@@ -1661,7 +1661,14 @@ grid.userStateNotice = {
             k1: 'states',
             k2: 'object array',
             k3: 'no',
-            k4: '终端状态信息'
+            k4: '终端状态信息数组，参考：[{"uid":65803,"extid":"itrunk_65803","state":4,"atg":0},{"uid":65835,"extid":"itrunk_65835","state":7,"atg":98678},{"uid":65802,"extid":null,"state":7,"atg":0},{"uid":65780,"extid":null,"state":4,"atg":0}]' +
+                '  state状态取值:  8：已删除\n' +
+                '7：在线\n' +
+                '5：离线\n' +
+                '4：离线\n' +
+                '3：已停用\n' +
+                '1：已停用\n' +
+                '0：已停用'
         }
     ]
 }

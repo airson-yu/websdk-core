@@ -64,8 +64,8 @@
         <!--<p>2.将ITC.Console.Service.zip文件解压到D:\console\ConsoleService根目录(根据实际情况修改目录),使用admin权限打开CMD窗口，并切换到此目录</p>-->
         <!--<p>2.使用admin权限执行此命令卸载之前安装的service(若为全新安装则可忽略此步骤)：sc delete IConService</p>-->
         <!--<p>2.卸载之前安装的service(若为全新安装则可忽略此步骤)：C:\Windows\Microsoft.NET\Framework\v4.0.30319\installutil.exe /u ITC.Console.Service.exe (确保此目录为已经安装的服务的路径)</p>-->
-        <p>1.下载并安装调度台服务软件：（链接：https://pan.baidu.com/s/1kgs1QnDT9j_I61WEGm1rbA 提取码：szc7）
-            <a href="https://pan.baidu.com/s/1kgs1QnDT9j_I61WEGm1rbA" target="_blank">点击下载</a>
+        <p>1.下载并安装调度台服务软件：（链接：https://pan.baidu.com/s/1FJbFxqRj83fczLZOzRx-Uw 提取码：el2w）
+            <a href="https://pan.baidu.com/s/1FJbFxqRj83fczLZOzRx-Uw" target="_blank">点击下载</a>
         </p>
         <!-- <p>4.安装调用台服务：C:\Windows\Microsoft.NET\Framework\v4.0.30319\installutil.exe ITC.Console.Service.exe (此目录为新安装的服务的路径)</p>
          <p>5.使用admin权限执行此命令启动调度台服务：net start IConService</p>-->
@@ -99,7 +99,7 @@
                 <a href="#userRequest_getUserInfo">getUserInfo:获取用户信息</a>
                 <a href="#userRequest_getConsoleInfo">getConsoleInfo:获取调度台信息</a>
                 <a href="#userRequest_setUserParams">setUserParams:设置用户参数</a>
-                <a href="#userRequest_noticeUserState">noticeUserState:触发用户状态通知</a>
+                <a href="#userRequest_getUserStateAsync">getUserStateAsync:获取用户状态（通过userStateNotice异步通知）老版本的noticeUserState接口仍保留</a>
             gpsRequest:
                 <a href="#gpsRequest_queryGPS">queryGPS:查询终端的当前位置</a>
                 <a href="#gpsRequest_queryHistoryGPS">queryHistoryGPS:查询终端的GPS轨迹</a>
@@ -276,14 +276,14 @@
             </div>
         </div>
 
-        <div id="userRequest_noticeUserState" class="grid_item_div">
+        <div id="userRequest_getUserStateAsync" class="grid_item_div">
             <div class="grid_item">
-                <h2>request.userRequest.noticeUserState(异步) 请求参数</h2>
-                <i-table border size="small" :columns="grid.col" :data="grid.userRequest_noticeUserState.req"></i-table>
+                <h2>request.userRequest.getUserStateAsync(异步) 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.userRequest_getUserStateAsync.req"></i-table>
             </div>
             <div class="grid_item">
-                <h2>request.userRequest.noticeUserState 回调参数</h2>
-                <i-table border size="small" :columns="grid.col" :data="grid.userRequest_noticeUserState.rsp"></i-table>
+                <h2>request.userRequest.getUserStateAsync 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.userRequest_getUserStateAsync.rsp"></i-table>
             </div>
         </div>
 
