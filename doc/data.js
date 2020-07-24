@@ -369,6 +369,42 @@ grid.userRequest_getUserStateAsync = {
     ]
 }
 
+grid.userRequest_addAdminUsers = {
+    req: [
+        {
+            k1: 'uids',
+            k2: 'int array',
+            k3: 'no',
+            k4: '用户ID数组'
+        },
+        {
+            k1: 'extuids',
+            k2: 'string array',
+            k3: 'no',
+            k4: '第三方用户ID数组'
+        },
+        common.callback,
+        common.cbid,
+        common.empty,
+        common.empty,
+        common.empty
+    ],
+    rsp: [
+        common.build_msg_code('rsp_add_admin_users'),
+        common.session,
+        common.cmd_type_1,
+        common.cmd_status,
+        common.error_reason,
+        common.cbid,
+        {
+            k1: 'user_infos',
+            k2: 'object array',
+            k3: 'yes',
+            k4: '用户基本信息数据，参考：[{"uid":65803,"ext_id":"itrunk_65803","display_name":"yrhu1","img_url":null,"phone":"19940682602","priority":3,"admin":1,"state":1,"type":"portable","oc":0,"policeid":null,"cameras":[],"param":{"gps_report":1073741825,"gps_interval":1073741854}}]'
+        }
+    ]
+}
+
 grid.gpsRequest_queryGPS = {
     req: [
         {

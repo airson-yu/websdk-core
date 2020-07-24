@@ -100,6 +100,7 @@
                 <a href="#userRequest_getConsoleInfo">getConsoleInfo:获取调度台信息</a>
                 <a href="#userRequest_setUserParams">setUserParams:设置用户参数</a>
                 <a href="#userRequest_getUserStateAsync">getUserStateAsync:获取用户状态（通过userStateNotice异步通知）老版本的noticeUserState接口仍保留</a>
+                <a href="#userRequest_addAdminUsers">addAdminUsers:批量管辖用户</a>
             gpsRequest:
                 <a href="#gpsRequest_queryGPS">queryGPS:查询终端的当前位置</a>
                 <a href="#gpsRequest_queryHistoryGPS">queryHistoryGPS:查询终端的GPS轨迹</a>
@@ -284,6 +285,17 @@
             <div class="grid_item">
                 <h2>request.userRequest.getUserStateAsync 回调参数</h2>
                 <i-table border size="small" :columns="grid.col" :data="grid.userRequest_getUserStateAsync.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="userRequest_addAdminUsers" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.userRequest.addAdminUsers 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.userRequest_addAdminUsers.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.userRequest.addAdminUsers 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.userRequest_addAdminUsers.rsp"></i-table>
             </div>
         </div>
 
