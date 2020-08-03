@@ -72,17 +72,15 @@ class Callbacks {
         }
     }
 
-    rsp_user_state = (data, callback) => {
-        //logger.debug('rsp_user_state:{}', data);
+    rsp_add_admin_users = (data, callback) => {
+        //logger.debug('rsp_add_admin_users:{}', data);
         if (callback) {
-            /*let param = {'target': data.target, 'states': data.states};
-            callback(this.processor.build_response(param));*/
             callback(this.processor.build_response(data));
         }
     }
 
-    rsp_add_admin_users = (data, callback) => {
-        //logger.debug('rsp_add_admin_users:{}', data);
+    rsp_create_grp = (data, callback) => {
+        //logger.debug('rsp_create_grp:{}', data);
         if (callback) {
             callback(this.processor.build_response(data));
         }
