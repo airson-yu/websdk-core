@@ -1,5 +1,4 @@
 import logger from "../logger";
-import Result from "../result";
 
 class VideoWebsocket {
     constructor(url, options) {
@@ -52,6 +51,7 @@ class VideoWebsocket {
         this.socket.onclose = this.onClose.bind(this);
     }
 
+    // eslint-disable-next-line no-unused-vars
     resume(secondsHeadroom) {
     }
 
@@ -78,12 +78,14 @@ class VideoWebsocket {
     }
 
     onClose() {
+        //let that = this;
         logger.info('video ws onClose');
         if (this.shouldAttemptReconnect) {
             clearTimeout(this.reconnectTimeoutId);
             if (this.reconnectTimes > 3) {
                 logger.info('video ws reconnectTimes>3,give up');
                 this.shouldAttemptReconnect = false;
+                return false;
             }
             this.reconnectTimes++;
             this.reconnectTimeoutId = setTimeout(function () {

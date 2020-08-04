@@ -58,6 +58,39 @@ class WS {
     resume(secondsHeadroom) {
     }
 
+    heartbeat_core(that, socket) {
+        if (that.established) {
+            //logger.debug('ping');
+            let heartbeat_msg = "{msg_code:\"heartbeat\"}";
+            let clientid = null;
+            if (window.websdk.private_cache) {
+                clientid = window.websdk.private_cache.clientid;// session key
+            }
+            if (clientid) {
+                heartbeat_msg = "{msg_code:\"heartbeat\",clientid:" + clientid + "}";
+            } else {
+                if (window.localStorage) {
+                    let login_cache_str = window.localStorage.getItem("websdk_private_cache");
+                    if (login_cache_str) {
+                        window.websdk.private_cache = JSON.parse(login_cache_str);
+                        logger.debug('heartbeat get websdk_private_cache from localStorage');
+                        clientid = window.websdk.private_cache.clientid;// session key
+                        if (clientid) {
+                            heartbeat_msg = "{msg_code:\"heartbeat\",clientid:\"" + clientid + "\"}";
+                        }
+                    }
+                }
+            }
+            clientid ? logger.debug('ping-' + clientid) : logger.debug('ping');
+            socket.send(heartbeat_msg);
+
+        } else {
+            logger.info('not_logon_stop_heart_beat');
+            clearInterval(that.heartId);
+            that.heartId = null;
+        }
+    }
+
     heartbeat() {
         // TODO FIXME FOR TEST
         //return false;
@@ -68,16 +101,10 @@ class WS {
             that.heartId = null;
         }
         let socket = that.socket;
+        that.heartbeat_core(that, socket); // XXX 打开连接就先发一次心跳，确保service收到clientid，从而保持登录状态 2020年8月4日11:57:14
         //socket.send("{msg_code:\"heartbeat\"}");
         that.heartId = setInterval(function () {
-            if (that.established) {
-                logger.debug('ping');
-                socket.send("{msg_code:\"heartbeat\"}");
-            } else {
-                logger.info('not_logon_stop_heart_beat');
-                clearInterval(that.heartId);
-                that.heartId = null;
-            }
+            that.heartbeat_core(that, socket);
         }, 10000);
     }
 

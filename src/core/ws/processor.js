@@ -42,7 +42,14 @@ class Processor {
         that.config.init_callback && that.config.init_callback(that.build_rsp_succ(Result.succ));
         that.config.init_callback = null;
 
-        //this.ws.init().start();
+        let need_init_ws = false;
+        if (window.websdk.private_cache && window.websdk.private_cache.clientid) {
+            need_init_ws = true;
+        } else if (window.localStorage && window.localStorage.getItem("websdk_private_cache")) {
+            need_init_ws = true;
+        }
+
+        need_init_ws && this.ws.init().start();
     }
 
     init_login = (callback) => {
@@ -120,6 +127,8 @@ class Processor {
                 window.websdk.private_cache.ipaddr = data.ipaddr;
                 window.websdk.private_cache.port = data.port;
                 window.websdk.private_cache.token = data.token;
+                window.websdk.private_cache.clientid = data.clientid;// session key
+                window.websdk.private_cache.client_alive_time = data.client_alive_time; // session alive time after close ws
                 let url_host = 'http://' + data.ipaddr + ':' + data.port;
                 window.websdk.private_cache.upload_url_gfile =
                     url_host + '/rtv/api/v1/file/chunk_upload?type=gfile&token=' + data.token + '&uid=' + data.uid;

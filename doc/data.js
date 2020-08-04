@@ -122,8 +122,15 @@ grid.authRequest_logon = {
             k3: 'no',
             k4: '若调度台账号关联了多个调度台，需要指定关联哪个调度台'
         },
+        {
+            k1: 'client_alive_time',
+            k2: 'int',
+            k3: 'no',
+            k4: '客户端保活时长，单位分钟'
+        },
         common.callback,
         common.cbid,
+        common.empty,
         common.empty,
         common.empty
     ],
@@ -139,6 +146,18 @@ grid.authRequest_logon = {
             k2: 'object array',
             k3: 'yes',
             k4: '当cmd_status不为0时，返回关联的调度台列表'
+        },
+        {
+            k1: 'clientid',
+            k2: 'string',
+            k3: 'no',
+            k4: '客户端连接ID（登录成功时有值）'
+        },
+        {
+            k1: 'client_alive_time',
+            k2: 'string',
+            k3: 'no',
+            k4: '客户端保活时长，单位分钟（登录成功时有值）'
         },
         common.empty,
         common.empty,

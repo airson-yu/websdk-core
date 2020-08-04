@@ -75,7 +75,7 @@ var api_demo = {
 
     // XXX authRequest
     req_login: function () {
-        websdk.request.authRequest.logon(global_data.ipaddr, global_data.port, global_data.orgid, global_data.logonName, global_data.password, global_data.consoleName, function (rsp) {
+        websdk.request.authRequest.logon(global_data.ipaddr, global_data.port, global_data.orgid, global_data.logonName, global_data.password, global_data.consoleName, 5, function (rsp) {
             console.log('demo_req_logon result:', rsp);
             if (rsp.cmd_status === 0) {
                 document.getElementById('sdk_tip').innerText = '登录成功';
