@@ -429,6 +429,10 @@ websdk.init(function (result) {
 
     //websdk.view = websdk.vm.$children[0];
 
+    if (window.websdk.private_cache && window.websdk.private_cache.login_uid) {
+        document.getElementById('sdk_tip').innerText = '登录成功';
+    }
+
     console.log('websdk.init result:', result);
 
     api_demo.logonNotice();

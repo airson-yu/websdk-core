@@ -335,10 +335,11 @@ class Monitors {
     }
 
     ErrMsg = (data) => {
-        logger.warn('monitor ErrMsg:{}', data);
         if (data.cmd_status == 52001) { //service提示尚未登录，清空登录缓存
-            logger.debug("ErrMsg-52001, clear_login_cache");
+            logger.debug("monitor ErrMsg-52001, clear_login_cache");
             CacheTools.clear_login_cache();
+        } else {
+            logger.warn('monitor ErrMsg:{}', data);
         }
         if (this.functions.ErrMsg) {
             //this.functions.ErrMsg(data);

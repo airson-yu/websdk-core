@@ -5,6 +5,7 @@ class CacheTools {
     }
 
     static save_login_cache = (data, rsp) => {
+        logger.debug('save_login_cache');
         let target = rsp.user_info[0];
         window.websdk.private_cache.login_uid = data.uid;
         window.websdk.private_cache.login_user = target;
@@ -35,6 +36,7 @@ class CacheTools {
     }
 
     static clear_login_cache = () => {
+        logger.debug('clear_login_cache');
         if (null !== window.websdk || undefined !== window.websdk) {
             window.websdk.private_cache = {login_uid: 0, login_user: {}};
             window.websdk.login_ing = false;
