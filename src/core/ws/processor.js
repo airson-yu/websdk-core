@@ -4,6 +4,7 @@ import Callbacks from "../callbacks";
 import config from "../config";
 import Result from "../result";
 import logger from "../logger";
+import CacheTools from "../cache_tools";
 
 class Processor {
     constructor() {
@@ -43,9 +44,12 @@ class Processor {
         that.config.init_callback = null;
 
         let need_init_ws = false;
-        if (window.websdk.private_cache && window.websdk.private_cache.clientid) {
+        if (CacheTools.check_login_from_cache()) {
+            logger.debug("init need_init_ws");
             need_init_ws = true;
-        } else if (window.localStorage && window.localStorage.getItem("websdk_private_cache")) {
+        } else if (CacheTools.check_login_from_local_storage()) {
+            logger.debug("init need_init_ws and load_cache_from_local_storage");
+            CacheTools.load_cache_from_local_storage();
             need_init_ws = true;
         }
 
@@ -86,12 +90,9 @@ class Processor {
                 logger.debug('logout websdk.view.resetState');
             });
         }
-        if (null !== window.websdk || undefined !== window.websdk) {
-            window.websdk.private_cache.login_uid = 0;
-            window.websdk.private_cache.login_user = {};
-            window.websdk.login_ing = false;
-            window.localStorage && window.localStorage.removeItem("websdk_private_cache");
-        }
+
+        CacheTools.clear_login_cache();
+
         if (close_ws) {
             that.ws.socket && that.ws.destroy();
         }
@@ -121,32 +122,8 @@ class Processor {
                 if (!rsp.user_info) {
                     return;
                 }
-                let target = rsp.user_info[0];
-                window.websdk.private_cache.login_uid = data.uid;
-                window.websdk.private_cache.login_user = target;
-                window.websdk.private_cache.ipaddr = data.ipaddr;
-                window.websdk.private_cache.port = data.port;
-                window.websdk.private_cache.token = data.token;
-                window.websdk.private_cache.clientid = data.clientid;// session key
-                window.websdk.private_cache.client_alive_time = data.client_alive_time; // session alive time after close ws
-                let url_host = 'http://' + data.ipaddr + ':' + data.port;
-                window.websdk.private_cache.upload_url_gfile =
-                    url_host + '/rtv/api/v1/file/chunk_upload?type=gfile&token=' + data.token + '&uid=' + data.uid;
-                /*window.websdk.private_cache.upload_url_gfile =
-                    url_host + '/rtv/api/v1/gps/get_gps_trace?token=' + data.token + '&uid=' + data.uid;
-                window.websdk.private_cache.get_remote_video_url =
-                    url_host + '/data/api/video/list?token=' + data.token + '&consoleId=' + data.uid;
-                window.websdk.private_cache.transform_video_url =
-                    url_host + '/data/api/transformVideo?token=' + data.token + '&consoleId=' + data.uid;*/
-                if (!data.ipaddr) {
-                    logger.warn('rsp_logon ipaddr empty');
-                }
 
-                // cache to localStorage
-                if (window.localStorage) {
-                    logger.debug('save websdk_private_cache to localStorage');
-                    window.localStorage.setItem("websdk_private_cache", JSON.stringify(window.websdk.private_cache));
-                }
+                CacheTools.save_login_cache(data, rsp);
 
             }, 'req_user_profile_processor_logon');//
         }
@@ -292,17 +269,10 @@ class Processor {
         logger.warn('{success: false, code: 10104, desc: "尚未登录"}');
         return false;*/
 
-        if (!window.websdk.private_cache.login_uid && data.msg_code !== 'req_logon' && data.msg_code !== 'req_logout' && !window.websdk.login_ing) {
+        if (!CacheTools.check_login_from_cache() && !CacheTools.check_login_ing_from_cache() &&
+            data.msg_code !== 'req_logon' && data.msg_code !== 'req_logout') {
             // 缓存中没有登录信息，再检查localStorage中是否有登录信息
-            let cache_exist = false;
-            if (window.localStorage) {
-                let login_cache_str = window.localStorage.getItem("websdk_private_cache");
-                if (login_cache_str) {
-                    window.websdk.private_cache = JSON.parse(login_cache_str);
-                    cache_exist = true;
-                    logger.debug('get websdk_private_cache from localStorage');
-                }
-            }
+            let cache_exist = CacheTools.load_cache_from_local_storage();
             if (!cache_exist) {
                 logger.warn('{success: false, code: 10104, desc: "尚未登录"}');
                 callback && callback(this.build_rsp_fail(Result.no_login));
@@ -353,7 +323,7 @@ class Processor {
     build_req_send = (msg_code, param, callback, cbid, async) => {
         let that = this;
         if (msg_code == 'req_logon') {
-            if (window.websdk.private_cache.login_uid) {
+            if (CacheTools.check_login_from_cache()) {
                 logger.warn('{success: false, code: 10105, desc: "已经登录"}');
                 callback && callback(this.build_rsp_fail(Result.already_login));
                 return false;

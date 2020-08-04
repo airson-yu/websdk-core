@@ -1,5 +1,6 @@
 import Result from "../result";
 import logger from "../logger";
+import CacheTools from "../cache_tools";
 
 class WS {
     constructor(config, options) {
@@ -26,7 +27,8 @@ class WS {
         this.processor = processor
     }
 
-    destroy() {
+    destroy(event) {
+        logger.debug("ws destroy:{}", event);
         clearTimeout(this.reconnectTimeoutId);
         this.shouldAttemptReconnect = false;
         this.socket.close()
@@ -42,6 +44,7 @@ class WS {
     }
 
     start() {
+        logger.debug("ws start");
         this.shouldAttemptReconnect = !!this.reconnectInterval;
         this.progress = 0;
         this.established = false;
@@ -56,28 +59,22 @@ class WS {
 
     // eslint-disable-next-line no-unused-vars
     resume(secondsHeadroom) {
+        logger.debug("ws resume:{}", secondsHeadroom);
     }
 
     heartbeat_core(that, socket) {
         if (that.established) {
             //logger.debug('ping');
             let heartbeat_msg = "{msg_code:\"heartbeat\"}";
-            let clientid = null;
-            if (window.websdk.private_cache) {
-                clientid = window.websdk.private_cache.clientid;// session key
-            }
+            let clientid = CacheTools.get_clientid();// session key
             if (clientid) {
                 heartbeat_msg = "{msg_code:\"heartbeat\",clientid:" + clientid + "}";
             } else {
-                if (window.localStorage) {
-                    let login_cache_str = window.localStorage.getItem("websdk_private_cache");
-                    if (login_cache_str) {
-                        window.websdk.private_cache = JSON.parse(login_cache_str);
-                        logger.debug('heartbeat get websdk_private_cache from localStorage');
-                        clientid = window.websdk.private_cache.clientid;// session key
-                        if (clientid) {
-                            heartbeat_msg = "{msg_code:\"heartbeat\",clientid:\"" + clientid + "\"}";
-                        }
+                let exists = CacheTools.load_cache_from_local_storage();
+                if (exists) {
+                    clientid = CacheTools.get_clientid();// session key
+                    if (clientid) {
+                        heartbeat_msg = "{msg_code:\"heartbeat\",clientid:\"" + clientid + "\"}";
                     }
                 }
             }
@@ -109,7 +106,7 @@ class WS {
     }
 
     onOpen() {
-        logger.info('ws onOpen');
+        //logger.debug("ws onOpen:{}", event);
         this.progress = 1;
         this.established = true;
         this.heartbeat();
@@ -125,12 +122,13 @@ class WS {
 
     }
 
-    onClose() {
+    onClose(event) {
+        logger.debug("ws onClose:{}", event);
         clearInterval(this.heartId);
         this.heartId = null;
         this.established = false;
         logger.info('ws onClose');
-        if (this.shouldAttemptReconnect && window.websdk.private_cache.login_uid) {
+        if (this.shouldAttemptReconnect && CacheTools.check_login_from_cache()) {
             clearTimeout(this.reconnectTimeoutId);
             this.reconnectTimeoutId = setTimeout(function () {
                 this.start()

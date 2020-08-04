@@ -1,4 +1,5 @@
 import logger from "./logger";
+import CacheTools from "./cache_tools";
 
 class Monitors {
     constructor(processor) {
@@ -335,6 +336,10 @@ class Monitors {
 
     ErrMsg = (data) => {
         logger.warn('monitor ErrMsg:{}', data);
+        if (data.cmd_status == 52001) { //service提示尚未登录，清空登录缓存
+            logger.debug("ErrMsg-52001, clear_login_cache");
+            CacheTools.clear_login_cache();
+        }
         if (this.functions.ErrMsg) {
             //this.functions.ErrMsg(data);
             this.executeMonitor(this.functions.ErrMsg, data);
