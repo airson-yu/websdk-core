@@ -38,8 +38,14 @@ class VideoWebsocket {
         return this;
     }*/
 
-    start() {
-        this.shouldAttemptReconnect = !!this.reconnectInterval;
+    start(is_restart) {
+        if (is_restart) {
+            // XXX 在关闭retry的时候，不能去重置shouldAttemptReconnect，这样始终都会retry 2020年8月5日15:44:28
+            logger.debug("video ws restart");
+        } else {
+            logger.debug("video ws start");
+            this.shouldAttemptReconnect = !!this.reconnectInterval;
+        }
         this.progress = 0;
         this.established = false;
         //this.socket = new WebSocket(this.url, this.options.protocols || null);
@@ -77,20 +83,23 @@ class VideoWebsocket {
         //this.config.init_callback(this.processor.build_rsp_succ(Result.succ));
     }
 
-    onClose() {
+    onClose(event) {
         //let that = this;
-        logger.info('video ws onClose');
+        logger.debug("video ws onClose:{}", event);
         if (this.shouldAttemptReconnect) {
-            clearTimeout(this.reconnectTimeoutId);
+            this.reconnectTimes++;
             if (this.reconnectTimes > 3) {
                 logger.info('video ws reconnectTimes>3,give up');
                 this.shouldAttemptReconnect = false;
                 return false;
             }
-            this.reconnectTimes++;
+            clearTimeout(this.reconnectTimeoutId);
             this.reconnectTimeoutId = setTimeout(function () {
-                this.start()
+                this.start(true);
             }.bind(this), this.reconnectInterval * 1e3)
+            logger.info('video ws reconnectTimeoutId:{}', this.reconnectTimeoutId);
+        } else {
+            logger.debug("video ws shouldAttemptReconnect false");
         }
     }
 

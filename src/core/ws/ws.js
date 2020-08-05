@@ -43,9 +43,14 @@ class WS {
         return this;
     }
 
-    start() {
-        logger.debug("ws start");
-        this.shouldAttemptReconnect = !!this.reconnectInterval;
+    start(is_restart) {
+        if (is_restart) {
+            // XXX 在关闭retry的时候，不能去重置shouldAttemptReconnect，这样始终都会retry 2020年8月5日15:44:28
+            logger.debug("ws restart");
+        } else {
+            logger.debug("ws start");
+            this.shouldAttemptReconnect = !!this.reconnectInterval;
+        }
         this.progress = 0;
         this.established = false;
         //this.socket = new WebSocket(this.url, this.options.protocols || null);
@@ -119,20 +124,20 @@ class WS {
         this.config.logon_callback && this.config.logon_callback(this.processor.build_rsp_succ(Result.succ));
         this.config.logon_callback = null;
 
-
     }
 
     onClose(event) {
-        logger.debug("ws onClose:{}", event);
+        logger.info("ws onClose:{}", event);
         clearInterval(this.heartId);
         this.heartId = null;
         this.established = false;
-        logger.info('ws onClose');
         if (this.shouldAttemptReconnect && CacheTools.check_login_from_cache()) {
             clearTimeout(this.reconnectTimeoutId);
             this.reconnectTimeoutId = setTimeout(function () {
-                this.start()
+                this.start(true);
             }.bind(this), this.reconnectInterval * 1e3)
+        } else {
+            logger.debug("ws shouldAttemptReconnect false");
         }
     }
 
