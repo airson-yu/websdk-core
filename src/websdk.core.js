@@ -14,7 +14,7 @@ class websdk {
             login_uid: null,
             login_user: {},
         };
-        logger.debug('websdk_core_version: 2020.08.05.01');
+        logger.debug('websdk_core_version: 2020.08.06.01');
 
         //replace_local_ip_for_ie: append activeX node @see processor.js constructor
         window.is_ie = false;
@@ -47,6 +47,7 @@ class websdk {
     init = (callback) => {
         let that = this;
         if (window.websdk.websdkui) { //兼容老版本的API：window.websdk.init();
+            logger.debug("websdkui.init");
             return window.websdk.websdkui.init(callback);
         } else {
             if (window.is_ie) {

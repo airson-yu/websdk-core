@@ -31,17 +31,10 @@ class Processor {
         let that = this;
         that.vm = vm;
         if (!vm) {
+            logger.debug("init without vm, do callback");
             callback && callback(that.build_rsp_fail(Result.view_init_error));
             return;
         }
-        if (callback) {
-            that.config.init_callback = callback;
-        } else {
-            that.config.init_callback = null;
-        }
-
-        that.config.init_callback && that.config.init_callback(that.build_rsp_succ(Result.succ));
-        that.config.init_callback = null;
 
         let need_init_ws = false;
         if (CacheTools.check_login_from_cache()) {
@@ -54,6 +47,16 @@ class Processor {
         }
 
         need_init_ws && this.ws.init().start();
+
+        // do callback
+        if (callback) {
+            that.config.init_callback = callback;
+        } else {
+            that.config.init_callback = null;
+        }
+
+        that.config.init_callback && that.config.init_callback(that.build_rsp_succ(Result.succ));
+        that.config.init_callback = null;
     }
 
     init_login = (callback) => {

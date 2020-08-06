@@ -86,6 +86,24 @@ class VideoWebsocket {
         //this.config.init_callback(this.processor.build_rsp_succ(Result.succ));
     }
 
+    /**
+     * https://github.com/ecomfe/echarts-gl/issues/253
+     * https://cloud.tencent.com/developer/article/1157788
+     * https://github.com/pixijs/pixi.js/issues/2233
+     * https://developer.mozilla.org/zh-CN/docs/Web/API/WebGLRenderingContext/getExtension
+     * https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_best_practices
+     */
+    clear_webgl_context() {
+        if (this.processor.renderContext) {
+            logger.debug("clear_webgl_context");
+            this.processor.renderContext.flush();
+            let ext = this.processor.renderContext.getExtension('WEBGL_lose_context');
+            ext && ext.loseContext();
+            /* scene.renderer.currentRenderTarget.gl.getExtension('WEBGL_lose_context').loseContext(); */
+            /*scene.renderer.destroy();*/
+        }
+    }
+
     onClose(event) {
         //let that = this;
         logger.debug("video ws onClose:{}", event);
@@ -94,6 +112,7 @@ class VideoWebsocket {
             if (this.reconnectTimes > 3) {
                 logger.info('video ws reconnectTimes>3,give up,times:{}', this.reconnectTimes);
                 this.shouldAttemptReconnect = false;
+                this.clear_webgl_context();
                 return false;
             }
             this.reconnectTimeoutId && clearTimeout(this.reconnectTimeoutId);
@@ -103,11 +122,13 @@ class VideoWebsocket {
             logger.info('video ws reconnectTimeoutId:{}', this.reconnectTimeoutId);
         } else {
             logger.debug("video ws shouldAttemptReconnect false");
+            this.clear_webgl_context();
         }
     }
 
     onError(event) {
         logger.warn("video ws onError:{}", event);
+        this.clear_webgl_context();
     }
 
     onMessage(ev) {
