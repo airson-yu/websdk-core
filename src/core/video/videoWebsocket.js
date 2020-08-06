@@ -1,5 +1,8 @@
 import logger from "../logger";
 
+/**
+ * 需要与ui项目中的videoWebsocket.js一起更新
+ */
 class VideoWebsocket {
     constructor(url, options) {
         this.url = url;
@@ -89,11 +92,11 @@ class VideoWebsocket {
         if (this.shouldAttemptReconnect) {
             this.reconnectTimes++;
             if (this.reconnectTimes > 3) {
-                logger.info('video ws reconnectTimes>3,give up');
+                logger.info('video ws reconnectTimes>3,give up,times:{}', this.reconnectTimes);
                 this.shouldAttemptReconnect = false;
                 return false;
             }
-            clearTimeout(this.reconnectTimeoutId);
+            this.reconnectTimeoutId && clearTimeout(this.reconnectTimeoutId);
             this.reconnectTimeoutId = setTimeout(function () {
                 this.start(true);
             }.bind(this), this.reconnectInterval * 1e3)
