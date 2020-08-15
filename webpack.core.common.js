@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 //const VueLoaderPlugin = require('vue-loader/lib/plugin');
 require("babel-polyfill"); //es5
+const webpack = require('webpack');
 
 module.exports = {
     entry: ['babel-polyfill', './src/websdk.core.js'],
@@ -11,13 +12,23 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'iTRUNK CONSOLE WEB SDK'
         }),
+        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
         //new VueLoaderPlugin()
     ],
     output: {
         filename: 'websdk.core.bundle.js',
         path: path.resolve(__dirname, 'dist'),
-        /*library: 'websdk',
-        libraryTarget: 'umd'*/
+        library: 'websdk',
+        libraryTarget: 'umd'
+    },
+    externals: {
+        lodash: {
+            commonjs: 'lodash',
+            commonjs2: 'lodash',
+            amd: 'lodash',
+            root: '_'
+        },
+        moment: 'moment'
     },
     module: {
         rules: [
