@@ -21,7 +21,7 @@ module.exports = {
         library: 'websdk',
         libraryTarget: 'umd'
     },
-    externals: {
+    /*externals: {
         lodash: {
             commonjs: 'lodash',
             commonjs2: 'lodash',
@@ -29,7 +29,7 @@ module.exports = {
             root: '_'
         },
         moment: 'moment'
-    },
+    },*/
     module: {
         rules: [
             {
