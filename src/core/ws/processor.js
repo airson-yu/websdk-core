@@ -8,6 +8,7 @@ import CacheTools from "../cache_tools";
 
 class Processor {
     constructor() {
+        logger.debug("processor construct");
         //this.config = new Config();
         this.config = config;
         /*this.callbackIndex = 0;
@@ -44,6 +45,8 @@ class Processor {
             logger.debug("init need_init_ws and load_cache_from_local_storage");
             CacheTools.load_cache_from_local_storage();
             need_init_ws = true;
+        } else {
+            logger.debug("init no_need_init_ws");
         }
 
         need_init_ws && this.ws.init().start();
@@ -60,6 +63,7 @@ class Processor {
     }
 
     init_login = (callback) => {
+        logger.debug("init init_login");
         let that = this;
         that.ws = new WS(that.config, {'processor': that});
         if (callback) {
@@ -87,6 +91,7 @@ class Processor {
 
     clear_cache = (that, reset_ui, close_ws) => {
         if (reset_ui) {
+            logger.debug('processor clear_cache reset_ui');
             let resetView = window.websdk.view && window.websdk.view.resetStateWhenLogout;
             // eslint-disable-next-line no-unused-vars
             resetView && window.websdk.view.resetStateWhenLogout(function (result) {
@@ -97,7 +102,11 @@ class Processor {
         CacheTools.clear_login_cache();
 
         if (close_ws) {
-            that.ws.socket && that.ws.destroy();
+            logger.debug('processor clear_cache close_ws just_check');
+            if (that.ws.socket) {
+                logger.debug('processor clear_cache ws.destroy');
+                that.ws.destroy()
+            }
         }
     }
 
@@ -105,10 +114,12 @@ class Processor {
         if (data.msg_code === 'rsp_logout') { //req_logout 已经调用 resetStateWhenLogout
             data.msg_code = 'notice_logout';
             data.cmd_type = 2;
+            logger.debug('processor rsp_logout handle_receive_logout will clear_cache');
             that.clear_cache(that, false, true);
 
         } else if (data.msg_code === 'notice_logout' || (data.msg_code === 'notice_logon' && data.cmd_status == 2)) {// 已在其他设备登录
-            logger.debug('monitor notice_logout');
+            //logger.debug('monitor notice_logout');
+            logger.debug('processor notice_logout handle_receive_logout will clear_cache');
             that.clear_cache(that, true, true);
         }
     }
@@ -331,13 +342,15 @@ class Processor {
                 callback && callback(this.build_rsp_fail(Result.already_login));
                 return false;
             }
+            logger.debug('processor req_logon will clear_cache');
             that.clear_cache(that, false, true); // 先注销ws，再创建新的
             // eslint-disable-next-line no-unused-vars
             that.init_login(ws_result => {
                 that.send(that.build_request(msg_code, param), callback, cbid, async);
             });
         } else if (msg_code == 'req_logout') {
-            logger.debug('req_logout destroy ui');
+            //logger.debug('req_logout destroy ui');
+            logger.debug('processor req_logout will clear_cache');
             that.clear_cache(that, true, false);
             return this.send(this.build_request(msg_code, param), callback, cbid, async);
         } else {

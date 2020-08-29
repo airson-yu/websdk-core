@@ -4,6 +4,7 @@ import CacheTools from "../cache_tools";
 
 class WS {
     constructor(config, options) {
+        logger.debug("ws construct");
         this.config = config;
         this.url = null;
         //this.url = config.get_next_ws_url();
@@ -24,6 +25,7 @@ class WS {
     }
 
     connect(processor) {
+        logger.debug("ws connect");
         this.processor = processor
     }
 
@@ -35,6 +37,7 @@ class WS {
     }
 
     init() {
+        logger.debug("ws init");
         this.config.reset_port_array_index();
         this.url = this.config.get_next_ws_url();
         this.shouldAttemptReconnect = true;
@@ -88,8 +91,10 @@ class WS {
 
         } else {
             logger.info('not_logon_stop_heart_beat');
-            clearInterval(that.heartId);
-            that.heartId = null;
+            if (that.heartId) {
+                clearInterval(that.heartId);
+                that.heartId = null;
+            }
         }
     }
 
@@ -104,6 +109,8 @@ class WS {
         }
         let socket = that.socket;
         that.heartbeat_core(that, socket); // XXX 打开连接就先发一次心跳，确保service收到clientid，从而保持登录状态 2020年8月4日11:57:14
+        that.heartbeat_core(that, socket);
+        that.heartbeat_core(that, socket);// XXX 连接上就立即多发几次消息，ws server有可能收不到第一条消息，尽快发了消息才能识别为已登录 2020.08.26.18.24
         //socket.send("{msg_code:\"heartbeat\"}");
         that.heartId = setInterval(function () {
             that.heartbeat_core(that, socket);
@@ -111,7 +118,7 @@ class WS {
     }
 
     onOpen() {
-        //logger.debug("ws onOpen:{}", event);
+        logger.debug("ws onOpen");
         this.progress = 1;
         this.established = true;
         this.heartbeat();
@@ -159,6 +166,7 @@ class WS {
     }
 
     onMessage(ev) {
+        //logger.debug("m:{}", ev.data);
         this.processor.receive(ev.data)
     }
 
