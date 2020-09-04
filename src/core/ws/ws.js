@@ -22,6 +22,7 @@ class WS {
         this.progress = 0;
         this.reconnectTimeoutId = 0;
         this.processor = options.processor;
+        this.received_first_pong = false;
     }
 
     connect(processor) {
@@ -118,6 +119,7 @@ class WS {
     }
 
     onOpen() {
+        this.received_first_pong = false;
         logger.debug("ws onOpen");
         this.progress = 1;
         this.established = true;
@@ -134,6 +136,7 @@ class WS {
     }
 
     onClose(event) {
+        this.received_first_pong = false;
         logger.info("ws onClose:{}", event);
         clearInterval(this.heartId);
         this.heartId = null;
@@ -149,6 +152,7 @@ class WS {
     }
 
     onError(event) {
+        this.received_first_pong = false;
         logger.warn("ws onError:{}", event);
         if (event.target.readyState === 3) { // 换端口重新连接
             this.url = this.config.get_next_ws_url();
@@ -166,10 +170,35 @@ class WS {
     }
 
     onMessage(ev) {
+        this.checkFirstPong();
         //logger.debug("m:{}", ev.data);
         this.processor.receive(ev.data)
     }
 
+    checkFirstPong() {
+        if (this.received_first_pong) {
+            return;
+        }
+        let that = this;
+        if (!that.received_first_pong) {
+            logger.debug("received_first_pong");
+            that.received_first_pong = true;
+        }
+        if (that.processor.init_status == 2) {
+            that.processor.init_status = 3;// init done
+            logger.debug("init_ws_done by ws");
+        }
+        if (that.processor.init_ws_alone_status == 2) {
+            that.processor.init_ws_alone_status = 3;// ini done
+            logger.debug("init_ws_alone_done by ws");
+        }
+        if (that.config.init_callback) {
+            logger.debug("trigger init_callback by ws");
+            that.config.init_callback(that.processor.build_rsp_succ(Result.succ));
+            that.config.init_callback = null
+        }
+
+    }
 }
 
 export default WS;

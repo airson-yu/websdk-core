@@ -35,6 +35,13 @@ Result['10105'], Result.already_login = {
     code: 10105,
     desc: '已经登录'
 }
-
+Result['10106'], Result.no_init = {
+    code: 10106,
+    desc: '尚未执行初始化'
+}
+Result['10107'], Result.init_not_done = {
+    code: 10107,
+    desc: '初始化尚未完成'
+}
 
 export default Result;

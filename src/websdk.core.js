@@ -14,7 +14,7 @@ class websdk {
             login_uid: null,
             login_user: {},
         };
-        logger.debug('websdk_core_version: 2020.08.28.01');
+        logger.debug('websdk_core_version: 2020.09.04.01');
 
         //replace_local_ip_for_ie: append activeX node @see processor.js constructor
         window.is_ie = false;
@@ -54,11 +54,13 @@ class websdk {
                 logger.debug('websdkcore init delay for ie');
                 setTimeout(function () {
                     that.core.processor.replace_local_ip_for_ie();//replace_local_ip_for_ie
-                    callback(that.core.processor.build_rsp_succ(Result.succ));
+                    //callback(that.core.processor.build_rsp_succ(Result.succ));
+                    that.core.processor.init(null, callback);
                 }, 0);// 0 is necessary
 
             } else {
-                callback(that.core.processor.build_rsp_succ(Result.succ));
+                //callback(that.core.processor.build_rsp_succ(Result.succ));
+                that.core.processor.init(null, callback);
             }
             return that;
         }

@@ -20,6 +20,8 @@ class Processor {
         this.vm = null;
         //this.async_msg_code = '_async_';
         this.empty_cbid_code = '_empty_';
+        this.init_status = 1;//1未初始化，2初始化未完成，3初始化完成
+        this.init_ws_alone_status = 1;//1未初始化，2初始化未完成，3初始化完成
     }
 
     replace_local_ip_for_ie = () => {
@@ -29,12 +31,14 @@ class Processor {
     }
 
     init = (vm, callback) => {
+        logger.debug('start init');
+        this.init_status = 2;// init ing
         let that = this;
         that.vm = vm;
         if (!vm) {
-            logger.debug("init without vm, do callback");
-            callback && callback(that.build_rsp_fail(Result.view_init_error));
-            return;
+            logger.debug("init without vm");//core和ui都会执行init
+            //callback && callback(that.build_rsp_fail(Result.view_init_error));
+            //return;
         }
 
         let need_init_ws = false;
@@ -58,20 +62,33 @@ class Processor {
             that.config.init_callback = null;
         }
 
-        that.config.init_callback && that.config.init_callback(that.build_rsp_succ(Result.succ));
-        that.config.init_callback = null;
+        if (that.ws.received_first_pong) {
+            that.init_status = 3;//init done
+            logger.debug('init_done');
+            that.config.init_callback && that.config.init_callback(that.build_rsp_succ(Result.succ));
+            that.config.init_callback = null;
+        } else if (need_init_ws) {
+            // wait first_pong then trigger init_callback
+            logger.debug('wait first_pong then trigger init_callback');
+        } else {
+            // no need_init_ws
+            that.init_status = 3;
+        }
     }
 
-    init_login = (callback) => {
-        logger.debug("init init_login");
+    init_ws_alone = (callback) => {
         let that = this;
+        that.init_ws_alone_status = 2;
+        logger.debug("init_ws_alone start");
         that.ws = new WS(that.config, {'processor': that});
+        that.ws.received_first_pong = false;
         if (callback) {
             that.config.logon_callback = callback;
         } else {
             that.config.logon_callback = null;
         }
         that.ws.init().start();
+        logger.debug('init_ws_alone done, wait first_pong then trigger init_callback');
     }
 
     // --- xxx codec start ---
@@ -264,6 +281,7 @@ class Processor {
     // --- xxx sender start ---
 
     send = (data, callback, cbid, async) => {
+        let that = this;
         if (null === data || undefined === data) {
             data = {};
         }
@@ -283,31 +301,41 @@ class Processor {
         logger.warn('{success: false, code: 10104, desc: "尚未登录"}');
         return false;*/
 
+        if (that.init_status == 1) {
+            logger.warn('{success: false, code: 10106, desc: "尚未执行初始化"}');
+            callback && callback(that.build_rsp_fail(Result.no_init));
+            return false;
+        } else if (that.init_status == 2) {
+            logger.warn('{success: false, code: 10107, desc: "初始化尚未完成"}');
+            callback && callback(that.build_rsp_fail(Result.init_not_done));
+            return false;
+        }
+
         if (!CacheTools.check_login_from_cache() && !CacheTools.check_login_ing_from_cache() &&
             data.msg_code !== 'req_logon' && data.msg_code !== 'req_logout') {
             // 缓存中没有登录信息，再检查localStorage中是否有登录信息
             let cache_exist = CacheTools.load_cache_from_local_storage();
             if (!cache_exist) {
                 logger.warn('{success: false, code: 10104, desc: "尚未登录"}');
-                callback && callback(this.build_rsp_fail(Result.no_login));
+                callback && callback(that.build_rsp_fail(Result.no_login));
                 return false;
             }
         }
 
-        if (cbid === this.empty_cbid_code) {
+        if (cbid === that.empty_cbid_code) {
             data.cbid = cbid;
         } else if (callback && cbid) {
             data.cbid = cbid;
-            this.client_callbacks[cbid] = callback;
+            that.client_callbacks[cbid] = callback;
         }
 
-        let msg = this.encode(data);
+        let msg = that.encode(data);
 
         logger.info('send:{}', msg);
         /*logger.debug('send:{}', msg);
         this.output('<label style="color:#2bd42b;">send:</label>' + msg);*/
 
-        this.ws.socket.send(msg);
+        that.ws.socket.send(msg);
 
         // 异步调用，先同步回ack然后再等通知
         async && callback && callback(true);
@@ -336,7 +364,33 @@ class Processor {
      */
     build_req_send = (msg_code, param, callback, cbid, async) => {
         let that = this;
-        if (msg_code == 'req_logon') {
+
+        if (that.init_status == 1) {
+            logger.warn('{success: false, code: 10106, desc: "尚未执行初始化"}');
+            callback && callback(that.build_rsp_fail(Result.no_init));
+            return false;
+        } else if (that.init_status == 2) {
+            logger.warn('{success: false, code: 10107, desc: "初始化尚未完成"}');
+            callback && callback(that.build_rsp_fail(Result.init_not_done));
+            return false;
+        }
+
+        // XXX 重复logon的检查交由service来检查 2020年09月04日15:44:57
+        if (msg_code == 'req_logout') {
+            //logger.debug('req_logout destroy ui');
+            logger.debug('processor req_logout will clear_cache');
+            that.clear_cache(that, true, false);
+        }
+        if (that.ws.established) {
+            return that.send(that.build_request(msg_code, param), callback, cbid, async);
+        } else {
+            logger.debug('start ws first, then send request');
+            that.init_ws_alone(() => {
+                that.send(that.build_request(msg_code, param), callback, cbid, async);
+            });
+        }
+
+        /*if (msg_code == 'req_logon') {
             if (CacheTools.check_login_from_cache()) {
                 logger.warn('{success: false, code: 10105, desc: "已经登录"}');
                 callback && callback(this.build_rsp_fail(Result.already_login));
@@ -352,17 +406,17 @@ class Processor {
             //logger.debug('req_logout destroy ui');
             logger.debug('processor req_logout will clear_cache');
             that.clear_cache(that, true, false);
-            return this.send(this.build_request(msg_code, param), callback, cbid, async);
+            return that.send(that.build_request(msg_code, param), callback, cbid, async);
         } else {
             if (that.ws.established) {
-                return this.send(this.build_request(msg_code, param), callback, cbid, async);
+                return that.send(that.build_request(msg_code, param), callback, cbid, async);
             } else {
                 logger.debug('start ws first, then send request');
                 that.init_login(() => {
                     that.send(that.build_request(msg_code, param), callback, cbid, async);
                 });
             }
-        }
+        }*/
         return true;
     }
 
