@@ -18,8 +18,8 @@ module.exports = {
     output: {
         filename: 'websdk.core.bundle.js',
         path: path.resolve(__dirname, 'dist'),
-        /*library: 'websdk',
-        libraryTarget: 'umd'*/
+        library: 'websdk',
+        libraryTarget: 'umd'
     },
     /*externals: {
         lodash: {

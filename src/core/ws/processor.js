@@ -33,6 +33,9 @@ class Processor {
     init = (vm, callback) => {
         logger.debug('start init');
         this.init_status = 2;// init ing
+        setTimeout(function () {
+            that.init_status = 3;//防止异常情况下始终提示尚未初始化完成
+        }, 10000);
         let that = this;
         that.vm = vm;
         if (!vm) {
@@ -64,7 +67,7 @@ class Processor {
 
         if (that.ws.received_first_pong) {
             that.init_status = 3;//init done
-            logger.debug('init_done');
+            logger.debug('init_done trigger callback');
             that.config.init_callback && that.config.init_callback(that.build_rsp_succ(Result.succ));
             that.config.init_callback = null;
         } else if (need_init_ws) {
@@ -73,12 +76,16 @@ class Processor {
         } else {
             // no need_init_ws
             that.init_status = 3;
+            logger.debug('no_need_init_ws init_done');
         }
     }
 
     init_ws_alone = (callback) => {
         let that = this;
         that.init_ws_alone_status = 2;
+        setTimeout(function () {
+            that.init_ws_alone_status = 3;//防止异常情况下始终提示尚未初始化完成
+        }, 10000);
         logger.debug("init_ws_alone start");
         that.ws = new WS(that.config, {'processor': that});
         that.ws.received_first_pong = false;

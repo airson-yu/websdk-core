@@ -97,8 +97,8 @@ class VideoWebsocket {
         let context = this.processor.renderContext;
         if (context && !context.isContextLost()) {
             logger.debug("clear_webgl_context");
-            let ext = context.getExtension('WEBGL_lose_context');
-            ext && ext.loseContext();
+            //let ext = context.getExtension('WEBGL_lose_context');
+            //ext && ext.loseContext();//会导致在第二次视频通话时报错 2020年09月07日15:41:16
             context.flush();
             /* scene.renderer.currentRenderTarget.gl.getExtension('WEBGL_lose_context').loseContext(); */
             /*scene.renderer.destroy();*/
