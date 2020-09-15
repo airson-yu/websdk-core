@@ -309,10 +309,12 @@ class Processor {
         return false;*/
 
         if (that.init_status == 1) {
+            logger.info('send fail:{}', data);
             logger.warn('{success: false, code: 10106, desc: "尚未执行初始化"}');
             callback && callback(that.build_rsp_fail(Result.no_init));
             return false;
         } else if (that.init_status == 2) {
+            logger.info('send fail:{}', data);
             logger.warn('{success: false, code: 10107, desc: "初始化尚未完成"}');
             callback && callback(that.build_rsp_fail(Result.init_not_done));
             return false;
@@ -323,6 +325,7 @@ class Processor {
             // 缓存中没有登录信息，再检查localStorage中是否有登录信息
             let cache_exist = CacheTools.load_cache_from_local_storage();
             if (!cache_exist) {
+                logger.info('send fail:{}', data);
                 logger.warn('{success: false, code: 10104, desc: "尚未登录"}');
                 callback && callback(that.build_rsp_fail(Result.no_login));
                 return false;
