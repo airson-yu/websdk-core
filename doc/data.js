@@ -561,6 +561,24 @@ grid.groupRequest_getGroupInfo = {
     ]
 }
 
+grid.groupRequest_getGroupAttachInfo = {
+    req: [
+        {
+            k1: 'targets',
+            k2: 'int array',
+            k3: 'yes',
+            k4: '群组ID数组'
+        },
+        common.callback,
+        common.cbid,
+    ],
+    rsp: [
+        common.async_result,
+        common.empty,
+        common.empty,
+    ]
+}
+
 grid.groupRequest_enterGroup = {
     req: [
         {
@@ -1886,6 +1904,28 @@ grid.pttStatusNotice = {
             k2: 'string',
             k3: 'yes',
             k4: 'Unix时间戳'
+        }
+    ]
+}
+
+grid.groupAttachInfoNotice = {
+    rsp: [
+        common.build_msg_code('notice_group_attach_info'),
+        common.cmd_type_2,
+        common.session,
+        common.cbid,
+        {
+            k1: 'attach_info',
+            k2: 'object array',
+            k3: 'yes',
+            k4: '群组成员信息，object字段：' +
+                '\ntgid - int - 群组ID，' +
+                '\nuids_num - int - 成员总数，' +
+                '\nuids - int array - 成员ID列表，' +
+                '\nextuids - string array - 成员外部ID列表，' +
+                '\nattached_num - int - 进入群组的人数，' +
+                '\nattached_uids - int array - 进入群组的用户ID列表，' +
+                '\nattached_extuids - string array - 进入群组的用户外部ID列表'
         }
     ]
 }

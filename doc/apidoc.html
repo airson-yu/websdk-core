@@ -106,6 +106,7 @@
                 <a href="#gpsRequest_queryHistoryGPS">queryHistoryGPS:查询终端的GPS轨迹</a>
             groupRequest:
                 <a href="#groupRequest_getGroupInfo">getGroupInfo:获取群组信息</a>
+                <a href="#groupRequest_getGroupAttachInfo">getGroupAttachInfo:获取群组成员信息和进入群组成员信息</a>
                 <a href="#groupRequest_enterGroup">enterGroup:加入群组</a>
                 <a href="#groupRequest_leaveGroup">leaveGroup:退出群组</a>
                 <a href="#groupRequest_forceEnterGroup">forceEnterGroup:群组强拉（强行要求组的成员进入该组）</a>
@@ -156,6 +157,7 @@
             <a href="#userGPSNotice">userGPSNotice:用户GPS通知</a>
             <a href="#callStatusNotice">callStatusNotice:语音通话状态状态通知</a>
             <a href="#pttStatusNotice">pttStatusNotice:PTT状态通知</a>
+            <a href="#groupAttachInfoNotice">groupAttachInfoNotice:群组成员数和进入群组成员数的结果通知</a>
             <a href="#enterGroupNotice">enterGroupNotice:加入群组通知</a>
             <a href="#leaveGroupNotice">leaveGroupNotice:离开群组通知</a>
             <a href="#addGroupMemberNotice">addGroupMemberNotice:增加组成员通知</a>
@@ -329,6 +331,17 @@
             <div class="grid_item">
                 <h2>request.groupRequest.getGroupInfo 回调参数</h2>
                 <i-table border size="small" :columns="grid.col" :data="grid.groupRequest_getGroupInfo.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="groupRequest_getGroupAttachInfo" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.groupRequest.getGroupAttachInfo(异步)  请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.groupRequest_getGroupAttachInfo.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.groupRequest.getGroupAttachInfo 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.groupRequest_getGroupAttachInfo.rsp"></i-table>
             </div>
         </div>
 
@@ -755,6 +768,13 @@
             <div class="grid_item">
                 <h2>pttStatusNotice 回调参数</h2>
                 <i-table border size="small" :columns="grid.col" :data="grid.pttStatusNotice.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="groupAttachInfoNotice" class="grid_item_div">
+            <div class="grid_item">
+                <h2>groupAttachInfoNotice 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.groupAttachInfoNotice.rsp"></i-table>
             </div>
         </div>
 
