@@ -2,7 +2,6 @@ import Core from './core/core';
 import Request from "./client/request";
 import Listeners from "./client/listeners";
 import logger from "./core/logger";
-import Result from "../../websdk-ui/src/tools/result";
 
 class websdk {
     constructor() {

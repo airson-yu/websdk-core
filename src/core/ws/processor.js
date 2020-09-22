@@ -37,8 +37,9 @@ class Processor {
             that.init_status = 3;//防止异常情况下始终提示尚未初始化完成
         }, 10000);
         let that = this;
-        that.vm = vm;
-        if (!vm) {
+        if (vm) {
+            that.vm = vm;
+        } else {
             logger.debug("init without vm");//core和ui都会执行init
             //callback && callback(that.build_rsp_fail(Result.view_init_error));
             //return;
@@ -56,7 +57,7 @@ class Processor {
             logger.debug("init no_need_init_ws");
         }
 
-        need_init_ws && this.ws.init().start();
+        need_init_ws && !this.ws.established && this.ws.init().start();
 
         // do callback
         if (callback) {
