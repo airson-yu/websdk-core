@@ -12,6 +12,12 @@ class GroupRequest extends BaseRequest {
         this.core.invokes.req_grp_profile(param, callback, cbid);
     }
 
+    getGroupAttachInfo = (targets, callback, cbid) => {
+        //logger.debug('getGroupAttachInfo:{}', targets);
+        let param = {'targets': targets};
+        this.core.invokes.req_group_attach_info(param, callback, cbid);
+    }
+
     enterGroup = (demander, extdemander, tgid, mute, callback, cbid) => {
         //logger.debug('enterGroup:{}', tgid);
         let param = {'demander': demander, 'extdemander': extdemander, 'tgid': tgid, 'mute': mute};

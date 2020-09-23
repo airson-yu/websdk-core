@@ -41,6 +41,12 @@ class Invokes {
         this.processor.build_req_send('req_grp_profile', param, callback, cbid);
     }
 
+    req_group_attach_info = (param, callback, cbid) => {
+        //logger.debug('req_group_attach_info:{}', param.target);
+        !callback && (cbid = this.empty_cbid_code);
+        this.processor.build_req_send('req_group_attach_info', param, callback, cbid);
+    }
+
     req_query_history_gps = (param, callback, cbid) => {
         //logger.debug('req_query_history_gps:{}', param.demander);
         !callback && (cbid = this.empty_cbid_code);

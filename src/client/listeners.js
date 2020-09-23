@@ -18,6 +18,7 @@ class Listeners {
             'notice_ptt_replay': 'notice_ptt_replay',
             'notice_ptt_status': 'notice_ptt_status',
             'notice_im': 'notice_im',
+            'notice_group_attach_info': 'notice_group_attach_info',
             'notice_enter_group': 'notice_enter_group',
             'notice_leave_group': 'notice_leave_group',
             'notice_add_grp_mem': 'notice_add_grp_mem',
@@ -120,6 +121,11 @@ class Listeners {
     noticeIM = (callback, key) => {
         //logger.debug('listener noticeIM');
         this.monitors.addMonitor(this.types.notice_im, callback, key);
+    }
+
+    groupAttachInfoNotice = (callback, key) => {
+        //logger.debug('listener groupAttachInfoNotice');
+        this.monitors.addMonitor(this.types.notice_group_attach_info, callback, key);
     }
 
     enterGroupNotice = (callback, key) => {

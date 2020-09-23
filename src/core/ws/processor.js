@@ -57,7 +57,12 @@ class Processor {
             logger.debug("init no_need_init_ws");
         }
 
-        need_init_ws && !this.ws.established && this.ws.init().start();
+        if (need_init_ws && this.ws.established) {
+            need_init_ws = false;
+            logger.debug('ws.established, need_init_ws change to false');
+        }
+
+        need_init_ws && this.ws.init().start();
 
         // do callback
         if (callback) {

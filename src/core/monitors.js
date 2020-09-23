@@ -177,6 +177,16 @@ class Monitors {
         }
     }
 
+    notice_group_attach_info = (data) => {
+        //logger.debug('monitor notice_enter_group');
+        if (this.functions.notice_group_attach_info) {
+            /*let param = {'demander': data.demander, 'tgid': data.tgid, 'mute': data.mute};
+            this.functions.notice_enter_group(param);*/
+            //this.functions.notice_enter_group(data);
+            this.executeMonitor(this.functions.notice_group_attach_info, data);
+        }
+    }
+
     notice_enter_group = (data) => {
         //logger.debug('monitor notice_enter_group');
         if (this.functions.notice_enter_group) {
