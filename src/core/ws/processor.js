@@ -82,7 +82,9 @@ class Processor {
         } else {
             // no need_init_ws
             that.init_status = 3;
-            logger.debug('no_need_init_ws init_done');
+            logger.debug('no_need_init_ws init_done trigger callback');
+            that.config.init_callback && that.config.init_callback(that.build_rsp_succ(Result.succ));
+            that.config.init_callback = null;
         }
     }
 
