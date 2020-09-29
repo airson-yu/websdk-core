@@ -57,6 +57,7 @@ class CacheTools {
 
     static check_login_from_local_storage = () => {
         if (window.localStorage && window.localStorage.getItem("websdk_private_cache")) {
+            // XXX 这里可以判断时效，超过几个小时就判断为无效缓存，但是这又涉及到刷新缓存TS的问题，只要在活动TS就要及时刷新，暂不处理。
             return true;
         }
         return false;
