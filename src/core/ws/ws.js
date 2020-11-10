@@ -130,8 +130,9 @@ class WS {
         /*this.config.init_callback && this.config.init_callback(this.processor.build_rsp_succ(Result.succ));
         this.config.init_callback = null;*/
 
-        this.config.logon_callback && this.config.logon_callback(this.processor.build_rsp_succ(Result.succ));
-        this.config.logon_callback = null;
+        // XXX 这时虽然收到了onOpen，但是实际可能正在连接中，需要等到收到心跳返回后才能执行登录回调，这个逻辑在checkFirstPong方法中，2020年11月10日12:11:30
+        /*this.config.logon_callback && this.config.logon_callback(this.processor.build_rsp_succ(Result.succ));
+        this.config.logon_callback = null;*/
 
     }
 
