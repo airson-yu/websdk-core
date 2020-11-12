@@ -109,9 +109,17 @@ class WS {
             that.heartId = null;
         }
         let socket = that.socket;
-        that.heartbeat_core(that, socket); // XXX 打开连接就先发一次心跳，确保service收到clientid，从而保持登录状态 2020年8月4日11:57:14
+
+        // XXX 打开连接就先发一次心跳，确保service收到clientid，从而保持登录状态 2020年8月4日11:57:14
+        // XXX 连接上就立即多发几次消息，ws server有可能收不到第一条消息，尽快发了消息才能识别为已登录 2020.08.26.18.24
         that.heartbeat_core(that, socket);
-        that.heartbeat_core(that, socket);// XXX 连接上就立即多发几次消息，ws server有可能收不到第一条消息，尽快发了消息才能识别为已登录 2020.08.26.18.24
+        that.heartbeat_core(that, socket);
+        setTimeout(function (){
+            that.heartbeat_core(that, socket);
+        }, 10);
+        setTimeout(function (){
+            that.heartbeat_core(that, socket);
+        }, 50);
         setTimeout(function (){
             that.heartbeat_core(that, socket);
         }, 100);
@@ -121,6 +129,9 @@ class WS {
         setTimeout(function (){
             that.heartbeat_core(that, socket);
         }, 1000);
+        setTimeout(function (){
+            that.heartbeat_core(that, socket);
+        }, 3000);
         //socket.send("{msg_code:\"heartbeat\"}");
         that.heartId = setInterval(function () {
             that.heartbeat_core(that, socket);
