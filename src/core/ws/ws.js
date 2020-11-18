@@ -218,7 +218,11 @@ class WS {
             that.config.init_callback(that.processor.build_rsp_succ(Result.succ));
             that.config.init_callback = null
         }
-
+        if (that.config.logon_callback) {
+            logger.debug("trigger logon_callback(request_callback) by ws");
+            that.config.logon_callback(that.processor.build_rsp_succ(Result.succ));
+            that.config.logon_callback = null
+        }
     }
 }
 
