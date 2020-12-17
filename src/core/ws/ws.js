@@ -210,7 +210,7 @@ class WS {
             logger.debug("init_ws_done by ws");
         }
         if (that.processor.init_ws_alone_status == 2) {
-            that.processor.init_ws_alone_status = 3;// ini done
+            that.processor.init_ws_alone_status = 3;// init done
             logger.debug("init_ws_alone_done by ws");
         }
         if (that.config.init_callback) {

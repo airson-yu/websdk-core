@@ -31,12 +31,16 @@ class Processor {
     }
 
     init = (vm, callback) => {
+        let that = this;
+        if (that.init_status === 2) {
+            logger.debug('init ing ignore this request');
+            return;
+        }
+        that.init_status = 2;// init ing
         logger.debug('start init');
-        this.init_status = 2;// init ing
         setTimeout(function () {
             that.init_status = 3;//防止异常情况下始终提示尚未初始化完成
         }, 10000);
-        let that = this;
         if (vm) {
             that.vm = vm;
         } else {
@@ -57,12 +61,12 @@ class Processor {
             logger.debug("init no_need_init_ws");
         }
 
-        if (need_init_ws && this.ws.established) {
+        if (need_init_ws && that.ws.established) {
             need_init_ws = false;
             logger.debug('ws.established, need_init_ws change to false');
         }
 
-        need_init_ws && this.ws.init().start();
+        need_init_ws && that.ws.init().start();
 
         // do callback
         if (callback) {
@@ -90,6 +94,10 @@ class Processor {
 
     init_ws_alone = (callback) => {
         let that = this;
+        if (that.init_ws_alone_status === 2) {
+            logger.debug('init_ws_alone ing ignore this request');
+            return;
+        }
         that.init_ws_alone_status = 2;
         setTimeout(function () {
             that.init_ws_alone_status = 3;//防止异常情况下始终提示尚未初始化完成
