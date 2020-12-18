@@ -17,11 +17,12 @@ class WS {
         }
         this.reconnectInterval = options.reconnectInterval !== undefined ? options.reconnectInterval : 5;
         this.shouldAttemptReconnect = !!this.reconnectInterval;
-        this.completed = false;
-        this.established = false;
-        this.progress = 0;
+        //this.completed = false;
         this.reconnectTimeoutId = 0;
         this.processor = options.processor;
+        this.can_do_init = true;
+        this.established = false;
+        this.progress = 0;
         this.received_first_pong = false;
     }
 
@@ -31,6 +32,10 @@ class WS {
     }
 
     destroy(event) {
+        this.progress = 0;
+        this.can_do_init = true;
+        this.established = false;
+        this.received_first_pong = false;
         logger.debug("ws destroy:{}", event);
         clearTimeout(this.reconnectTimeoutId);
         this.shouldAttemptReconnect = false;
@@ -38,6 +43,10 @@ class WS {
     }
 
     init() {
+        if (!this.can_do_init) {
+            logger.debug("can_do_init is false, ignore ws init");
+            return this;
+        }
         logger.debug("ws init");
         this.config.reset_port_array_index();
         this.url = this.config.get_next_ws_url();
@@ -48,6 +57,11 @@ class WS {
     }
 
     start(is_restart) {
+        if (!this.can_do_init) {
+            logger.debug("can_do_init is false, ignore ws start");
+            return this;
+        }
+        this.can_do_init = false;
         if (is_restart) {
             // XXX 在关闭retry的时候，不能去重置shouldAttemptReconnect，这样始终都会retry 2020年8月5日15:44:28
             logger.debug("ws restart");
@@ -114,22 +128,22 @@ class WS {
         // XXX 连接上就立即多发几次消息，ws server有可能收不到第一条消息，尽快发了消息才能识别为已登录 2020.08.26.18.24
         that.heartbeat_core(that, socket);
         that.heartbeat_core(that, socket);
-        setTimeout(function (){
+        setTimeout(function () {
             that.heartbeat_core(that, socket);
         }, 10);
-        setTimeout(function (){
+        setTimeout(function () {
             that.heartbeat_core(that, socket);
         }, 50);
-        setTimeout(function (){
+        setTimeout(function () {
             that.heartbeat_core(that, socket);
         }, 100);
-        setTimeout(function (){
+        setTimeout(function () {
             that.heartbeat_core(that, socket);
         }, 200);
-        setTimeout(function (){
+        setTimeout(function () {
             that.heartbeat_core(that, socket);
         }, 1000);
-        setTimeout(function (){
+        setTimeout(function () {
             that.heartbeat_core(that, socket);
         }, 3000);
         //socket.send("{msg_code:\"heartbeat\"}");
@@ -139,6 +153,7 @@ class WS {
     }
 
     onOpen() {
+        this.can_do_init = false;
         this.received_first_pong = false;
         logger.debug("ws onOpen");
         this.progress = 1;
@@ -157,6 +172,7 @@ class WS {
     }
 
     onClose(event) {
+        this.can_do_init = true;
         this.received_first_pong = false;
         logger.info("ws onClose:{}", event);
         clearInterval(this.heartId);
@@ -173,6 +189,7 @@ class WS {
     }
 
     onError(event) {
+        this.can_do_init = true;
         this.received_first_pong = false;
         logger.warn("ws onError:{}", event);
         if (event.target.readyState === 3) { // 换端口重新连接

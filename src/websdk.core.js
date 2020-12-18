@@ -13,7 +13,7 @@ class websdk {
             login_uid: null,
             login_user: {},
         };
-        logger.debug('websdk_core_version: R08.00.38,date: 20201217');
+        logger.debug('websdk_core_version: R08.00.38,date: 20201218');
 
         //replace_local_ip_for_ie: append activeX node @see processor.js constructor
         window.is_ie = false;
