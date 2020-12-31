@@ -1,4 +1,5 @@
 import BaseRequest from './baseRequest';
+import logger from "../../core/logger";
 
 class VoiceRequest extends BaseRequest {
     constructor(core) {
@@ -71,6 +72,58 @@ class VoiceRequest extends BaseRequest {
         //logger.debug('dtmf:{}-{}', telno, subno);
         let param = {'telno': telno, 'value': subno};
         this.core.invokes.req_dtmf(param, callback, cbid);
+    }
+
+    getAudioList = (start, count, starttime, endtime, callerlike, calleelike, tglike, type, callback, cbid) => {
+        logger.debug('getAudioList,start:{},count:{}', start, count);
+        //startDate endDate userCamNameLike start length
+        start = start >= 0 ? start : 0;
+        count = count > 0 ? count : 100;
+        //let consoleId = window.websdk.private_cache.login_uid;
+        let param = {
+            'starttime': starttime,
+            'endtime': endtime,
+            'callerlike': callerlike,
+            'calleelike': calleelike,
+            'tglike': tglike,
+            'type': type,
+            'start': start,
+            'length': count,
+            //'consoleId': consoleId,
+        }
+        this.core.invokes.req_get_audio_list(param, callback, cbid);
+    }
+
+    transformAudio = (audioid, suffix, path, callback, cbid) => {
+        let result = {
+            msg_code: 'transformAudio',
+            cbid: cbid,
+            cmd_type: 1
+        }
+        if (!audioid) {
+            result.cmd_status = 2;
+            result.error_reason = 'audioid empty';
+            callback(result);
+            return;
+        }
+        if (!suffix) {
+            result.cmd_status = 3;
+            result.error_reason = 'suffix empty';
+            callback(result);
+            return;
+        }
+        if (!path) {
+            result.cmd_status = 4;
+            result.error_reason = 'path empty';
+            callback(result);
+            return;
+        }
+        let param = {
+            'id': audioid,
+            'suffix': suffix,
+            'path': path
+        }
+        this.core.invokes.req_transform_audio(param, callback, cbid);
     }
 
 }

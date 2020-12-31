@@ -215,6 +215,20 @@ class Callbacks {
         }
     }
 
+    rsp_get_audio_list = (data, callback) => {
+        //logger.debug('rsp_get_audio_list:{}', data);
+        if (callback) {
+            callback(this.processor.build_response(data));
+        }
+    }
+
+    rsp_transform_audio = (data, callback) => {
+        //logger.debug('rsp_transform_audio:{}', data);
+        if (callback) {
+            callback(this.processor.build_response(data));
+        }
+    }
+
 }
 
 export default Callbacks;

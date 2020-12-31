@@ -252,6 +252,18 @@ class Invokes {
         //callback && callback(true);
     }
 
+    req_get_audio_list = (param, callback, cbid) => {
+        //logger.debug('req_get_audio_list:{}', param.demander);
+        this.processor.build_req_send('req_get_audio_list', param, callback, cbid);
+        //callback && callback(true);
+    }
+
+    req_transform_audio = (param, callback, cbid) => {
+        //logger.debug('req_transform_audio:{}', param.demander);
+        this.processor.build_req_send('req_transform_audio', param, callback, cbid);
+        //callback && callback(true);
+    }
+
     req_play_video = (param, callback, cbid) => {
         //logger.debug('req_play_video:{}', param.demander);
         this.processor.build_req_send('req_play_video', param, callback, null, true);

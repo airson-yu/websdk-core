@@ -1216,7 +1216,7 @@ grid.videoRequest_transformVideo = {
         common.cbid,
         {
             k1: 'url',
-            k2: 'int',
+            k2: 'string',
             k3: 'no',
             k4: '视频URL'
         }
@@ -1439,6 +1439,122 @@ grid.voiceRequest_dtmf = {
     rsp: [
         common.async_result,
         common.empty
+    ]
+}
+
+grid.audioRequest_getAudioList = {
+    req: [
+        {
+            k1: 'start',
+            k2: 'int',
+            k3: 'no',
+            k4: '数据分页起始值'
+        },
+        {
+            k1: 'count',
+            k2: 'int',
+            k3: 'no',
+            k4: '数据分页条数'
+        },
+        {
+            k1: 'starttime',
+            k2: 'string',
+            k3: 'no',
+            k4: '开始时间，采用"2008-10-13 16:00:00"格式'
+        },
+        {
+            k1: 'endtime',
+            k2: 'string',
+            k3: 'no',
+            k4: '结束时间，格式同上'
+        },
+        {
+            k1: 'callerlike',
+            k2: 'string',
+            k3: 'no',
+            k4: '发起人名称'
+        },
+        {
+            k1: 'calleelike',
+            k2: 'string',
+            k3: 'no',
+            k4: '接收人名称'
+        },
+        {
+            k1: 'tglike',
+            k2: 'string',
+            k3: 'no',
+            k4: '群组名称'
+        },
+        {
+            k1: 'type',
+            k2: 'string',
+            k3: 'no',
+            k4: '语音类型：1个呼，2组呼'
+        },
+        common.callback,
+        common.cbid,
+        common.empty
+    ],
+    rsp: [
+        common.build_msg_code('req_get_audio_list'),
+        common.cmd_type_1,
+        common.cmd_status,
+        common.error_reason,
+        common.cbid,
+        {
+            k1: 'rows',
+            k2: 'json array',
+            k3: 'no',
+            k4: '视频数据列表，格式参考：{"callee":"164010","calleeAudioUrl":null,"calleeName":"办公室","callerName":"fan","callerid":65890,"corpId":1,"corpid":null,"end":1609382857000,"id":666,' +
+                '"path":"20201231/164010/65890_164010_277478328_20201231104733.amr","pttid":277478328,"ssid":null,"start":1609382853000,"suffix":"202012","tgid":164010,"type":1}'
+        },
+        {
+            k1: 'total',
+            k2: 'int',
+            k3: 'no',
+            k4: '数据总条数'
+        }
+    ]
+}
+
+grid.audioRequest_transformAudio = {
+    req: [
+        {
+            k1: 'audioid',
+            k2: 'int',
+            k3: 'no',
+            k4: '音频ID'
+        },
+        {
+            k1: 'suffix',
+            k2: 'string',
+            k3: 'no',
+            k4: '音频ID后缀，协助唯一定位视频文件'
+        },
+        {
+            k1: 'path',
+            k2: 'string',
+            k3: 'no',
+            k4: '音频地址'
+        },
+        common.callback,
+        common.cbid,
+        common.empty,
+        common.empty
+    ],
+    rsp: [
+        common.build_msg_code('req_transform_audio'),
+        common.cmd_type_1,
+        common.cmd_status,
+        common.error_reason,
+        common.cbid,
+        {
+            k1: 'url',
+            k2: 'string',
+            k3: 'no',
+            k4: '音频URL'
+        }
     ]
 }
 

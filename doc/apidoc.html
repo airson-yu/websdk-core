@@ -64,8 +64,9 @@
         <!--<p>2.将ITC.Console.Service.zip文件解压到D:\console\ConsoleService根目录(根据实际情况修改目录),使用admin权限打开CMD窗口，并切换到此目录</p>-->
         <!--<p>2.使用admin权限执行此命令卸载之前安装的service(若为全新安装则可忽略此步骤)：sc delete IConService</p>-->
         <!--<p>2.卸载之前安装的service(若为全新安装则可忽略此步骤)：C:\Windows\Microsoft.NET\Framework\v4.0.30319\installutil.exe /u ITC.Console.Service.exe (确保此目录为已经安装的服务的路径)</p>-->
-        <p>1.下载并安装调度台服务软件：（链接：https://pan.baidu.com/s/1H8xAp3837mNg4mDIolzG8g 提取码：r1lw）
-            <a href="https://pan.baidu.com/s/1H8xAp3837mNg4mDIolzG8g" target="_blank">点击下载</a>
+        <p>请先确保已下载并成功安装调度台服务软件（ConsoleService-8.0.37.exe）：（链接: https://pan.baidu.com/s/1ZYXOMzWDFLkZMOjKwYiRPg 密码:
+            puno）
+            <a href="https://pan.baidu.com/s/1ZYXOMzWDFLkZMOjKwYiRPg" target="_blank">点击下载</a>
         </p>
         <!-- <p>4.安装调用台服务：C:\Windows\Microsoft.NET\Framework\v4.0.30319\installutil.exe ITC.Console.Service.exe (此目录为新安装的服务的路径)</p>
          <p>5.使用admin权限执行此命令启动调度台服务：net start IConService</p>-->
@@ -135,6 +136,8 @@
                 <a href="#voiceRequest_pttOn">pttOn:开始PTT</a>
                 <a href="#voiceRequest_pttOff">pttOff:结束PTT</a>
                 <a href="#voiceRequest_dtmf">dtmf:PSTN呼叫分机号（暂不支持）</a>
+                <a href="#voiceRequest_getAudioList">getAudioList:获取语音列表</a>
+                <a href="#voiceRequest_transformAudio">transformAudio:转换语音格式（amr转mp3）</a>
         view:
             <a href="#view_showUserModal">showUserModal:显示用户窗口</a>
             <a href="#view_showGroupModal">showGroupModal:显示群组窗口</a>
@@ -617,6 +620,28 @@
             <div class="grid_item">
                 <h2>request.voiceRequest.dtmf 回调参数</h2>
                 <i-table border size="small" :columns="grid.col" :data="grid.voiceRequest_dtmf.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="audioRequest_getAudioList" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.audioRequest.getAudioList 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.audioRequest_getAudioList.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.audioRequest.getAudioList 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.audioRequest_getAudioList.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="audioRequest_transformAudio" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.audioRequest.transformAudio 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.audioRequest_transformAudio.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.audioRequest.transformAudio 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.audioRequest_transformAudio.rsp"></i-table>
             </div>
         </div>
 
