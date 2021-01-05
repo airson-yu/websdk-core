@@ -1448,25 +1448,25 @@ grid.audioRequest_getAudioList = {
             k1: 'start',
             k2: 'int',
             k3: 'no',
-            k4: '数据分页起始值'
+            k4: '数据条数起始值，默认为0，即从第一条开始'
         },
         {
             k1: 'count',
             k2: 'int',
             k3: 'no',
-            k4: '数据分页条数'
+            k4: '数据分页条数，默认为100，即每次最多返回100条数据'
         },
         {
             k1: 'starttime',
             k2: 'string',
             k3: 'no',
-            k4: '开始时间，采用"2008-10-13 16:00:00"格式'
+            k4: '开始时间，默认为当前月，采用"2008-10-13 16:00:00"格式'
         },
         {
             k1: 'endtime',
             k2: 'string',
             k3: 'no',
-            k4: '结束时间，格式同上'
+            k4: '结束时间，默认为当前月，格式同上'
         },
         {
             k1: 'callerlike',
@@ -1488,7 +1488,7 @@ grid.audioRequest_getAudioList = {
         },
         {
             k1: 'type',
-            k2: 'string',
+            k2: 'int',
             k3: 'no',
             k4: '语音类型：1个呼，2组呼'
         },
