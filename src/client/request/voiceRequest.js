@@ -77,8 +77,8 @@ class VoiceRequest extends BaseRequest {
     getAudioList = (start, count, starttime, endtime, callerlike, calleelike, tglike, type, callback, cbid) => {
         logger.debug('getAudioList,start:{},count:{}', start, count);
         //startDate endDate userCamNameLike start length
-        start = start >= 0 ? start : 0;
-        count = count > 0 ? count : 100;
+        start = (start && start >= 0) ? start : 0;
+        count = (count && count > 0) ? count : 100;
         //let consoleId = window.websdk.private_cache.login_uid;
         let param = {
             'starttime': starttime,
