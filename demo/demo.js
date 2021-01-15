@@ -155,7 +155,28 @@ var api_demo = {
     },
     req_query_history_gps: function () {
         // XXX 起始时间和结束时间不能超过24小时，且不能超过当前时间
-        websdk.request.gpsRequest.queryHistoryGPS(global_data.param_uid1, null, '2019-06-05 10:00:46', '2019-06-05 22:00:46', function (rsp) {
+        //var starttime = '2021-01-15 06:00:00';
+        //var endtime = '2021-01-15 23:00:00';
+
+        // XXX 查询1个小时以内的数据 2021年01月15日17:13:54
+        var now = new Date();
+        var month = now.getMonth() + 1;
+        if (month < 10) {
+            month = '0' + month;
+        }
+        var ymd = now.getFullYear() + '-' + month + '-' + now.getDate();
+        var hour = now.getHours();
+        var h = now.getHours() < 10 ? ('0' + now.getHours()) : now.getHours();
+        var m = now.getMinutes() < 10 ? ('0' + now.getMinutes()) : now.getMinutes();
+        var s = now.getSeconds() < 10 ? ('0' + now.getSeconds()) : now.getSeconds();
+        var hs = h;
+        if (hour > 1) {
+            hs = hour - 1;
+            hs = hs < 10 ? ('0' + hs) : hs;
+        }
+        var starttime = ymd + ' ' + hs + ':' + m + ':' + s;
+        var endtime = ymd + ' ' + h + ':' + m + ':' + s;
+        websdk.request.gpsRequest.queryHistoryGPS(global_data.param_uid1, null, starttime, endtime, function (rsp) {
             console.log('demo_req_query_history_gps result:', rsp);
         }, 'demo_req_query_history_gps');//
     },
