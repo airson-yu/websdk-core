@@ -159,6 +159,19 @@ class Callbacks {
         }
     }
 
+    rsp_set_push_video_play_type = (data, callback) => {
+        //logger.debug('rsp_set_push_video_play_type:{}', data);
+        if (callback) {
+            /*let param = {
+                'cmd_status': data.cmd_status,
+                'target': data.target,
+                'session': data.session
+            };
+            callback(this.processor.build_response(param));*/
+            callback(this.processor.build_response(data));
+        }
+    }
+
     rsp_update_video_set = (data, callback) => {
         //logger.debug('rsp_update_video_set:{}', data);
         if (callback) {

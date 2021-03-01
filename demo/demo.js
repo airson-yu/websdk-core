@@ -325,6 +325,13 @@ var api_demo = {
         }, 'demo_req_stop_video');//
     },
 
+    req_set_push_video_play_type: function () {
+        //var that = this;
+        websdk.request.videoRequest.setPushVideoPlayType(0, function (rsp) {
+            console.log('demo_req_set_push_video_play_type result:{}', rsp);
+        }, 'demo_req_set_push_video_play_type');//
+    },
+
     req_get_video_list: function () {
         websdk.request.videoRequest.getVideoList(0, 10, '2020-04-01 11:11:11', '2022-04-01 11:11:11', null, function (rsp) {
             console.log('demo_req_get_video_list result:{}', rsp);

@@ -276,6 +276,12 @@ class Invokes {
         //callback && callback(true);
     }
 
+    req_set_push_video_play_type = (param, callback, cbid) => {
+        //logger.debug('req_set_push_video_play_type:{}', param.demander);
+        this.processor.build_req_send('req_set_push_video_play_type', param, callback, null, true);
+        //callback && callback(true);
+    }
+
     req_switch_camera = (param, callback, cbid) => {
         //logger.debug('req_switch_camera:{}', param.demander);
         this.processor.build_req_send('req_switch_camera', param, callback, null, true);

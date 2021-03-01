@@ -126,6 +126,7 @@
                 <a href="#videoRequest_getVideoList">getVideoList:获取视频列表</a>
                 <a href="#videoRequest_transformVideo">transformVideo:转换视频格式（mp4转m3u8）</a>
                 <a href="#videoRequest_getPushVideoUsers">getPushVideoUsers:获取正在视频推流的用户列表</a>
+                <a href="#videoRequest_setPushVideoPlayType">setPushVideoPlayType:设置主动推流的视频是否返回URL</a>
             <!--<a href="#startVideoConf">startVideoConf:发起视频会商</a>
             <a href="#stopVideoConf">stopVideoConf:结束视频会商</a>
             <a href="#shareVideoInVideoConf">shareVideoInVideoConf:发起视频会商分享视频</a>
@@ -521,6 +522,17 @@
             <div class="grid_item">
                 <h2>request.videoRequest.getPushVideoUsers 回调参数</h2>
                 <i-table border size="small" :columns="grid.col" :data="grid.videoRequest_getPushVideoUsers.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="videoRequest_setPushVideoPlayType" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.videoRequest.setPushVideoPlayType 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.videoRequest_setPushVideoPlayType.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.videoRequest.setPushVideoPlayType 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.videoRequest_setPushVideoPlayType.rsp"></i-table>
             </div>
         </div>
 

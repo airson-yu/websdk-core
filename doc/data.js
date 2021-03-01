@@ -1247,6 +1247,28 @@ grid.videoRequest_getPushVideoUsers = {
     ]
 }
 
+grid.videoRequest_setPushVideoPlayType = {
+    req: [
+        {
+            k1: 'play_type',
+            k2: 'int',
+            k3: 'no',
+            k4: '0:播放视频，1仅返回视频URL，2既播放又返回URL，默认为0'
+        },
+        common.callback,
+        common.cbid,
+        common.empty,
+        common.empty
+    ],
+    rsp: [
+        common.build_msg_code('req_set_push_video_play_type'),
+        common.cmd_type_1,
+        common.cmd_status,
+        common.error_reason,
+        common.cbid,
+    ]
+}
+
 grid.voiceRequest_call = {
     req: [
         {

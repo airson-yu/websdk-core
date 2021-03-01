@@ -8,7 +8,7 @@ class VideoRequest extends BaseRequest {
         this.core = core;
     }
 
-    playVideo = (demander, target, extdemander, exttarget, session, channel, resolution, callback, cbid) => {
+    playVideo = (demander, target, extdemander, exttarget, session, channel, resolution, play_type, callback, cbid) => {
         //logger.debug('openVideo:{}', target);
         let param = {
             'demander': demander,
@@ -18,10 +18,22 @@ class VideoRequest extends BaseRequest {
             'session': session,
             'channel': channel,
             'resolution': resolution,
+            'play_type': play_type,
             //'camera': camera
         };
         this.core.invokes.req_play_video(param, callback, cbid);
         //this.initVideoDom(param.cavans);
+    }
+
+    setPushVideoPlayType = (play_type, callback, cbid) => {
+        //logger.debug('stopPlayVideo:{}', target);
+        if (!play_type || (play_type !== 1 && play_type !== 2)) {
+            play_type = 0;
+        }
+        let param = {
+            'play_type': play_type,//0播放视频，1仅返回视频 URL，2既播放又返回 URL，默认为0
+        };
+        this.core.invokes.req_set_push_video_play_type(param, callback, cbid);
     }
 
     stopPlayVideo = (demander, target, extdemander, exttarget, session, channel, stop_type, callback, cbid) => {
