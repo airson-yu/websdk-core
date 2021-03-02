@@ -912,12 +912,18 @@ grid.videoRequest_playVideo = {
             k3: 'no',
             k4: '1:后摄像头，2，前摄像头。(暂不支持，请填1)'
         },*/
-        {
+        /*{
             k1: 'playid',
             k2: 'long',
             k3: 'no',
             k4: '仅仅notice_play_video 中有效'
-        }
+        },*/
+        {
+            k1: 'play_type',
+            k2: 'int',
+            k3: 'no',
+            k4: '0:播放视频，1仅返回视频URL，2既播放又返回URL，默认为0'
+        },
         //target, exttarget, im_type, content, time, callback, cbid
     ],
     rsp: [
