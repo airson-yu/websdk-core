@@ -314,7 +314,7 @@ var api_demo = {
     req_play_video: function () {
         //var that = this;
         //playVideo = (demander, target, extdemander, exttarget, session, channel, resolution, callback, cbid) => {
-        websdk.request.videoRequest.playVideo(global_data.con_id, global_data.param_uid1, null, null, 0, 0, 0, function (rsp) {
+        websdk.request.videoRequest.playVideo(global_data.con_id, global_data.param_uid1, null, null, 0, 0, 0, 2 ,function (rsp) {
             console.log('demo_req_play_video result:{}', rsp);
         }, 'demo_req_play_video');//
     },
@@ -327,7 +327,7 @@ var api_demo = {
 
     req_set_push_video_play_type: function () {
         //var that = this;
-        websdk.request.videoRequest.setPushVideoPlayType(0, function (rsp) {
+        websdk.request.videoRequest.setPushVideoPlayType(2, function (rsp) {
             console.log('demo_req_set_push_video_play_type result:{}', rsp);
         }, 'demo_req_set_push_video_play_type');//
     },
