@@ -1680,7 +1680,13 @@ grid.set_video_close_action = {
         }
     ],
     rsp: [
-        common.result
+        common.result,
+        {
+            k1: 'data',
+            k2: 'int array',
+            k3: 'yes',
+            k4: '用户ID数组'
+        }
     ]
 }
 
@@ -1709,6 +1715,20 @@ grid.set_video_push_close_action = {
     ],
     rsp: [
         common.result
+    ]
+}
+
+grid.setLogLevelNone = {
+    req: [
+
+    ],
+    rsp: [
+        {
+            k1: 'result',
+            k2: 'string',
+            k3: 'yes',
+            k4: '返回当前日志打印级别'
+        }
     ]
 }
 

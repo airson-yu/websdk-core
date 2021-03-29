@@ -149,6 +149,8 @@
             <a href="#config_set_video_close_action">set_video_close_action:设置关闭视频时的操作（包括终端主动推送和调度台拉取）</a>
             <a href="#config_set_video_pull_close_action">set_video_pull_close_action:设置关闭视频时的操作（只针对主动推送的视频）</a>
             <a href="#config_set_video_push_close_action">set_video_push_close_action:设置关闭视频时的操作（只针对调度台拉取的视频）</a>
+            <a href="#setLogLevelNone">setLogLevelDebug:日志打印级别设置为none(不打印)</a>
+            <a href="#setLogLevelDebug">setLogLevelDebug:日志打印级别设置为debug</a>
 
         listeners:
             <a href="#logonNotice">logonNotice:登录状态变更通知</a>
@@ -731,6 +733,17 @@
             <div class="grid_item">
                 <h2>websdkui.configApi.set_video_push_close_action 回调参数</h2>
                 <i-table border size="small" :columns="grid.col" :data="grid.set_video_push_close_action.rsp"></i-table>
+            </div>
+        </div>
+
+        <div id="setLogLevelNone" class="grid_item_div">
+            <div class="grid_item">
+                <h2>request.baseRequest.setLogLevelNone 请求参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.setLogLevelNone.req"></i-table>
+            </div>
+            <div class="grid_item">
+                <h2>request.baseRequest.setLogLevelNone 回调参数</h2>
+                <i-table border size="small" :columns="grid.col" :data="grid.setLogLevelNone.rsp"></i-table>
             </div>
         </div>
 
