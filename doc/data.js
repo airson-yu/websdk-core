@@ -1727,7 +1727,21 @@ grid.setLogLevelNone = {
             k1: 'result',
             k2: 'string',
             k3: 'yes',
-            k4: '返回当前日志打印级别'
+            k4: '返回结果为字符串：当前日志打印级别'
+        }
+    ]
+}
+
+grid.setLogLevelDebug = {
+    req: [
+
+    ],
+    rsp: [
+        {
+            k1: 'result',
+            k2: 'string',
+            k3: 'yes',
+            k4: '返回结果为字符串：当前日志打印级别'
         }
     ]
 }
