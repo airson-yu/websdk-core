@@ -33,11 +33,11 @@ class BaseRequest {
         for (let i in logger.level_list) {
             let val = logger.level_list[i];
             if (val == logger.level) {
-                callback(i);
+                callback && callback(i);
                 return;
             }
         }
-        callback();
+        callback && callback();
     }
 
 }
